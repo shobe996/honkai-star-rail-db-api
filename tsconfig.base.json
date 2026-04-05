@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@honkai-star-rail-db/webkit": ["libs/webkit/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
