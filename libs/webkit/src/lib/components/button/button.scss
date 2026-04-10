@@ -1,0 +1,67 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: inline-block;
+}
+
+.hsr-button-base {
+  @extend %font-hsr-style;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 2px;
+  background: transparent;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  // --- VARIANT: RESET (The Gold Border one) ---
+  &.reset {
+    color: hsr.$hsr-gold;
+    border: 1px solid hsr.$hsr-gold;
+    height: 40px;
+    padding: 0 16px;
+
+    &:hover:not(:disabled) {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-bg-dark;
+    }
+  }
+
+  // --- VARIANT: NAV (The Paginator ones) ---
+  &.nav {
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 16px;
+    min-width: 40px;
+
+    &:hover:not(:disabled) {
+      background: hsr.$hsr-gold;
+      color: #000;
+      border-color: hsr.$hsr-gold;
+    }
+  }
+
+  // --- VARIANT: GHOST / TOGGLE (The "LVL Toggle" style) ---
+  &.ghost {
+    background: #1a1d23;
+    color: #888;
+    border: 1px solid #333;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-family: hsr.$font-body; // Uses Roboto Condensed
+
+    &:hover:not(:disabled) {
+      color: #fff;
+      border-color: hsr.$hsr-gold;
+      background: #252932;
+    }
+  }
+}
