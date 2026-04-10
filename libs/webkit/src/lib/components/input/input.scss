@@ -1,0 +1,40 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.hsr-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  input {
+    background: #1a1d23; // From your .hsr-input
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: 'Roboto Condensed', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:focus {
+      border-color: hsr.$hsr-gold;
+      box-shadow: 0 0 8px rgba(246, 196, 56, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #121418;
+    }
+  }
+}
