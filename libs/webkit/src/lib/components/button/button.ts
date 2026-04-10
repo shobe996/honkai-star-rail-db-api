@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
   selector: 'lib-button',
@@ -7,8 +7,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   styleUrl: './button.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Button {
-  @Input() variant: 'primary' | 'secondary' | 'reset' | 'nav' | 'ghost' = 'primary';
-  @Input() type: 'button' | 'submit' | 'reset' = 'button';
-  @Input() disabled = false;
+export class ButtonComponent {
+  variant = input<'primary' | 'secondary' | 'reset' | 'nav'>('primary');
+  disabled = input<boolean>(false);
+  type = input<'button' | 'submit' | 'reset'>('button');
 }
