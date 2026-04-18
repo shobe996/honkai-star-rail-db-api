@@ -1,0 +1,33 @@
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; // Standard HSR grid spacing
+  padding: 24px;
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1; 
+  overflow-y: auto; 
+  align-content: flex-start;
+
+  /* Crucial: Ensure the custom tag behaves like a block */
+  lib-card, webkit-card { 
+    display: block; 
+    width: calc(33.333% - 10.7px); // Precise math for 3 columns with 16px gap
+    min-width: 320px; 
+    box-sizing: border-box;
+  }
+}
+
+/* Responsive breakpoints matching the UI screenshots */
+@media (max-width: 1200px) {
+  .card-list lib-card { 
+    width: calc(50% - 8px); 
+  }
+}
+
+@media (max-width: 768px) {
+  .card-list lib-card { 
+    width: 100%; 
+    min-width: unset; 
+  }
+}

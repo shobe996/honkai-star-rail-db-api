@@ -1,1 +1,66 @@
-/* You can add global styles to this file, and also import other style files */
+.stats-section {
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+
+    .label-caps {
+      font-size: 9px;
+      color: #666;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .toggle-btn {
+      background: #1a1d23;
+      color: #888;
+      border: 1px solid #333;
+      font-size: 8px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+
+      &:hover {
+        color: #fff;
+        border-color: #f6c438;
+      }
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+    row-gap: 4px;
+  }
+
+  .stat-pill {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 2px;
+
+    span {
+      font-size: 10px;
+      color: #999;
+      font-family: 'Roboto Condensed', sans-serif;
+    }
+
+    strong {
+      color: #f6c438;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.badge-container {
+  display: flex;
+  gap: 8px;
+  /* Ensure badges don't wrap and break card height */
+  overflow: hidden;
+}

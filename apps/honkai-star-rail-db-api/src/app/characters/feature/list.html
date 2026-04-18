@@ -1,0 +1,49 @@
+<div class="card-list">
+  @for (character of characters.data; track character.id) {
+  <lib-card
+    [rarityValue]="character.rarity.value"
+    [image]="character.icon_url"
+    [name]="character.name"
+    [starIcon]="character.rarity.icon"
+    (imageClick)="toDetails(character.id)"
+    (nameClick)="toDetails(character.id)"
+  >
+    <div badges class="badge-container">
+      <lib-badge
+        [icon]="character.path.icon_url"
+        [label]="character.path.name"
+      />
+      <lib-badge
+        [icon]="character.type.icon_url"
+        [label]="character.type.name"
+      />
+    </div>
+
+    <div stats class="stats-section">
+      <div class="stats-header">
+        <span class="label-caps">BASE STATS</span>
+        <button class="toggle-btn" (click)="toggleStats(character.id)">
+          LVL TOGGLE
+        </button>
+      </div>
+      <div class="stats-grid">
+        @let s = getStats(character, character.id);
+        <div class="stat-pill">
+          <span>HP</span> <strong>{{ s.base_hp }}</strong>
+        </div>
+        <div class="stat-pill">
+          <span>ATK</span> <strong>{{ s.base_atk }}</strong>
+        </div>
+        <div class="stat-pill">
+          <span>DEF</span> <strong>{{ s.base_def }}</strong>
+        </div>
+        <div class="stat-pill">
+          <span>SPD</span> <strong>{{ s.base_speed }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <div footer class="faction-footer">{{ character.faction.name }}</div>
+  </lib-card>
+  }
+</div>
