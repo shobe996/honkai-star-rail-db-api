@@ -1,0 +1,29 @@
+@use '../../styles/theme' as hsr;
+
+.hsr-select {
+  background: #1a1d23;
+  color: #fff;
+  border: 1px solid #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: hsr.$font-body;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: hsr.$hsr-gold;
+    box-shadow: 0 0 8px hsr.$hsr-gold-glow;
+  }
+
+  option {
+    background: #1a1d23;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
