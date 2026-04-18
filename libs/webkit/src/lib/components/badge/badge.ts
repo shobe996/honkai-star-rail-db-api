@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 @Component({
-  selector: 'lib-badge-component',
+  selector: 'lib-badge',
   imports: [],
   templateUrl: './badge.html',
   styleUrl: './badge.scss',
