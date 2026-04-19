@@ -12,4 +12,9 @@ export class CharacterService {
     const characters = characterFilters.all();
     return of(characters);
   }
+
+  getAllPaginated(page: number, size: number): Observable<PaginatedResult<Character>> {
+    const characters = characterFilters.all(page, size);
+    return of(characters);
+  }
 }
