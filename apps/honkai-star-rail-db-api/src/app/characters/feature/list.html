@@ -47,3 +47,12 @@
   </lib-card>
   }
 </div>
+<lib-paginator
+    [total]="characters.total"
+    [size]="characters.size"
+    [page]="characters.page"
+    [hasMore]="characters.hasMore"
+    label="Characters"
+    (pageChange)="goToPage($event)"
+    (sizeChange)="updatePageSize($event)"
+  />

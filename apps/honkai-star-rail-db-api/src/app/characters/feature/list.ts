@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Character, characterFilters } from 'honkai-star-rail-db';
-import { BadgeComponent, CardComponent } from '@honkai-star-rail-db/webkit';
+import {
+  BadgeComponent,
+  CardComponent,
+  PaginatorComponent,
+} from '@honkai-star-rail-db/webkit';
 
 @Component({
   selector: 'app-list-component',
-  imports: [CardComponent, BadgeComponent],
+  imports: [CardComponent, BadgeComponent, PaginatorComponent],
   templateUrl: './list.html',
   styleUrl: './list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,11 +22,22 @@ export class ListComponent {
 
   toggleStats(characterId: number) {
     const current = this.statsToggleState.get(characterId) || 'level1';
-    this.statsToggleState.set(characterId, current === 'level1' ? 'level80' : 'level1');
+    this.statsToggleState.set(
+      characterId,
+      current === 'level1' ? 'level80' : 'level1',
+    );
   }
 
   getStats(character: Character, id: number) {
     const level = this.statsToggleState.get(id) || 'level1';
     return character.stats[level];
+  }
+
+  goToPage(page: number) {
+    console.log(page);
+  }
+
+  updatePageSize(size: number) {
+    console.log(size);
   }
 }
