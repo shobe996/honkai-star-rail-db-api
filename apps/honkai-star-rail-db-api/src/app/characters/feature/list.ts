@@ -5,18 +5,31 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { Character } from 'honkai-star-rail-db';
+import { Character, factionFilters, pathFilters, rarityFilters, typeFilters } from 'honkai-star-rail-db';
 import {
   BadgeComponent,
   CardComponent,
   PaginatorComponent,
+  FilterBarComponent,
+  SelectComponent,
+  InputComponent,
 } from '@honkai-star-rail-db/webkit';
 import { CharacterListFacadeService } from '../data-access/character-list-facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { form, FormField } from '@angular/forms/signals';
+import { CharacterSearchForm } from '../data-access/character-search-form.model';
 
 @Component({
   selector: 'app-list-component',
-  imports: [CardComponent, BadgeComponent, PaginatorComponent],
+  imports: [
+    CardComponent,
+    BadgeComponent,
+    PaginatorComponent,
+    FilterBarComponent,
+    SelectComponent,
+    FormField,
+    InputComponent
+  ],
   templateUrl: './list.html',
   styleUrl: './list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +38,20 @@ export class ListComponent implements OnInit {
   private _characterListFacadeSerice = inject(CharacterListFacadeService);
   private _currentPage = signal(1);
   private _currentSize = signal(10);
+
+  searchFormModel = signal<CharacterSearchForm>({
+    name: '',
+    path: '',
+    type: '',
+    rarity: '',
+    faction: '',
+  });
+
+  searchForm = form(this.searchFormModel);
+  paths = pathFilters.all();
+  types = typeFilters.all();
+  rarities = rarityFilters.all();
+  factions = factionFilters.all();
   toDetails(id: number) {
     console.log(id);
   }
@@ -41,7 +68,10 @@ export class ListComponent implements OnInit {
     },
   });
   ngOnInit(): void {
-    this._characterListFacadeSerice.getAllPaginated(this._currentPage(), this._currentSize());
+    this._characterListFacadeSerice.getAllPaginated(
+      this._currentPage(),
+      this._currentSize(),
+    );
   }
 
   toggleStats(characterId: number) {
@@ -65,5 +95,9 @@ export class ListComponent implements OnInit {
   updatePageSize(size: number) {
     this._currentSize.set(size);
     this._characterListFacadeSerice.getAllPaginated(this._currentPage(), size);
+  }
+
+  resetFilters() {
+    throw new Error('Method not implemented.');
   }
 }

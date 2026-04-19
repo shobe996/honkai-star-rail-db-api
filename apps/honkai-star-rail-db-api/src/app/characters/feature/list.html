@@ -1,3 +1,37 @@
+<lib-filter-bar (reset)="resetFilters()">
+  <lib-input
+    placeholder="Search name..."
+    [formField]="searchForm.name"
+  />
+
+  <lib-select
+    [options]="paths"
+    labelKey="name"
+    valueKey="name"
+    [formField]="searchForm.path"
+  />
+
+  <lib-select
+    [options]="types"
+    labelKey="name"
+    valueKey="name"
+    [formField]="searchForm.type"
+  />
+
+  <lib-select
+    [options]="rarities"
+    labelKey="name"
+    valueKey="id"
+    [formField]="searchForm.rarity"
+  />
+
+  <lib-select
+    [options]="factions"
+    labelKey="name"
+    valueKey="id"
+    [formField]="searchForm.faction"
+  />
+</lib-filter-bar>
 <div class="card-list">
   @for (character of viewModel().characters.data; track character.id) {
   <lib-card
@@ -48,11 +82,11 @@
   }
 </div>
 <lib-paginator
-    [total]="viewModel().characters.total"
-    [size]="viewModel().characters.size"
-    [page]="viewModel().characters.page"
-    [hasMore]="viewModel().characters.hasMore"
-    label="Charactes"
-    (pageChange)="goToPage($event)"
-    (sizeChange)="updatePageSize($event)"
-  />
+  [total]="viewModel().characters.total"
+  [size]="viewModel().characters.size"
+  [page]="viewModel().characters.page"
+  [hasMore]="viewModel().characters.hasMore"
+  label="Charactes"
+  (pageChange)="goToPage($event)"
+  (sizeChange)="updatePageSize($event)"
+/>
