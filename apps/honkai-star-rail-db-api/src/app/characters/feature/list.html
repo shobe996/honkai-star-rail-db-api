@@ -1,5 +1,5 @@
 <div class="card-list">
-  @for (character of characters.data; track character.id) {
+  @for (character of viewModel().characters.data; track character.id) {
   <lib-card
     [rarityValue]="character.rarity.value"
     [image]="character.icon_url"
@@ -48,11 +48,11 @@
   }
 </div>
 <lib-paginator
-    [total]="characters.total"
-    [size]="characters.size"
-    [page]="characters.page"
-    [hasMore]="characters.hasMore"
-    label="Characters"
+    [total]="viewModel().characters.total"
+    [size]="viewModel().characters.size"
+    [page]="viewModel().characters.page"
+    [hasMore]="viewModel().characters.hasMore"
+    label="Charactes"
     (pageChange)="goToPage($event)"
     (sizeChange)="updatePageSize($event)"
   />
