@@ -1,0 +1,54 @@
+<div class="paginator-container">
+  <div class="paginator-info">
+    Showing <strong>{{ startRange() }}</strong> -
+    <strong>{{ endRange() }}</strong>
+    of <strong>{{ total() }}</strong> {{ label() }}
+  </div>
+
+  <div class="paginator-controls">
+    <div class="size-selector">
+      <span>Rows per page:</span>
+      <lib-select
+        [options]="pageSizeOptions"
+        [value]="sizeSignal()"
+        (valueChange)="handleSizeChange($event)"
+      />
+    </div>
+
+    <div class="page-nav">
+      <lib-button 
+        variant="nav" 
+        [isEdge]="true"
+        [disabled]="page() === 1" 
+        (click)="pageChange.emit(1)">
+        <span class="arrow">|&laquo;</span>
+      </lib-button>
+
+      <lib-button 
+        variant="nav" 
+        [disabled]="page() === 1" 
+        (click)="pageChange.emit(page() - 1)">
+        <span class="arrow">&laquo;</span> PREV
+      </lib-button>
+
+      <span class="page-indicator">
+        PAGE <strong>{{ page() }}</strong> / {{ lastPage() }}
+      </span>
+
+      <lib-button
+        variant="nav"
+        [disabled]="!hasMore()"
+        (click)="pageChange.emit(page() + 1)">
+        NEXT <span class="arrow">&raquo;</span>
+      </lib-button>
+
+      <lib-button 
+        variant="nav" 
+        [isEdge]="true"
+        [disabled]="page() === lastPage()" 
+        (click)="pageChange.emit(lastPage())">
+        <span class="arrow">&raquo;|</span>
+      </lib-button>
+    </div>
+  </div>
+</div>

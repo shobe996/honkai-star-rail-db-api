@@ -11,3 +11,5 @@ export * from './lib/components/container/container';
 export * from './lib/components/badge/badge';
 
 export * from './lib/components/card/card';
+
+export * from './lib/components/paginator/paginator';
