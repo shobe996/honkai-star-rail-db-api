@@ -10,11 +10,11 @@ import { FormValueControl } from '@angular/forms/signals';
 })
 export class SelectComponent <T extends object, V extends string | number> implements FormValueControl<V>{
   label = input<string>('');
-
   options = input<T[]>([]);
 
-  labelKey = input<keyof T>();
-  valueKey = input<keyof T>();
+  // These become optional. If not provided, we use the raw value of T.
+  labelKey = input<keyof T | undefined>();
+  valueKey = input<keyof T | undefined>();
 
   disabled = input<boolean>(false);
   value = model<V>('' as unknown as V);
@@ -23,16 +23,25 @@ export class SelectComponent <T extends object, V extends string | number> imple
 
   onSelectionChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
+    // We cast the string value from the HTMLSelectElement back to V
     this.value.set(selectElement.value as unknown as V);
   }
 
   getOptionLabel(opt: T): string {
     const key = this.labelKey();
-    return key ? String(opt[key]) : '';
+    // If T is an object and key exists, return the property. 
+    // Otherwise, stringify the primitive.
+    if (key && typeof opt === 'object' && opt !== null) {
+      return String(opt[key]);
+    }
+    return String(opt);
   }
 
   getOptionValue(opt: T): V {
     const key = this.valueKey();
-    return key ? (opt[key] as unknown as V) : ('' as unknown as V);
+    if (key && typeof opt === 'object' && opt !== null) {
+      return opt[key] as unknown as V;
+    }
+    return opt as unknown as V;
   }
 }
