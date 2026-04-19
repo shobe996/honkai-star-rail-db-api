@@ -1,4 +1,4 @@
-<lib-filter-bar (reset)="resetFilters()">
+<lib-filter-bar (resetFilters)="resetFilters()">
   <lib-input
     placeholder="Search name..."
     [formField]="searchForm.name"
@@ -21,14 +21,14 @@
   <lib-select
     [options]="rarities"
     labelKey="name"
-    valueKey="id"
+    valueKey="name"
     [formField]="searchForm.rarity"
   />
 
   <lib-select
     [options]="factions"
     labelKey="name"
-    valueKey="id"
+    valueKey="name"
     [formField]="searchForm.faction"
   />
 </lib-filter-bar>

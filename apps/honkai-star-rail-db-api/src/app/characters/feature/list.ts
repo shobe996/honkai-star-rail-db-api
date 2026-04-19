@@ -1,11 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
-  OnInit,
   signal,
 } from '@angular/core';
-import { Character, factionFilters, pathFilters, rarityFilters, typeFilters } from 'honkai-star-rail-db';
+import {
+  Character,
+  factionFilters,
+  pathFilters,
+  rarityFilters,
+  typeFilters,
+} from 'honkai-star-rail-db';
 import {
   BadgeComponent,
   CardComponent,
@@ -18,6 +24,7 @@ import { CharacterListFacadeService } from '../data-access/character-list-facade
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../data-access/character-search-form.model';
+import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
 
 @Component({
   selector: 'app-list-component',
@@ -28,13 +35,13 @@ import { CharacterSearchForm } from '../data-access/character-search-form.model'
     FilterBarComponent,
     SelectComponent,
     FormField,
-    InputComponent
+    InputComponent,
   ],
   templateUrl: './list.html',
   styleUrl: './list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
   private _characterListFacadeSerice = inject(CharacterListFacadeService);
   private _currentPage = signal(1);
   private _currentSize = signal(10);
@@ -67,11 +74,25 @@ export class ListComponent implements OnInit {
       },
     },
   });
-  ngOnInit(): void {
-    this._characterListFacadeSerice.getAllPaginated(
-      this._currentPage(),
-      this._currentSize(),
-    );
+
+  constructor() {
+    effect(() => {
+      const { name, path, type, rarity, faction } = this.searchForm().value();
+
+      const criteria: CharacterSearchCriteria = {
+        name: name ?? '',
+        path: path ?? '',
+        type: type ?? '',
+        faction: faction ?? '',
+        rarity: rarity ? Number.parseInt(rarity) : undefined,
+      };
+
+      this._characterListFacadeSerice.filter(
+        criteria,
+        this._currentPage(),
+        this._currentSize(),
+      );
+    });
   }
 
   toggleStats(characterId: number) {
@@ -89,15 +110,22 @@ export class ListComponent implements OnInit {
 
   goToPage(page: number) {
     this._currentPage.set(page);
-    this._characterListFacadeSerice.getAllPaginated(page, this._currentSize());
   }
 
   updatePageSize(size: number) {
     this._currentSize.set(size);
-    this._characterListFacadeSerice.getAllPaginated(this._currentPage(), size);
+    this._currentPage.set(1);
   }
 
   resetFilters() {
-    throw new Error('Method not implemented.');
+    const initial: CharacterSearchForm = {
+      name: '',
+      path: '',
+      type: '',
+      rarity: '',
+      faction: '',
+    };
+    this.searchForm().reset(initial);
+    this._currentPage.set(1);
   }
 }
