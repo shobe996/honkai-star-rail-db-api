@@ -9,10 +9,8 @@
   cursor: pointer;
   font-weight: 700;
   transition: all 0.2s ease;
-  display: flex;
+
   align-items: center;
-  justify-content: center;
-  gap: 8px;
   border-radius: 2px;
   background: transparent;
   border: 1px solid transparent;
@@ -33,8 +31,8 @@
     padding: 8px 20px;
 
     &:hover:not(:disabled) {
-      background: #fff;
-      border-color: #fff;
+      background: hsr.$hsr-color;
+      border-color: hsr.$hsr-color;
     }
   }
 
@@ -42,8 +40,9 @@
   &.reset {
     color: hsr.$hsr-gold;
     border: 1px solid hsr.$hsr-gold;
+    border-radius: 4px;
     height: 40px;
-    padding: 0 16px;
+    padding: 8px 16px;
 
     &:hover:not(:disabled) {
       background: hsr.$hsr-gold;
@@ -53,14 +52,37 @@
 
   // --- VARIANT: NAV (The Paginator style) ---
   &.nav {
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 6px 16px;
-    min-width: 40px;
+    background: transparent;
+  color: hsr.$hsr-color;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 16px;
+  border-radius: 2px;
+  font-family: hsr.$font-display;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 40px;
+  justify-content: center;
+  text-transform: uppercase;
+
+   .arrow {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
 
     &:hover:not(:disabled) {
       background: hsr.$hsr-gold;
-      color: #000;
+      color: hsr.$hsr-black;
       border-color: hsr.$hsr-gold;
     }
 
@@ -72,16 +94,16 @@
 
   // --- VARIANT: GHOST / TOGGLE (The "LVL Toggle" style) ---
   &.ghost {
-    background: #1a1d23;
-    color: #888;
+    background: hsr.$hsr-bg-element;
+    color: hsr.$hsr-ghost;
     border: 1px solid #333;
     font-size: 9px;
     padding: 3px 8px;
     border-radius: 12px;
-    font-family: hsr.$font-body; // Uses Roboto Condensed
+    font-family: hsr.$font-body;
 
     &:hover:not(:disabled) {
-      color: #fff;
+      color: hsr.$hsr-color;
       border-color: hsr.$hsr-gold;
       background: #252932;
     }

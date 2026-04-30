@@ -3,11 +3,19 @@ $hsr-gold: #f6c438;
 $hsr-gold-glow: rgba(246, 196, 56, 0.3);
 $hsr-bg-dark: #050505;
 $hsr-card-bg: #0d0e12;
-$hsr-white: #ececec;
+$hsr-white: #eee;
+$hsr-bg-element: #1a1d23;
+$hsr-color: #fff;
+$hsr-ghost: #888;
+$hsr-label: #666;
+$hsr-black: #000;
 
 // Rarity Colors
-$rarity-5: #eb8d3d;
+$rarity-5: #d0aa6e;
 $rarity-4: #9c65d7;
+$rarity-3: #4c86c9;
 
 // Borders
 $hsr-border: 1px solid rgba(246, 196, 56, 0.5);
+$hsr-border-black: 1px solid rgba(255, 255, 255, 0.08);
+$hsr-border-black-2: 1px solid rgba(255, 255, 255, 0.1)

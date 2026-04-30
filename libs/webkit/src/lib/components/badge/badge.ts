@@ -10,5 +10,4 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 export class BadgeComponent {
   icon = input.required<string>();
   label = input.required<string>();
-  size = input<'sm' | 'md'>('md');
 }

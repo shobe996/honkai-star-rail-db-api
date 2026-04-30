@@ -1,8 +1,19 @@
+@use 'theme' as hsr;
+
+.page-container {
+  background: hsr.$hsr-bg-dark;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
 .card-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px; // Standard HSR grid spacing
-  padding: 24px;
+  gap: 16px;
+  padding: 20px;
   box-sizing: border-box;
   width: 100%;
   flex: 1; 
@@ -12,7 +23,7 @@
   /* Crucial: Ensure the custom tag behaves like a block */
   lib-card, webkit-card { 
     display: block; 
-    width: calc(33.333% - 10.7px); // Precise math for 3 columns with 16px gap
+    width: calc(33.33% - 11px);
     min-width: 320px; 
     box-sizing: border-box;
   }

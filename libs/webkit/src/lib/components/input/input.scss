@@ -2,7 +2,7 @@
 
 :host {
   display: block;
-  width: 100%;
+  unicode-bidi: isolate;
 }
 
 .hsr-input-wrapper {
@@ -11,20 +11,17 @@
   gap: 4px;
 
   input {
-    background: #1a1d23; // From your .hsr-input
-    color: #fff;
+    background: hsr.$hsr-bg-element;
+    color: hsr.$hsr-color;
     border: 1px solid #333;
     padding: 8px 12px;
     border-radius: 4px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-family: hsr.$font-body;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
     width: 100%;
     box-sizing: border-box;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.3);
-    }
+    min-width: 226px;
 
     &:focus {
       border-color: hsr.$hsr-gold;

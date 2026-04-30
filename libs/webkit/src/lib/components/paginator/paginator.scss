@@ -13,9 +13,9 @@
   gap: 1rem;
   padding: 1.5rem 2rem;
   background: hsr.$hsr-card-bg;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: hsr.$hsr-border-black-2;
   font-family: hsr.$font-body;;
-  color: #888;
+  color: hsr.$hsr-ghost;
   width: 100%;
   box-sizing: border-box;
   z-index: 10;
@@ -24,7 +24,6 @@
 .paginator-info {
   font-size: 0.9rem;
   letter-spacing: 1px;
-  text-transform: uppercase;
   
   strong { 
     color: hsr.$hsr-gold; // HSR Gold accent
@@ -43,15 +42,7 @@
 .size-selector {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-
-  /* Custom styling for the webkit-select inside the paginator */
-  webkit-select {
-    min-width: 80px;
-  }
+  gap: 10px;
 }
 
 .page-nav {
@@ -60,42 +51,7 @@
   gap: 0.75rem; 
 }
 
-.nav-btn {
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 6px 16px;
-  border-radius: 2px;
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 40px;
-  justify-content: center;
-  text-transform: uppercase;
-  
-  .arrow {
-    font-size: 1.1rem;
-    line-height: 1;
-  }
-
-  &:hover:not(:disabled) {
-    background: hsr.$hsr-gold;
-    color: #000;
-    border-color: hsr.$hsr-gold;
-  }
-
-  &:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
-    filter: grayscale(1);
-  }
-
-  /* Specific border color for the 'First' and 'Last' page buttons */
+.nav {
   &:first-child, 
   &:last-child {
     border-color: rgba(246, 196, 56, 0.3);
@@ -103,11 +59,10 @@
 }
 
 .page-indicator {
-  font-family: 'Oswald', sans-serif;
+  font-family: hsr.$font-display;
   letter-spacing: 2px;
   font-size: 1rem;
   text-transform: uppercase;
-  color: #666;
 
   strong { 
     color: hsr.$hsr-gold; 

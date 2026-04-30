@@ -1,13 +1,11 @@
 <div class="character-card">
   <div class="image-side" [class]="'rarity-' + rarityValue()">
-    <button
-      type="button"
-      class="img-btn"
-      (click)="imageClick.emit()"
-      aria-label="View character details"
-    >
-      <img [src]="image()" [alt]="name()" />
-    </button>
+    <img
+      [src]="image()"
+      [alt]="name()"
+      tabindex="0"
+    />
+    <!-- </button> -->
   </div>
 
   <div class="info-content">
@@ -24,9 +22,9 @@
       </h2>
     </div>
 
-    <div class="badge-slot">
+
       <ng-content select="[badges]"></ng-content>
-    </div>
+    
 
     <div class="stats-slot">
       <ng-content select="[stats]"></ng-content>

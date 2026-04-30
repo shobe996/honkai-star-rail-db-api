@@ -5,9 +5,9 @@
   [class]="variant()"
   [class.edge-nav]="variant() === 'nav' && isEdge()">
   
-  <span class="button-content">
+  <!-- <span class="button-content"> -->
     <ng-content></ng-content>
-  </span>
+  <!-- </span> -->
 
   @if (variant() === 'primary' || variant() === 'reset') {
     <div class="hsr-border-accent"></div>
