@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import {
   Character,
+  characterRarityFilters,
   factionFilters,
   pathFilters,
-  rarityFilters,
   typeFilters,
 } from 'honkai-star-rail-db';
 import {
@@ -44,7 +44,7 @@ import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characte
 export class ListComponent {
   private _characterListFacadeSerice = inject(CharacterListFacadeService);
   private _currentPage = signal(1);
-  private _currentSize = signal(10);
+  private _currentSize = signal(9);
 
   searchFormModel = signal<CharacterSearchForm>({
     name: '',
@@ -57,7 +57,7 @@ export class ListComponent {
   searchForm = form(this.searchFormModel);
   paths = pathFilters.all();
   types = typeFilters.all();
-  rarities = rarityFilters.all();
+  rarities = characterRarityFilters.all();
   factions = factionFilters.all();
   toDetails(id: number) {
     console.log(id);
