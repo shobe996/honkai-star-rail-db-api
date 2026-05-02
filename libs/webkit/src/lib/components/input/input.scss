@@ -1,0 +1,37 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+.hsr-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  input {
+    background: hsr.$hsr-bg-element;
+    color: hsr.$hsr-color;
+    border: 1px solid #333;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-family: hsr.$font-body;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 226px;
+
+    &:focus {
+      border-color: hsr.$hsr-gold;
+      box-shadow: 0 0 8px rgba(246, 196, 56, 0.2);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #121418;
+    }
+  }
+}

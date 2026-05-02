@@ -1,0 +1,15 @@
+<button 
+  [disabled]="disabled()" 
+  [type]="type()"
+  class="hsr-button-base"
+  [class]="variant()"
+  [class.edge-nav]="variant() === 'nav' && isEdge()">
+  
+  <!-- <span class="button-content"> -->
+    <ng-content></ng-content>
+  <!-- </span> -->
+
+  @if (variant() === 'primary' || variant() === 'reset') {
+    <div class="hsr-border-accent"></div>
+  }
+</button>

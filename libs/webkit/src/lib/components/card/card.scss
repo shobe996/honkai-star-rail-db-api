@@ -1,0 +1,89 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: block;
+}
+
+.character-card {
+  display: flex;
+  background: hsr.$hsr-card-bg;
+  border: hsr.$hsr-border-black;
+  border-radius: 4px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: hsr.$hsr-gold;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+
+    .image-side img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.image-side {
+  flex: 0 0 188px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  // Gradients matching your screenshots exactly
+  &.rarity-5 {
+    background: linear-gradient(180deg, #a35d55, hsr.$rarity-5);
+  }
+  &.rarity-4 {
+    background: linear-gradient(180deg, #3f4064, hsr.$rarity-4);
+  }
+  &.rarity-3 {
+    background: linear-gradient(180deg, #3a3b62, hsr.$rarity-3);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.info-content {
+  flex: 1;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  font-family: hsr.$font-body;
+}
+
+.rarity-stars {
+  color: hsr.$hsr-gold;
+  font-size: 10px;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.name-text {
+  font-family: hsr.$font-display;
+  color: hsr.$hsr-color;
+  font-size: 1.4rem;
+  margin: 0;
+  text-transform: uppercase;
+  cursor: pointer;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.footer-slot {
+  font-size: 10px;
+  color: #555;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-top: 8px;
+}

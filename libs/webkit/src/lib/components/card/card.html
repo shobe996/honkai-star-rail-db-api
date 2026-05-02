@@ -1,0 +1,37 @@
+<div class="character-card">
+  <div class="image-side" [class]="'rarity-' + rarityValue()">
+    <img
+      [src]="image()"
+      [alt]="name()"
+      tabindex="0"
+    />
+    <!-- </button> -->
+  </div>
+
+  <div class="info-content">
+    <div class="header-row">
+      <span class="rarity-stars">{{ starIcon() }}</span>
+      <h2
+        class="name-text"
+        role="button"
+        tabindex="0"
+        (click)="nameClick.emit()"
+        (keyup.enter)="nameClick.emit()"
+      >
+        {{ name() }}
+      </h2>
+    </div>
+
+
+      <ng-content select="[badges]"></ng-content>
+    
+
+    <div class="stats-slot">
+      <ng-content select="[stats]"></ng-content>
+    </div>
+
+    <div class="footer-slot">
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: block;
+  min-width: 140px;
+}
+
+:host(.paginator-select) {
+  min-width: 53px;
+  select {
+    background: #1a1d23;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 4px 8px;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    &:focus {
+      border-color: #f6c438;
+    }
+  }
+}
+
+.hsr-select {
+  background: hsr.$hsr-bg-element;
+  color: hsr.$hsr-color;
+  border: 1px solid #333;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-family: hsr.$font-body;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: hsr.$hsr-gold;
+    box-shadow: 0 0 8px hsr.$hsr-gold-glow;
+  }
+
+  option {
+    background: hsr.$hsr-bg-element;
+    color: hsr.$hsr-color;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

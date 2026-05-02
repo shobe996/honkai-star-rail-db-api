@@ -1,0 +1,26 @@
+@use '../../styles/theme' as hsr;
+
+.filter-bar {
+  padding: 20px;
+  background: hsr.$hsr-card-bg;
+  border-bottom: hsr.$hsr-border-black-2;
+}
+
+.filter-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

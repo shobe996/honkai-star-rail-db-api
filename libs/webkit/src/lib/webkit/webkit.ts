@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   selector: 'lib-webkit',
   imports: [],
   templateUrl: './webkit.html',
-  styleUrl: './webkit.css',
+  styleUrl: './webkit.scss',
 })
 export class Webkit {}
