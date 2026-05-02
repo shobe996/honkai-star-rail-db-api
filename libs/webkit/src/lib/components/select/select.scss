@@ -6,7 +6,7 @@
 }
 
 :host(.paginator-select) {
-  width: 53px;
+  min-width: 53px;
   select {
     background: #1a1d23;
     color: #fff;

@@ -25,9 +25,10 @@
 }
 
 .image-side {
-  flex: 0 0 110px;
+  flex: 0 0 188px;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 
   // Gradients matching your screenshots exactly
   &.rarity-5 {
