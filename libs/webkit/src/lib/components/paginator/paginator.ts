@@ -34,9 +34,9 @@ export class PaginatorComponent {
   sizeSignal = computed(() => this.size().toString());
 
   pageSizeOptions = [
-    { id: '10', name: '10' },
-    { id: '20', name: '20' },
-    { id: '50', name: '50' },
+    { id: '9', name: '9' },
+    { id: '18', name: '18' },
+    { id: '45', name: '45' },
   ];
 
   handleSizeChange(newSize: string) {
