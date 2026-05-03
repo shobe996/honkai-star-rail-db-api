@@ -1,1 +1,75 @@
-<p>ListComponent works!</p>
+<div class="page-container">
+  <lib-filter-bar (resetFilters)="resetFilters()">
+    <lib-input
+      placeholder="Search name..."
+      [formField]="searchForm.name"
+    />
+  
+    <lib-select
+      [options]="paths"
+      labelKey="name"
+      valueKey="name"
+      label="Paths"
+      [formField]="searchForm.path"
+    />
+  
+    <lib-select
+      [options]="rarities"
+      labelKey="name"
+      valueKey="name"
+      label="Rarities"
+      [formField]="searchForm.rarity"
+    />
+
+  </lib-filter-bar>
+  <div class="card-list">
+    @for (lightCone of viewModel().lightCones.data; track lightCone.id) {
+    <lib-card
+      [rarityValue]="lightCone.rarity.value"
+      [image]="lightCone.icon_url"
+      [name]="lightCone.name"
+      [starIcon]="lightCone.rarity.icon"
+      (imageClick)="toDetails(lightCone.id)"
+      (nameClick)="toDetails(lightCone.id)"
+    >
+      <div badges class="badge-container">
+        <lib-badge
+          [icon]="lightCone.path.icon_url"
+          [label]="lightCone.path.name"
+        />
+      </div>
+  
+      <div stats class="stats-section">
+        <div class="stats-header">
+          <span class="label-caps">BASE STATS</span>
+          <button class="toggle-btn" (click)="toggleStats(lightCone.id)">
+            LVL TOGGLE
+          </button>
+        </div>
+        <div class="stats-grid">
+          @let s = getStats(lightCone, lightCone.id);
+          <div class="stat-pill">
+            <span>HP</span> <strong>{{ s.base_hp }}</strong>
+          </div>
+          <div class="stat-pill">
+            <span>ATK</span> <strong>{{ s.base_atk }}</strong>
+          </div>
+          <div class="stat-pill">
+            <span>DEF</span> <strong>{{ s.base_def }}</strong>
+          </div>
+        </div>
+      </div>
+  
+    </lib-card>
+    }
+  </div>
+  <lib-paginator
+    [total]="viewModel().lightCones.total"
+    [size]="viewModel().lightCones.size"
+    [page]="viewModel().lightCones.page"
+    [hasMore]="viewModel().lightCones.hasMore"
+    label="Light Cones"
+    (pageChange)="goToPage($event)"
+    (sizeChange)="updatePageSize($event)"
+  />
+</div>
