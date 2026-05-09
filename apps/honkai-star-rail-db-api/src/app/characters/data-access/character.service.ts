@@ -29,4 +29,9 @@ export class CharacterService {
     const characters = characterFilters.byAttributes(criteria, page, size);
     return of(characters);
   }
+
+  getById(id: number): Observable<Character | null> {
+    const character = characterFilters.byId(id);
+    return of(character);
+  }
 }
