@@ -10,4 +10,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 export class BadgeComponent {
   icon = input.required<string>();
   label = input.required<string>();
+
+  variant = input<'mini' | 'detail'>('mini');
 }
