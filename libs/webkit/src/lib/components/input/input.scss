@@ -25,7 +25,7 @@
 
     &:focus {
       border-color: hsr.$hsr-gold;
-      box-shadow: 0 0 8px rgba(246, 196, 56, 0.2);
+      box-shadow: 0 0 8px hsr.$hsr-shadow;
     }
 
     &:disabled {
