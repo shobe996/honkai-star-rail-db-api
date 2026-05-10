@@ -53,32 +53,32 @@
   // --- VARIANT: NAV (The Paginator style) ---
   &.nav {
     background: transparent;
-  color: hsr.$hsr-color;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 6px 16px;
-  border-radius: 2px;
-  font-family: hsr.$font-display;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 40px;
-  justify-content: center;
-  text-transform: uppercase;
+    color: hsr.$hsr-color;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-family: hsr.$font-display;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 40px;
+    justify-content: center;
+    text-transform: uppercase;
 
-   .arrow {
-    font-size: 1.1rem;
-    line-height: 1;
-  }
+    .arrow {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
 
-  &:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    filter: grayscale(1);
-  }
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
 
     &:hover:not(:disabled) {
       background: hsr.$hsr-gold;
@@ -106,6 +106,28 @@
       color: hsr.$hsr-color;
       border-color: hsr.$hsr-gold;
       background: #252932;
+    }
+  }
+
+  &.round {
+    background: #222;
+    border: none;
+    color: hsr.$hsr-label;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Arial;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    padding: 0;
+    &.active {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-black;
     }
   }
 }
