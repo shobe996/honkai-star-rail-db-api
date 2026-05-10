@@ -25,6 +25,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/character-search-form.model';
 import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-component',
@@ -45,6 +46,7 @@ export class ListComponent {
   private _characterListFacadeSerice = inject(CharacterListFacadeService);
   private _currentPage = signal(1);
   private _currentSize = signal(9);
+  private _router = inject(Router);
 
   searchFormModel = signal<CharacterSearchForm>({
     name: '',
@@ -60,7 +62,8 @@ export class ListComponent {
   rarities = characterRarityFilters.all();
   factions = factionFilters.all();
   toDetails(id: number) {
-    console.log(id);
+    this._router.navigate(['character','detail', id]);
+
   }
   statsToggleState = new Map<number, 'level1' | 'level80'>();
   viewModel = toSignal(this._characterListFacadeSerice.viewModel$, {

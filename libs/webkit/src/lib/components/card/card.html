@@ -4,6 +4,8 @@
       [src]="image()"
       [alt]="name()"
       tabindex="0"
+      (keyup.enter)="imageClick.emit()"
+      (click)="imageClick.emit()"
     />
     <!-- </button> -->
   </div>
