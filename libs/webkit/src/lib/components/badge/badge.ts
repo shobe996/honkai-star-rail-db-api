@@ -8,8 +8,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgeComponent {
-  icon = input.required<string>();
-  label = input.required<string>();
+  icon = input.required<string | undefined>();
+  label = input.required<string | undefined>();
 
   variant = input<'mini' | 'detail'>('mini');
 }

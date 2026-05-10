@@ -19,8 +19,10 @@
     padding: 8px 16px;
     border-bottom: 2px solid hsr.$hsr-gold;
     border-radius: 4px; // Matches old detail spec
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
     img { width: 24px; height: 24px; margin-right: 10px; }
-    span { font-size: 14px; }
   }
 
   span {
