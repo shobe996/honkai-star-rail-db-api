@@ -6,6 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
 import { BadgeComponent, CardComponent, FilterBarComponent, InputComponent, PaginatorComponent, SelectComponent } from '@honkai-star-rail-db/webkit';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-component',
@@ -24,6 +25,7 @@ import { BadgeComponent, CardComponent, FilterBarComponent, InputComponent, Pagi
 })
 export class ListComponent {
   private _lightConeListFacadeSerice = inject(LightConeListFacadeService);
+  private _router = inject(Router);
   private _currentPage = signal(1);
   private _currentSize = signal(9);
 
@@ -38,7 +40,7 @@ export class ListComponent {
   paths = pathFilters.all();
   rarities = lightConeRarityFilters.all();
   toDetails(id: number) {
-    console.log(id);
+    this._router.navigate(['light-cone','detail', id]);
   }
   statsToggleState = new Map<number, 'level1' | 'level80'>();
   viewModel = toSignal(this._lightConeListFacadeSerice.viewModel$, {

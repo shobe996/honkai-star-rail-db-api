@@ -9,6 +9,11 @@ export const lightConeRoutes: Route[] = [
         loadComponent: () =>
           import('../feature/list/list').then((c) => c.ListComponent),
       },
+      {
+        path: 'detail/:id',
+        loadComponent: () =>
+          import('../feature/detail/detail').then((c) => c.DetailComponent),
+      },
     ],
   },
 ];

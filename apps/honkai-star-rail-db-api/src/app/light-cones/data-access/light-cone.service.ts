@@ -29,4 +29,9 @@ export class LightConeService {
     const lightCones = lightConeFilters.byAttributes(criteria, page, size);
     return of(lightCones);
   }
+
+  getById(id: number): Observable<LightCone | null> {
+      const lightCone = lightConeFilters.byId(id);
+      return of(lightCone);
+    }
 }
