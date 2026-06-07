@@ -63,7 +63,6 @@ export class ListComponent {
   factions = factionFilters.all();
   toDetails(id: number) {
     this._router.navigate(['character','detail', id]);
-
   }
   statsToggleState = new Map<number, 'level1' | 'level80'>();
   viewModel = toSignal(this._characterListFacadeSerice.viewModel$, {
