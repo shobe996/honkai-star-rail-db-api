@@ -15,3 +15,5 @@ export * from './lib/components/card/card';
 export * from './lib/components/paginator/paginator';
 
 export * from './lib/components/filter-bar/filter-bar';
+
+export * from './lib/components/navbar/navbar';
