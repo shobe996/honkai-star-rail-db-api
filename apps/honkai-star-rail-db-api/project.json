@@ -20,7 +20,10 @@
             "input": "apps/honkai-star-rail-db-api/public"
           }
         ],
-        "styles": ["apps/honkai-star-rail-db-api/src/styles.scss"]
+        "styles": ["apps/honkai-star-rail-db-api/src/styles.scss"],
+        "stylePreprocessorOptions": {
+          "includePaths": ["libs/webkit/src/lib/styles"]
+        }
       },
       "configurations": {
         "production": {

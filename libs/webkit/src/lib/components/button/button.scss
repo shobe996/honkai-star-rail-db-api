@@ -1,0 +1,133 @@
+@use '../../styles/theme' as hsr;
+
+:host {
+  display: inline-block;
+}
+
+.hsr-button-base {
+  @extend %font-hsr-style; // Uses Oswald from your spec
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+
+  align-items: center;
+  border-radius: 2px;
+  background: transparent;
+  border: 1px solid transparent;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    filter: grayscale(1);
+  }
+
+  // --- VARIANT: PRIMARY (Solid Gold) ---
+  &.primary {
+    background: hsr.$hsr-gold;
+    color: hsr.$hsr-bg-dark;
+    border-color: hsr.$hsr-gold;
+    padding: 8px 20px;
+
+    &:hover:not(:disabled) {
+      background: hsr.$hsr-color;
+      border-color: hsr.$hsr-color;
+    }
+  }
+
+  // --- VARIANT: RESET (The Gold Border style) ---
+  &.reset {
+    color: hsr.$hsr-gold;
+    border: 1px solid hsr.$hsr-gold;
+    border-radius: 4px;
+    height: 40px;
+    padding: 8px 16px;
+
+    &:hover:not(:disabled) {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-bg-dark;
+    }
+  }
+
+  // --- VARIANT: NAV (The Paginator style) ---
+  &.nav {
+    background: transparent;
+    color: hsr.$hsr-color;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 16px;
+    border-radius: 2px;
+    font-family: hsr.$font-display;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 40px;
+    justify-content: center;
+    text-transform: uppercase;
+
+    .arrow {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+
+    &:hover:not(:disabled) {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-black;
+      border-color: hsr.$hsr-gold;
+    }
+
+    // Special border for first/last page buttons in the right image
+    &.edge-nav {
+      border-color: rgba(246, 196, 56, 0.3);
+    }
+  }
+
+  // --- VARIANT: GHOST / TOGGLE (The "LVL Toggle" style) ---
+  &.ghost {
+    background: hsr.$hsr-bg-element;
+    color: hsr.$hsr-ghost;
+    border: 1px solid #333;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-family: hsr.$font-body;
+
+    &:hover:not(:disabled) {
+      color: hsr.$hsr-color;
+      border-color: hsr.$hsr-gold;
+      background: #252932;
+    }
+  }
+
+  &.round {
+    background: #222;
+    border: none;
+    color: hsr.$hsr-label;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 700;
+    font-family: Arial;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    padding: 0;
+    &.active {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-black;
+    }
+  }
+}

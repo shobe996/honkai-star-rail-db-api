@@ -1,0 +1,34 @@
+@use '../../styles/theme' as hsr;
+
+.hsr-badge {
+  display: flex;
+  align-items: center;
+  background: hsr.$hsr-bg-element; // Use your standard element bg
+  border-radius: 2px;
+  
+  // Default/Mini (Card Style)
+  &.mini {
+    padding: 3px 8px;
+    border-left: 2px solid hsr.$hsr-gold;
+    img { width: 16px; height: 16px; margin-right: 5px; }
+    span { font-size: 11px; }
+  }
+
+  // Detail Style (Hoyo-Badge from Old Details)
+  &.detail {
+    padding: 8px 16px;
+    border-bottom: 2px solid hsr.$hsr-gold;
+    border-radius: 4px; // Matches old detail spec
+    margin-right: 10px;
+    display: inline-flex;
+    align-items: center;
+    img { width: 24px; height: 24px; margin-right: 10px; }
+  }
+
+  span {
+    color: hsr.$hsr-white;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: hsr.$font-body; // Ensure Roboto Condensed
+  }
+}

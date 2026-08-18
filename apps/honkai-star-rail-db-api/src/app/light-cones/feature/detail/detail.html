@@ -1,0 +1,78 @@
+<div class="page-wrapper">
+  <div class="detail-container">
+    <div class="artwork-viewport">
+      <img
+        [src]="viewModel().lightCone?.icon_url"
+        class="splash-art"
+        [alt]="viewModel().lightCone?.name"
+      />
+      <div class="name-overlay-bg">{{ viewModel().lightCone?.name }}</div>
+    </div>
+
+    <div class="info-pane">
+      <header class="char-header">
+        <div class="rarity-row">{{ viewModel().lightCone?.rarity?.icon }}</div>
+        <h1 class="bold-name">{{ viewModel().lightCone?.name }}</h1>
+
+        <div class="badge-row">
+          <lib-badge
+            [icon]="viewModel().lightCone?.path?.icon_url"
+            [label]="viewModel().lightCone?.path?.name"
+            variant="detail"
+          ></lib-badge>
+        </div>
+      </header>
+
+      <div class="description-scroll">
+        <div
+          [innerHTML]="viewModel().lightCone?.effect"
+          class="flavor-text"
+        ></div>
+
+      <section class="stats-panel">
+        <div class="stats-header">
+          <span class="label">BASE STATS</span>
+          <div class="level-selector">
+            <lib-button
+              variant="round"
+              [active]="currentLevel === 'level1'"
+              (click)="toggleLevel('level1')"
+            >
+              01
+            </lib-button>
+
+            <lib-button
+              variant="round"
+              [active]="currentLevel === 'level80'"
+              (click)="toggleLevel('level80')"
+            >
+              80
+            </lib-button>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-box">
+            <span class="stat-label">HP</span>
+            <span class="stat-value">{{ activeStats?.base_hp }}</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">ATK</span>
+            <span class="stat-value">{{ activeStats?.base_atk }}</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">DEF</span>
+            <span class="stat-value">{{ activeStats?.base_def }}</span>
+          </div>
+        </div>
+        <!-- <lib-stats-header 
+          label="BASE STATS" 
+          [options]="['01', '80']" 
+          (select)="toggleLevel($event)">
+        </lib-stats-header>
+        
+        <lib-stat-grid [stats]="activeStats"></lib-stat-grid> -->
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'theme' as hsr;
+
+.stats-section {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: auto; 
+
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .label-caps {
+      font-size: 9px;
+      color: hsr.$hsr-label;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .toggle-btn {
+      background: hsr.$hsr-bg-element;
+      color: hsr.$hsr-ghost;
+      border: 1px solid #333;
+      font-size: 9px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-family: hsr.$font-body;
+
+      &:hover {
+        color: hsr.$hsr-color;
+        border-color: hsr.$hsr-gold;
+        background: #252932;
+      }
+    }
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .stat-pill {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 12px;
+    padding-bottom: 2px;
+
+    span {
+      color: #888;
+      
+    }
+
+    strong {
+      color: hsr.$hsr-gold;
+      font-family: hsr.$font-display;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+  }
+}
+
+.badge-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  margin-top: 8px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; // This kills the "Main" scrollbars
+}

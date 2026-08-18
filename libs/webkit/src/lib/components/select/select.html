@@ -1,0 +1,17 @@
+<div class="hsr-input-wrapper">
+
+  <select
+    [id]="selectId"
+    [value]="value()"
+    [disabled]="disabled()"
+    (change)="onSelectionChange($event)"
+    class="hsr-select"
+  >
+    @if (label()) {
+      <option value="">All {{ label() }}</option>
+    }
+    @for (opt of options(); track getOptionValue(opt)) {
+    <option [value]="getOptionValue(opt)">{{ getOptionLabel(opt) }}</option>
+    }
+  </select>
+</div>

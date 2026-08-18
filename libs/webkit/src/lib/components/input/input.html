@@ -1,0 +1,14 @@
+<div class="hsr-input-wrapper">
+  @if (label()) {
+    <label class="label-caps" [for]="inputId">{{ label() }}</label>
+  }
+  
+  <input
+    [id]="inputId"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    [disabled]="disabled()"
+    (input)="handleInput($event)"
+  />
+</div>

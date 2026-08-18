@@ -1,0 +1,24 @@
+<nav class="hsr-navbar" [class.vertical]="orientation() === 'vertical'" [class.horizontal]="orientation() === 'horizontal'">
+  @if (logoUrl()) {
+    <div class="nav-brand">
+      <img [src]="logoUrl()" alt="Brand Logo" class="brand-logo" />
+    </div>
+  }
+
+  <ul class="nav-list">
+    @for (item of items(); track item.link) {
+      <li class="nav-item">
+        <a [routerLink]="item.link" routerLinkActive="active" class="nav-link">
+          @if (item.icon) {
+            <img [src]="item.icon" [alt]="item.label" class="nav-icon" />
+          }
+          <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+
+  <div class="nav-footer">
+    <ng-content></ng-content>
+  </div>
+</nav>
