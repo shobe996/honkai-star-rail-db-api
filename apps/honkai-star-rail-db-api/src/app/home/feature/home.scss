@@ -1,0 +1,148 @@
+@use '../styles/theme' as hsr;
+
+:host {
+  display: block;
+  height: 100%;
+  overflow-y: auto; // Enables vertical scrolling inside the component boundary
+}
+
+.home-container {
+  min-height: 100vh;
+  background: #050505;
+  color: #fff;
+  padding: 3rem;
+  box-sizing: border-box;
+  overflow-y: auto; // Ensures page can scroll when content exceeds viewport
+}
+
+.home-header {
+  margin-bottom: 3rem;
+
+  .page-title {
+    font-family: hsr.$font-display;
+    font-size: 3.5rem;
+    color: hsr.$hsr-gold;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    color: hsr.$hsr-ghost;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+}
+
+.teams-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  max-width: 1200px; // Limits maximum card width
+  margin: 0 auto;    // Centers the container on large screens
+}
+
+.team-card {
+  background: #0d0e12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+  .team-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    .team-name {
+      font-family: hsr.$font-display;
+      font-size: 1.8rem;
+      margin: 0;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .team-desc {
+      color: #666;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.members-grid {
+  display: grid;
+  // Use 1fr so all 4 slots expand evenly across the card container width
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.character-slot {
+  background: #15171c;
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  &.five-star .portrait-wrapper {
+    background: linear-gradient(180deg, #a35d55, hsr.$rarity-5);
+    border-bottom: 2px solid hsr.$hsr-gold;
+  }
+
+  &.four-star .portrait-wrapper {
+    background: linear-gradient(180deg, #3f4064, hsr.$rarity-4);
+    border-bottom: 2px solid #9a6ade;
+  }
+
+  .portrait-wrapper {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+
+    .character-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // Fills slot crisp without distorting aspect ratio
+      image-rendering: -webkit-optimize-contrast; // Enhances sharpness on scaled assets
+      transition: transform 0.25s ease;
+    }
+  }
+
+  .character-name {
+    font-family: hsr.$font-display;
+    font-size: 1.1rem;
+    color: hsr.$hsr-label;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    border-color: hsr.$hsr-gold;
+    box-shadow: 0 8px 20px rgba(246, 196, 56, 0.15);
+
+    .portrait-wrapper .character-icon {
+      transform: scale(1.08);
+    }
+
+    .character-name {
+      color: #fff;
+    }
+  }
+}

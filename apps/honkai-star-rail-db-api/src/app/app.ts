@@ -12,6 +12,10 @@ export class App {
 
   navLinks: NavItem[]=[
     {
+      label: 'Home',
+      link: 'home'
+    },
+    {
       label: 'Characters',
       link: 'character/list'
     },
