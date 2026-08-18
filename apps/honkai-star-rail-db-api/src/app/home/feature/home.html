@@ -1,0 +1,38 @@
+<div class="home-container">
+  <header class="home-header">
+    <h1 class="page-title">CHARACTER TEAMS</h1>
+    <p class="subtitle">Select a character to view detailed stats.</p>
+  </header>
+
+  <section class="teams-wrapper">
+    @for (team of teams(); track team.id) {
+      <div class="team-card">
+        <div class="team-header">
+          <h2 class="team-name">{{ team.name }}</h2>
+          @if (team.description) {
+            <span class="team-desc">{{ team.description }}</span>
+          }
+        </div>
+
+        <div class="members-grid">
+          @for (member of team.members; track member.id) {
+            <div 
+              class="character-slot" 
+              [class.five-star]="member.rarity.value === 5"
+              [class.four-star]="member.rarity.value === 4"
+              (click)="navigateToCharacter(member.id)"
+              role="button"
+              tabindex="0">
+              
+              <div class="portrait-wrapper">
+                <img [src]="member.icon_url" [alt]="member.name" class="character-icon" />
+              </div>
+              
+              <span class="character-name">{{ member.name }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </section>
+</div>
