@@ -1,5 +1,6 @@
 <div class="page-wrapper">
   <div class="detail-container">
+    <!-- Artwork Area -->
     <div class="artwork-viewport">
       <img
         [src]="viewModel().lightCone?.full_artwork_url"
@@ -9,6 +10,7 @@
       <div class="name-overlay-bg">{{ viewModel().lightCone?.name }}</div>
     </div>
 
+    <!-- Info Pane -->
     <div class="info-pane">
       <header class="char-header">
         <div class="rarity-row">{{ viewModel().lightCone?.rarity?.icon }}</div>
@@ -23,12 +25,15 @@
         </div>
       </header>
 
+      <!-- Description Section -->
       <div class="description-scroll">
         <div
           [innerHTML]="viewModel().lightCone?.effect"
           class="flavor-text"
         ></div>
+      </div>
 
+      <!-- Base Stats Section (Properly closed outside description-scroll) -->
       <section class="stats-panel">
         <div class="stats-header">
           <span class="label">BASE STATS</span>
@@ -51,7 +56,7 @@
           </div>
         </div>
 
-        <div class="stat-grid">
+        <div class="stat-grid-3col">
           <div class="stat-box">
             <span class="stat-label">HP</span>
             <span class="stat-value">{{ activeStats?.base_hp }}</span>
@@ -65,13 +70,6 @@
             <span class="stat-value">{{ activeStats?.base_def }}</span>
           </div>
         </div>
-        <!-- <lib-stats-header 
-          label="BASE STATS" 
-          [options]="['01', '80']" 
-          (select)="toggleLevel($event)">
-        </lib-stats-header>
-        
-        <lib-stat-grid [stats]="activeStats"></lib-stat-grid> -->
       </section>
     </div>
   </div>

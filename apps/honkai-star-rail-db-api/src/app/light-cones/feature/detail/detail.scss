@@ -1,9 +1,15 @@
 @use 'theme' as hsr;
 
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .page-wrapper {
   background: hsr.$hsr-bg-dark;
   height: 100vh;
-  width: 100vw;
+  width: 100%; // Fixes overflow past vertical sidebar
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
@@ -28,13 +34,13 @@
   overflow: hidden;
 
   .splash-art {
-    max-height: 90%;
+    max-height: 85%;
     width: auto;
     height: auto;
-    max-width: 95%;
+    max-width: 90%;
     object-fit: contain;
     z-index: 2;
-    filter: drop-shadow(0 0 50px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.8));
   }
 
   .name-overlay-bg {
@@ -43,10 +49,11 @@
     left: -20px;
     font-size: 15rem;
     font-family: hsr.$font-display;
-    color: rgba(255,255,255,0.03);
+    color: rgba(255, 255, 255, 0.03);
     text-transform: uppercase;
     white-space: nowrap;
     z-index: 1;
+    pointer-events: none;
   }
 }
 
@@ -55,12 +62,12 @@
   height: 100%;
   background: hsr.$hsr-card-bg;
   border-left: 1px solid hsr.$hsr-shadow;
-  padding: 3rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .rarity-row {
@@ -69,7 +76,7 @@
 
 .bold-name {
   font-family: hsr.$font-display;
-  font-size: 4.5rem;
+  font-size: 4rem;
   text-transform: uppercase;
   margin: 0.5rem 0 1.5rem 0;
   line-height: 0.9;
@@ -78,7 +85,7 @@
 }
 
 .description-scroll {
-  margin: 2rem 0;
+  margin: 1.5rem 0;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -89,67 +96,62 @@
   &::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
   .flavor-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #bbb;
     line-height: 1.6;
     font-style: italic;
-    margin-bottom: 1.5rem;
   }
 }
 
-.faction-row {
-  margin-top: auto;
-  padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  .faction-label {
-    color: hsr.$hsr-label;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .faction-value {
-    color: hsr.$hsr-gold;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-family: hsr.$font-display;
-  }
-}
-
+/* --- STATS PANEL (3-Column Layout for Light Cones) --- */
 .stats-panel {
   background: #15171c;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  
+  margin-top: auto; // Pins stats section to the bottom
+
   .stats-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    .label { color: hsr.$hsr-label-2; font-weight: 700; letter-spacing: 2px; }
+    margin-bottom: 1.2rem;
+
+    .label {
+      color: hsr.$hsr-label-2;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.85rem;
+    }
   }
 }
 
-.stat-grid {
+// 3-Column grid perfectly spaces HP, ATK, and DEF in a single row
+.stat-grid-3col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
 .stat-box {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  .stat-label { color: #777; font-weight: 700; }
-  .stat-value { font-family: hsr.$font-display; font-size: 1.8rem; color: hsr.$hsr-gold; }
+  align-items: baseline;
+  padding: 8px 0;
+
+  .stat-label {
+    color: #777;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .stat-value {
+    font-family: hsr.$font-display;
+    font-size: 1.6rem;
+    color: hsr.$hsr-gold;
+    line-height: 1;
+  }
 }
 
 .level-selector {
