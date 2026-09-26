@@ -22,6 +22,10 @@ export class App {
     {
       label: 'Light Cones',
       link: 'light-cone/list'
+    },
+    {
+      label: 'Cavern Relics',
+      link: 'cavern-relic/list'
     }
   ];
 }

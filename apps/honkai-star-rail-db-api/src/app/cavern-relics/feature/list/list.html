@@ -1,0 +1,50 @@
+<div class="page-container">
+  <lib-filter-bar (resetFilters)="resetFilters()">
+    <lib-input
+      placeholder="Search relic name..."
+      [formField]="searchForm.name"
+    />
+  </lib-filter-bar>
+
+  <div class="card-list">
+    @for (relic of viewModel().cavernRelics.data; track relic.id) {
+    <lib-card
+      [rarityValue]="5"
+      [image]="relic.icons.icon_url"
+      [name]="relic.name"
+      (imageClick)="toDetails(relic.id)"
+      (nameClick)="toDetails(relic.id)"
+    >
+      <div badges class="piece-icons-container">
+        <img [src]="relic.icons.head_icon_url" alt="Head" class="piece-icon" title="Head" />
+        <img [src]="relic.icons.hand_icon_url" alt="Hands" class="piece-icon" title="Hands" />
+        <img [src]="relic.icons.body_icon_url" alt="Body" class="piece-icon" title="Body" />
+        <img [src]="relic.icons.feet_icon_url" alt="Feet" class="piece-icon" title="Feet" />
+      </div>
+
+      <div stats class="effects-section">
+        <div class="effect-box">
+          <span class="effect-label">2-PIECE SET</span>
+          <p class="effect-text">{{ relic.two_set_effect }}</p>
+        </div>
+        <div class="effect-box">
+          <span class="effect-label">4-PIECE SET</span>
+          <p class="effect-text">{{ relic.four_set_effect }}</p>
+        </div>
+      </div>
+
+      <div footer class="relic-footer">{{ relic.set }}</div>
+    </lib-card>
+    }
+  </div>
+
+  <lib-paginator
+    [total]="viewModel().cavernRelics.total"
+    [size]="viewModel().cavernRelics.size"
+    [page]="viewModel().cavernRelics.page"
+    [hasMore]="viewModel().cavernRelics.hasMore"
+    label="Cavern Relics"
+    (pageChange)="goToPage($event)"
+    (sizeChange)="updatePageSize($event)"
+  />
+</div>
