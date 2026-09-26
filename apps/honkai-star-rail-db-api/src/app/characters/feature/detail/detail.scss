@@ -1,9 +1,15 @@
 @use 'theme' as hsr;
 
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 .page-wrapper {
   background: hsr.$hsr-bg-dark;
   height: 100vh;
-  width: 100vw;
+  width: 100%; // Use 100% instead of 100vw to avoid horizontal overflow next to the sidebar
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
@@ -34,7 +40,7 @@
     max-width: 95%;
     object-fit: contain;
     z-index: 2;
-    filter: drop-shadow(0 0 50px rgba(0,0,0,0.8));
+    filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.8));
   }
 
   .name-overlay-bg {
@@ -43,10 +49,11 @@
     left: -20px;
     font-size: 15rem;
     font-family: hsr.$font-display;
-    color: rgba(255,255,255,0.03);
+    color: rgba(255, 255, 255, 0.03);
     text-transform: uppercase;
     white-space: nowrap;
     z-index: 1;
+    pointer-events: none;
   }
 }
 
@@ -55,12 +62,12 @@
   height: 100%;
   background: hsr.$hsr-card-bg;
   border-left: 1px solid hsr.$hsr-shadow;
-  padding: 3rem;
+  padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: -20px 0 50px rgba(0,0,0,0.5);
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto; // Enables scrolling on smaller screens or taller content
 }
 
 .rarity-row {
@@ -69,7 +76,7 @@
 
 .bold-name {
   font-family: hsr.$font-display;
-  font-size: 4.5rem;
+  font-size: 4rem;
   text-transform: uppercase;
   margin: 0.5rem 0 1.5rem 0;
   line-height: 0.9;
@@ -77,19 +84,18 @@
   letter-spacing: -1px;
 }
 
+.badge-row {
+  display: flex;
+  gap: 1rem;
+}
+
 .description-scroll {
-  margin: 2rem 0;
-  flex-grow: 1;
+  margin: 1.5rem 0;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  padding-right: 10px;
-
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
 
   .flavor-text {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #bbb;
     line-height: 1.6;
     font-style: italic;
@@ -98,7 +104,7 @@
 }
 
 .faction-row {
-  margin-top: auto;
+  margin-top: 1rem;
   padding: 10px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
@@ -122,34 +128,55 @@
   }
 }
 
+/* --- STATS PANEL & GRID FIXES --- */
 .stats-panel {
   background: #15171c;
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 8px;
-  
+  margin-top: auto; // Anchors to bottom of info-pane
+
   .stats-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    .label { color: hsr.$hsr-label-2; font-weight: 700; letter-spacing: 2px; }
+    margin-bottom: 1.2rem;
+
+    .label {
+      color: hsr.$hsr-label-2;
+      font-weight: 700;
+      letter-spacing: 2px;
+      font-size: 0.85rem;
+    }
   }
 }
 
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  column-gap: 2.5rem; // Expands space between the HP/DEF column and ATK/SPD column
+  row-gap: 1rem;
 }
 
 .stat-box {
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  .stat-label { color: #777; font-weight: 700; }
-  .stat-value { font-family: hsr.$font-display; font-size: 1.8rem; color: hsr.$hsr-gold; }
+  align-items: baseline; // Aligns text baselines cleanly
+  padding: 8px 0;
+
+  .stat-label {
+    color: #777;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .stat-value {
+    font-family: hsr.$font-display;
+    font-size: 1.6rem;
+    color: hsr.$hsr-gold;
+    line-height: 1;
+  }
 }
 
 .level-selector {

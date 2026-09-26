@@ -1,5 +1,6 @@
 <div class="page-wrapper">
   <div class="detail-container">
+    <!-- Left Visual Area -->
     <div class="artwork-viewport">
       <img
         [src]="viewModel().character?.splash_art_url"
@@ -9,6 +10,7 @@
       <div class="name-overlay-bg">{{ viewModel().character?.name }}</div>
     </div>
 
+    <!-- Right Information Panel -->
     <div class="info-pane">
       <header class="char-header">
         <div class="rarity-row">{{ viewModel().character?.rarity?.icon }}</div>
@@ -36,13 +38,11 @@
 
         <div class="faction-row">
           <span class="faction-label">AFFILIATION</span>
-          <span class="faction-value"
-            >{{ viewModel().character?.faction?.name }}</span
-          >
+          <span class="faction-value">{{ viewModel().character?.faction?.name }}</span>
         </div>
-        <!-- <lib-info-row label="AFFILIATION" [value]="viewModel().character?.faction?.name"></lib-info-row> -->
       </div>
 
+      <!-- Stats Panel -->
       <section class="stats-panel">
         <div class="stats-header">
           <span class="label">BASE STATS</span>
@@ -66,30 +66,30 @@
         </div>
 
         <div class="stat-grid">
+          <!-- Column 1: HP & DEF -->
           <div class="stat-box">
             <span class="stat-label">HP</span>
             <span class="stat-value">{{ activeStats?.base_hp }}</span>
           </div>
+
+          <!-- Column 2: ATK -->
           <div class="stat-box">
             <span class="stat-label">ATK</span>
             <span class="stat-value">{{ activeStats?.base_atk }}</span>
           </div>
+
+          <!-- Column 1: DEF -->
           <div class="stat-box">
             <span class="stat-label">DEF</span>
             <span class="stat-value">{{ activeStats?.base_def }}</span>
           </div>
+
+          <!-- Column 2: SPD -->
           <div class="stat-box">
             <span class="stat-label">SPD</span>
             <span class="stat-value">{{ activeStats?.base_speed }}</span>
           </div>
         </div>
-        <!-- <lib-stats-header 
-          label="BASE STATS" 
-          [options]="['01', '80']" 
-          (select)="toggleLevel($event)">
-        </lib-stats-header>
-        
-        <lib-stat-grid [stats]="activeStats"></lib-stat-grid> -->
       </section>
     </div>
   </div>
