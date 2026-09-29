@@ -28,6 +28,7 @@ export class ListComponent {
 
   searchFormModel = signal<CavernRelicSearchForm>({
     name: '',
+    effect: '',
   });
 
   searchForm = form(this.searchFormModel);
@@ -46,15 +47,13 @@ export class ListComponent {
 
   constructor() {
     effect(() => {
-      const { name } = this.searchForm().value();
+      const { name, effect } = this.searchForm().value();
 
-      // this._cavernRelicListFacadeService.filter(
-      //   { name: name ?? '' },
-      //   this._currentPage(),
-      //   this._currentSize()
-      // );
-
-      this._cavernRelicListFacadeService.getAll();
+      this._cavernRelicListFacadeService.filter(
+        { name: name ?? '', effect: effect ?? '' },
+        this._currentPage(),
+        this._currentSize()
+      );
     });
   }
 
@@ -74,6 +73,7 @@ export class ListComponent {
   resetFilters() {
     const initial: CavernRelicSearchForm = {
       name: '',
+      effect: '',
     };
     this.searchForm().reset(initial);
     this._currentPage.set(1);
