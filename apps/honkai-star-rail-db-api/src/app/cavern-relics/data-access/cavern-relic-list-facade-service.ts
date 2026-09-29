@@ -39,11 +39,11 @@ export class CavernRelicListFacadeService {
     });
   }
 
-  // filter(criteria: CavernRelicSearchCriteria, page: number, size: number): void {
-  //   this._cavernRelicService.filter(criteria, page, size).subscribe({
-  //     next: (value) => {
-  //       this._cavernRelicSubject$.next(value);
-  //     },
-  //   });
-  // }
+  filter(criteria: CavernRelicSearchCriteria, page: number, size: number): void {
+    this._cavernRelicService.filter(criteria, page, size).subscribe({
+      next: (value) => {
+        this._cavernRelicSubject$.next(value);
+      },
+    });
+  }
 }
