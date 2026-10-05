@@ -13,9 +13,8 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "baseUrl": ".",
     "paths": {
-      "@honkai-star-rail-db/webkit": ["libs/webkit/src/index.ts"]
+      "@honkai-star-rail-db/webkit": ["./libs/webkit/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
