@@ -50,6 +50,7 @@ export class ListComponent {
 
   searchFormModel = signal<CharacterSearchForm>({
     name: '',
+    description: '',
     path: '',
     type: '',
     rarity: '',
@@ -79,10 +80,11 @@ export class ListComponent {
 
   constructor() {
     effect(() => {
-      const { name, path, type, rarity, faction } = this.searchForm().value();
+      const { name, description, path, type, rarity, faction } = this.searchForm().value();
 
       const criteria: CharacterSearchCriteria = {
         name: name ?? '',
+        description: description ?? '',
         path: path ?? '',
         type: type ?? '',
         faction: faction ?? '',
@@ -122,6 +124,7 @@ export class ListComponent {
   resetFilters() {
     const initial: CharacterSearchForm = {
       name: '',
+      description: '',
       path: '',
       type: '',
       rarity: '',
