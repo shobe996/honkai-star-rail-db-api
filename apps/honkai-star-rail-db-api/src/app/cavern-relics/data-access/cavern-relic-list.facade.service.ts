@@ -5,9 +5,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { CavernRelicSearchCriteria } from 'honkai-star-rail-db/dist/types/cavern-relics/cavern-relic-criteria.types';
 import { CavernRelicService } from './cavern-relic.service';
 
-@Service({
-  providedIn: 'root',
-})
+@Service()
 export class CavernRelicListFacadeService {
   private _cavernRelicService = inject(CavernRelicService);
 
