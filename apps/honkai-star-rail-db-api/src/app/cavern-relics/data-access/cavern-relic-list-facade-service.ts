@@ -3,7 +3,7 @@ import { CavernRelic } from 'honkai-star-rail-db';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { CavernRelicSearchCriteria } from 'honkai-star-rail-db/dist/types/cavern-relics/cavern-relic-criteria.types';
-import { CavernRelicService } from './cavern-relic-service';
+import { CavernRelicService } from './cavern-relic.service';
 
 @Injectable({
   providedIn: 'root',
