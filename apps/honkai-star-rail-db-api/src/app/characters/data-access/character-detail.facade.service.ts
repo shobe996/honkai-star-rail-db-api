@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { CharacterService } from './character.service';
 import { Character } from 'honkai-star-rail-db';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class CharacterDetailFacadeService {
   private _characterService = inject(CharacterService);
 
