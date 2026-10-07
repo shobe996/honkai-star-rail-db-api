@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { LightCone, lightConeFilters } from 'honkai-star-rail-db';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones/light-cone-criteria.types';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class LightConeService {
   getAll(): Observable<PaginatedResult<LightCone>> {
     const lightCones = lightConeFilters.all();
