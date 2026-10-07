@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CavernRelicListFacadeService } from './cavern-relic-list-facade-service';
+import { CavernRelicListFacadeService } from './cavern-relic-list.facade.service';
 
 describe('CavernRelicListFacadeService', () => {
   let service: CavernRelicListFacadeService;
