@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CharacterListFacadeService } from './character-list-facade.service';
+import { CharacterListFacadeService } from './character-list.facade.service';
 
 describe('CharacterListFacadeService', () => {
   let service: CharacterListFacadeService;

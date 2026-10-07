@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LightConeListFacadeService } from './light-cone-list-facade.service';
+import { LightConeListFacadeService } from './light-cone-list.facade.service';
 
 describe('LightConeFacade', () => {
   let service: LightConeListFacadeService;

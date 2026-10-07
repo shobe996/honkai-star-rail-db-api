@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
-import { LightConeListFacadeService } from '../../data-access/light-cone-list-facade.service';
+import { LightConeListFacadeService } from '../../data-access/light-cone-list.facade.service';
 import { LightConeSearchForm } from '../../data-access/light-cone-search-form.model';
 import { LightCone, lightConeRarityFilters, pathFilters } from 'honkai-star-rail-db';
 import { toSignal } from '@angular/core/rxjs-interop';
