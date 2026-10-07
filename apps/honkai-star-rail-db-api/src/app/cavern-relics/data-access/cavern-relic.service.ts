@@ -4,9 +4,7 @@ import { CavernRelicSearchCriteria } from 'honkai-star-rail-db/dist/types/cavern
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { Observable, of } from 'rxjs';
 
-@Service({
-  providedIn: 'root',
-})
+@Service()
 export class CavernRelicService {
   getAll(): Observable<PaginatedResult<CavernRelic>> {
       const cavernRelics = cavernRelicFilters.all();
