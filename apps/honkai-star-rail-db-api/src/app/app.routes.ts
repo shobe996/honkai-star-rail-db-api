@@ -2,6 +2,7 @@ import { Route } from '@angular/router';
 import { characterRoutes } from './characters/data-access/character.routes';
 import { lightConeRoutes } from './light-cones/data-access/light-cone.routes';
 import { cavernRelicRoutes } from './cavern-relics/data-access/cavern-relic.routes';
+import { planarOrnamentRoutes } from './planar-ornaments/data-access/planar-ornament.routes';
 
 export const appRoutes: Route[] = [
   {
@@ -17,4 +18,5 @@ export const appRoutes: Route[] = [
   ...characterRoutes,
   ...lightConeRoutes,
   ...cavernRelicRoutes,
+  ...planarOrnamentRoutes
 ];
