@@ -1,13 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Character } from 'honkai-star-rail-db';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { CharacterService } from './character.service';
 import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class CharacterListFacadeService {
   private _characterService = inject(CharacterService);
 

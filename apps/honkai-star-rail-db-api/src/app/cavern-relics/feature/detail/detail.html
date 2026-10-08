@@ -1,0 +1,71 @@
+<div class="page-wrapper">
+    <div class="detail-container">
+      <!-- Left Visual Area: 4-Piece Relic Showcase Grid -->
+      <div class="artwork-viewport">
+        <div class="relic-grid-showcase">
+          <div class="relic-piece-card">
+            <img
+              [src]="viewModel().cavernRelic?.icons?.head_icon_url"
+              alt="Head"
+              class="piece-art"
+            />
+            <span class="piece-label">HEAD</span>
+          </div>
+   
+          <div class="relic-piece-card">
+            <img
+              [src]="viewModel().cavernRelic?.icons?.hand_icon_url"
+              alt="Hands"
+              class="piece-art"
+            />
+            <span class="piece-label">HANDS</span>
+          </div>
+   
+          <div class="relic-piece-card">
+            <img
+              [src]="viewModel().cavernRelic?.icons?.body_icon_url"
+              alt="Body"
+              class="piece-art"
+            />
+            <span class="piece-label">BODY</span>
+          </div>
+   
+          <div class="relic-piece-card">
+            <img
+              [src]="viewModel().cavernRelic?.icons?.feet_icon_url"
+              alt="Feet"
+              class="piece-art"
+            />
+            <span class="piece-label">FEET</span>
+          </div>
+        </div>
+   
+        <div class="name-overlay-bg">{{ viewModel().cavernRelic?.name }}</div>
+      </div>
+   
+      <!-- Right Information Panel -->
+      <div class="info-pane">
+        <header class="relic-header">
+          <span class="set-type-tag">{{ viewModel().cavernRelic?.set }}</span>
+          <h1 class="bold-name">{{ viewModel().cavernRelic?.name }}</h1>
+        </header>
+   
+        <!-- Set Effects Panel -->
+        <section class="set-effects-panel">
+          <div class="effect-group">
+            <span class="effect-badge">2-PIECE SET</span>
+            <p class="effect-description">
+              {{ viewModel().cavernRelic?.two_set_effect }}
+            </p>
+          </div>
+   
+          <div class="effect-group">
+            <span class="effect-badge">4-PIECE SET</span>
+            <p class="effect-description">
+              {{ viewModel().cavernRelic?.four_set_effect }}
+            </p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>

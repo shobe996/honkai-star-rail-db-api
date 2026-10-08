@@ -1,11 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { LightConeService } from './light-cone.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { LightCone } from 'honkai-star-rail-db';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class LightConeDetailFacadeService {
   private _lightConeService = inject(LightConeService);
 

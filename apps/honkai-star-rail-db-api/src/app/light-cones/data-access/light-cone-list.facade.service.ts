@@ -1,13 +1,11 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { LightConeService } from './light-cone.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { LightCone } from 'honkai-star-rail-db';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class LightConeListFacadeService {
   private _lightConeService = inject(LightConeService);
 

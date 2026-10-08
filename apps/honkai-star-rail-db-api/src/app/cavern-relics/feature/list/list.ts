@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { CardComponent, FilterBarComponent, InputComponent, PaginatorComponent } from '@honkai-star-rail-db/webkit';
-import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-list-facade-service';
+import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-list.facade.service';
 
 @Component({
   selector: 'app-list-component',

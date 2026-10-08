@@ -20,7 +20,7 @@ import {
   SelectComponent,
   InputComponent,
 } from '@honkai-star-rail-db/webkit';
-import { CharacterListFacadeService } from '../../data-access/character-list-facade.service';
+import { CharacterListFacadeService } from '../../data-access/character-list.facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/character-search-form.model';

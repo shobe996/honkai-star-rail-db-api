@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
-import { LightConeDetailFacadeService } from '../../data-access/light-cone-detail-facade.service';
+import { LightConeDetailFacadeService } from '../../data-access/light-cone-detail.facade.service';
 
 @Component({
   selector: 'app-detail-component',
