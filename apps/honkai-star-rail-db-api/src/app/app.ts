@@ -26,6 +26,10 @@ export class App {
     {
       label: 'Cavern Relics',
       link: 'cavern-relic/list'
+    },
+    {
+      label: 'Planar Ornaments',
+      link: 'planar-ornament/list'
     }
   ];
 }
