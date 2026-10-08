@@ -1,0 +1,46 @@
+<div class="page-wrapper">
+  <div class="detail-container">
+    <!-- Left Visual Area: 4-Piece Ornament Showcase Grid -->
+    <div class="artwork-viewport">
+      <div class="ornament-grid-showcase">
+        <div class="ornament-piece-card">
+          <img
+            [src]="viewModel().planarOrnament?.icons?.sphere_icon_url"
+            alt="Sphere"
+            class="piece-art"
+          />
+          <span class="piece-label">SPHERE</span>
+        </div>
+
+        <div class="ornament-piece-card">
+          <img
+            [src]="viewModel().planarOrnament?.icons?.rope_icon_url"
+            alt="Rope"
+            class="piece-art"
+          />
+          <span class="piece-label">ROPE</span>
+        </div>
+      </div>
+
+      <div class="name-overlay-bg">{{ viewModel().planarOrnament?.name }}</div>
+    </div>
+
+    <!-- Right Information Panel -->
+    <div class="info-pane">
+      <header class="ornament-header">
+        <span class="set-type-tag">{{ viewModel().planarOrnament?.set }}</span>
+        <h1 class="bold-name">{{ viewModel().planarOrnament?.name }}</h1>
+      </header>
+
+      <!-- Set Effects Panel -->
+      <section class="set-effects-panel">
+        <div class="effect-group">
+          <span class="effect-badge">2-PIECE SET</span>
+          <p class="effect-description">
+            {{ viewModel().planarOrnament?.two_set_effect }}
+          </p>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
