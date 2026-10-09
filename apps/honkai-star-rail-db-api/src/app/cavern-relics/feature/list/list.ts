@@ -1,10 +1,25 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { CavernRelicSearchForm } from '../../data-access/cavern-relic-search-form.model';
+import type { CavernRelicSearchCriteria } from 'honkai-star-rail-db/dist/types/cavern-relics/cavern-relic-criteria.types';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
-import { CardComponent, FilterBarComponent, InputComponent, PaginatorComponent } from '@honkai-star-rail-db/webkit';
+import {
+  CardComponent,
+  FilterBarComponent,
+  InputComponent,
+  PaginatorComponent,
+  SelectComponent,
+} from '@honkai-star-rail-db/webkit';
 import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-list.facade.service';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
+import { CavernRelic } from 'honkai-star-rail-db';
 
 @Component({
   selector: 'app-list-component',
@@ -13,6 +28,7 @@ import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-lis
     PaginatorComponent,
     FilterBarComponent,
     InputComponent,
+    SelectComponent,
     FormField,
   ],
   templateUrl: './list.html',
@@ -29,7 +45,20 @@ export class ListComponent {
   searchFormModel = signal<CavernRelicSearchForm>({
     name: '',
     effect: '',
+    sortBy: '',
+    sortDirection: '',
   });
+
+  sortByOptions = [
+    { label: 'ID', value: 'id' },
+    { label: 'Name', value: 'name' },
+    { label: 'Two Set Effect', value: 'two_set_effect' },
+    { label: 'Four Set Effect', value: 'four_set_effect' },
+  ];
+  sortDirectionOptions = [
+    { label: 'Ascending', value: 'asc' },
+    { label: 'Descending', value: 'desc' },
+  ];
 
   searchForm = form(this.searchFormModel);
 
@@ -47,13 +76,31 @@ export class ListComponent {
 
   constructor() {
     effect(() => {
-      const { name, effect } = this.searchForm().value();
+      const { name, effect, sortBy, sortDirection } = this.searchForm().value();
 
-      this._cavernRelicListFacadeService.filter(
-        { name: name ?? '', effect: effect ?? '' },
-        this._currentPage(),
-        this._currentSize()
-      );
+      const criteria: CavernRelicSearchCriteria = {
+        name: name ?? '',
+        effect: effect ?? '',
+      };
+
+      if (sortBy && sortDirection) {
+        const sortOptions: SortOptions<CavernRelic> = this.generateSortOptions(
+          sortBy,
+          sortDirection,
+        );
+        this._cavernRelicListFacadeService.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+          sortOptions,
+        );
+      } else {
+        this._cavernRelicListFacadeService.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+        );
+      }
     });
   }
 
@@ -74,8 +121,35 @@ export class ListComponent {
     const initial: CavernRelicSearchForm = {
       name: '',
       effect: '',
+      sortBy: '',
+      sortDirection: '',
     };
     this.searchForm().reset(initial);
     this._currentPage.set(1);
+  }
+
+  private generateSortOptions(
+    sortBy: string,
+    sortDirection: string,
+  ): SortOptions<CavernRelic> {
+    let sortOptions: SortOptions<CavernRelic> = {} as SortOptions<CavernRelic>;
+    if (sortBy && sortDirection) {
+      switch (sortBy) {
+        case 'id':
+          sortOptions.by = (cavernRelic) => cavernRelic.id;
+          break;
+        case 'name':
+          sortOptions.by = (cavernRelic) => cavernRelic.name;
+          break;
+        case 'two_set_effect':
+          sortOptions.by = (cavernRelic) => cavernRelic.two_set_effect;
+          break;
+        case 'four_set_effect':
+          sortOptions.by = (cavernRelic) => cavernRelic.four_set_effect;
+          break;
+      }
+      sortOptions.direction = sortDirection as 'asc' | 'desc';
+    }
+    return sortOptions;
   }
 }

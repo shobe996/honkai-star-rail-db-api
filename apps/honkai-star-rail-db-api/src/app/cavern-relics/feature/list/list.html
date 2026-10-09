@@ -9,6 +9,22 @@
       placeholder="Search by relic effect..."
       [formField]="searchForm.effect"
     />
+
+    <lib-select
+      [options]="sortByOptions"
+      labelKey="label"
+      valueKey="value"
+      label="Sort By"
+      [formField]="searchForm.sortBy"
+    />
+
+    <lib-select
+      [options]="sortDirectionOptions"
+      labelKey="label"
+      valueKey="value"
+      label="Sort Direction"
+      [formField]="searchForm.sortDirection"
+    />
   </lib-filter-bar>
 
   <div class="card-list">
