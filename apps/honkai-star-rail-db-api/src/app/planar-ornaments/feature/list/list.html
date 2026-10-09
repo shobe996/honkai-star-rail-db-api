@@ -1,46 +1,60 @@
 <div class="page-container">
-    <lib-filter-bar (resetFilters)="resetFilters()">
-      <lib-input
-        placeholder="Search ornament name..."
-        [formField]="searchForm.name"
-      />
-  
-      <lib-input
-        placeholder="Search by ornament effect..."
-        [formField]="searchForm.effect"
-      />
-    </lib-filter-bar>
-  
-    <div class="card-list">
-      @for (ornament of viewModel().planarOrnaments.data; track ornament.id) {
-      <lib-card
-        [rarityValue]="5"
-        [image]="ornament.icons.icon_url"
-        [name]="ornament.name"
-        (imageClick)="toDetails(ornament.id)"
-        (nameClick)="toDetails(ornament.id)"
-      >
-  
-        <div stats class="effects-section">
-          <div class="effect-box">
-            <span class="effect-label">2-PIECE SET</span>
-            <p class="effect-text">{{ ornament.two_set_effect }}</p>
-          </div>
-        </div>
-  
-        <div footer class="ornament-footer">{{ ornament.set }}</div>
-      </lib-card>
-      }
-    </div>
-  
-    <lib-paginator
-      [total]="viewModel().planarOrnaments.total"
-      [size]="viewModel().planarOrnaments.size"
-      [page]="viewModel().planarOrnaments.page"
-      [hasMore]="viewModel().planarOrnaments.hasMore"
-      label="Planar Ornaments"
-      (pageChange)="goToPage($event)"
-      (sizeChange)="updatePageSize($event)"
+  <lib-filter-bar (resetFilters)="resetFilters()">
+    <lib-input
+      placeholder="Search ornament name..."
+      [formField]="searchForm.name"
     />
+
+    <lib-input
+      placeholder="Search by ornament effect..."
+      [formField]="searchForm.effect"
+    />
+
+    <lib-select
+      [options]="sortByOptions"
+      labelKey="label"
+      valueKey="value"
+      label="Sort By"
+      [formField]="searchForm.sortBy"
+    />
+
+    <lib-select
+      [options]="sortDirectionOptions"
+      labelKey="label"
+      valueKey="value"
+      label="Sort Direction"
+      [formField]="searchForm.sortDirection"
+    />
+  </lib-filter-bar>
+
+  <div class="card-list">
+    @for (ornament of viewModel().planarOrnaments.data; track ornament.id) {
+    <lib-card
+      [rarityValue]="5"
+      [image]="ornament.icons.icon_url"
+      [name]="ornament.name"
+      (imageClick)="toDetails(ornament.id)"
+      (nameClick)="toDetails(ornament.id)"
+    >
+      <div stats class="effects-section">
+        <div class="effect-box">
+          <span class="effect-label">2-PIECE SET</span>
+          <p class="effect-text">{{ ornament.two_set_effect }}</p>
+        </div>
+      </div>
+
+      <div footer class="ornament-footer">{{ ornament.set }}</div>
+    </lib-card>
+    }
   </div>
-  
+
+  <lib-paginator
+    [total]="viewModel().planarOrnaments.total"
+    [size]="viewModel().planarOrnaments.size"
+    [page]="viewModel().planarOrnaments.page"
+    [hasMore]="viewModel().planarOrnaments.hasMore"
+    label="Planar Ornaments"
+    (pageChange)="goToPage($event)"
+    (sizeChange)="updatePageSize($event)"
+  />
+</div>
