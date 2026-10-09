@@ -4,6 +4,7 @@ import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { CharacterService } from './character.service';
 import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Service()
 export class CharacterListFacadeService {
@@ -37,8 +38,13 @@ export class CharacterListFacadeService {
     });
   }
 
-  filter(criteria: CharacterSearchCriteria, page: number, size: number): void {
-    this._characterService.filter(criteria, page, size).subscribe({
+  filter(
+    criteria: CharacterSearchCriteria,
+    page: number,
+    size: number,
+    sortOptions?: SortOptions<Character>,
+  ): void {
+    this._characterService.filter(criteria, page, size, sortOptions).subscribe({
       next: (value) => {
         this._characterSubject$.next(value);
       },

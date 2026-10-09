@@ -5,4 +5,6 @@ export interface CharacterSearchForm {
   type: string;
   rarity: string;
   faction: string;
+  sortBy: string;
+  sortDirection: string;
 }
