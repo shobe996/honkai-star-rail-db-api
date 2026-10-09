@@ -1,12 +1,30 @@
-import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 import { LightConeListFacadeService } from '../../data-access/light-cone-list.facade.service';
 import { LightConeSearchForm } from '../../data-access/light-cone-search-form.model';
-import { LightCone, lightConeRarityFilters, pathFilters } from 'honkai-star-rail-db';
+import {
+  LightCone,
+  lightConeRarityFilters,
+  pathFilters,
+} from 'honkai-star-rail-db';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
-import { BadgeComponent, CardComponent, FilterBarComponent, InputComponent, PaginatorComponent, SelectComponent } from '@honkai-star-rail-db/webkit';
+import {
+  BadgeComponent,
+  CardComponent,
+  FilterBarComponent,
+  InputComponent,
+  PaginatorComponent,
+  SelectComponent,
+} from '@honkai-star-rail-db/webkit';
 import { Router } from '@angular/router';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Component({
   selector: 'app-list-component',
@@ -33,14 +51,27 @@ export class ListComponent {
     name: '',
     path: '',
     rarity: '',
-    effect: ''
+    effect: '',
+    sortBy: '',
+    sortDirection: '',
   });
+
+  sortByOptions = [
+    { label: 'ID', value: 'id' },
+    { label: 'Name', value: 'name' },
+    { label: 'Rarity', value: 'rarity' },
+    { label: 'Path', value: 'path' },
+  ];
+  sortDirectionOptions = [
+    { label: 'Ascending', value: 'asc' },
+    { label: 'Descending', value: 'desc' },
+  ];
 
   searchForm = form(this.searchFormModel);
   paths = pathFilters.all();
   rarities = lightConeRarityFilters.all();
   toDetails(id: number) {
-    this._router.navigate(['light-cone','detail', id]);
+    this._router.navigate(['light-cone', 'detail', id]);
   }
   statsToggleState = new Map<number, 'level1' | 'level80'>();
   viewModel = toSignal(this._lightConeListFacadeSerice.viewModel$, {
@@ -57,7 +88,8 @@ export class ListComponent {
 
   constructor() {
     effect(() => {
-      const { name, path, rarity, effect } = this.searchForm().value();
+      const { name, path, rarity, effect, sortBy, sortDirection } =
+        this.searchForm().value();
 
       const criteria: LightConeSearchCriteria = {
         name: name ?? '',
@@ -66,11 +98,24 @@ export class ListComponent {
         rarity: rarity ? Number.parseInt(rarity) : undefined,
       };
 
-      this._lightConeListFacadeSerice.filter(
-        criteria,
-        this._currentPage(),
-        this._currentSize(),
-      );
+      if (sortBy && sortDirection) {
+        const sortOptions: SortOptions<LightCone> = this.generateSortOptions(
+          sortBy,
+          sortDirection,
+        );
+        this._lightConeListFacadeSerice.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+          sortOptions,
+        );
+      } else {
+        this._lightConeListFacadeSerice.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+        );
+      }
     });
   }
 
@@ -102,8 +147,35 @@ export class ListComponent {
       path: '',
       rarity: '',
       effect: '',
+      sortBy: '',
+      sortDirection: '',
     };
     this.searchForm().reset(initial);
     this._currentPage.set(1);
+  }
+
+  private generateSortOptions(
+    sortBy: string,
+    sortDirection: string,
+  ): SortOptions<LightCone> {
+    let sortOptions: SortOptions<LightCone> = {} as SortOptions<LightCone>;
+    if (sortBy && sortDirection) {
+      switch (sortBy) {
+        case 'id':
+          sortOptions.by = (lightCone) => lightCone.id;
+          break;
+        case 'name':
+          sortOptions.by = (lightCone) => lightCone.name;
+          break;
+        case 'rarity':
+          sortOptions.by = (lightCone) => lightCone.rarity.value;
+          break;
+        case 'path':
+          sortOptions.by = (lightCone) => lightCone.path.name;
+          break;
+      }
+      sortOptions.direction = sortDirection as 'asc' | 'desc';
+    }
+    return sortOptions;
   }
 }
