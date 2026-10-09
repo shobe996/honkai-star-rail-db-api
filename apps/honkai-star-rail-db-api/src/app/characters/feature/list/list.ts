@@ -26,6 +26,7 @@ import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/character-search-form.model';
 import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
 import { Router } from '@angular/router';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Component({
   selector: 'app-list-component',
@@ -55,7 +56,23 @@ export class ListComponent {
     type: '',
     rarity: '',
     faction: '',
+    sortBy: '',
+    sortDirection: '',
   });
+
+  sortByOptions = [
+    { label: 'ID', value: 'id' },
+    { label: 'Name', value: 'name' },
+    { label: 'Rarity', value: 'rarity' },
+    { label: 'Release Date', value: 'release_date' },
+    { label: 'Faction', value: 'faction' },
+    { label: 'Type', value: 'type' },
+    { label: 'Path', value: 'path' },
+  ];
+  sortDirectionOptions = [
+    { label: 'Ascending', value: 'asc' },
+    { label: 'Descending', value: 'desc' },
+  ];
 
   searchForm = form(this.searchFormModel);
   paths = pathFilters.all();
@@ -63,7 +80,7 @@ export class ListComponent {
   rarities = characterRarityFilters.all();
   factions = factionFilters.all();
   toDetails(id: number) {
-    this._router.navigate(['character','detail', id]);
+    this._router.navigate(['character', 'detail', id]);
   }
   statsToggleState = new Map<number, 'level1' | 'level80'>();
   viewModel = toSignal(this._characterListFacadeSerice.viewModel$, {
@@ -80,7 +97,16 @@ export class ListComponent {
 
   constructor() {
     effect(() => {
-      const { name, description, path, type, rarity, faction } = this.searchForm().value();
+      const {
+        name,
+        description,
+        path,
+        type,
+        rarity,
+        faction,
+        sortBy,
+        sortDirection,
+      } = this.searchForm().value();
 
       const criteria: CharacterSearchCriteria = {
         name: name ?? '',
@@ -91,11 +117,24 @@ export class ListComponent {
         rarity: rarity ? Number.parseInt(rarity) : undefined,
       };
 
-      this._characterListFacadeSerice.filter(
-        criteria,
-        this._currentPage(),
-        this._currentSize(),
-      );
+      if (sortBy && sortDirection) {
+        const sortOptions: SortOptions<Character> = this.generateSortOptions(
+          sortBy,
+          sortDirection,
+        );
+        this._characterListFacadeSerice.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+          sortOptions,
+        );
+      } else {
+        this._characterListFacadeSerice.filter(
+          criteria,
+          this._currentPage(),
+          this._currentSize(),
+        );
+      }
     });
   }
 
@@ -129,8 +168,44 @@ export class ListComponent {
       type: '',
       rarity: '',
       faction: '',
+      sortBy: '',
+      sortDirection: '',
     };
     this.searchForm().reset(initial);
     this._currentPage.set(1);
+  }
+
+  private generateSortOptions(
+    sortBy: string,
+    sortDirection: string,
+  ): SortOptions<Character> {
+    let sortOptions: SortOptions<Character> = {} as SortOptions<Character>;
+    if (sortBy && sortDirection) {
+      switch (sortBy) {
+        case 'id':
+          sortOptions.by = (character) => character.id;
+          break;
+        case 'name':
+          sortOptions.by = (character) => character.name;
+          break;
+        case 'rarity':
+          sortOptions.by = (character) => character.rarity.value;
+          break;
+        case 'release_date':
+          sortOptions.by = (character) => character.release_date;
+          break;
+        case 'faction':
+          sortOptions.by = (character) => character.faction.name;
+          break;
+        case 'type':
+          sortOptions.by = (character) => character.type.name;
+          break;
+        case 'path':
+          sortOptions.by = (character) => character.path.name;
+          break;
+      }
+      sortOptions.direction = sortDirection as 'asc' | 'desc';
+    }
+    return sortOptions;
   }
 }
