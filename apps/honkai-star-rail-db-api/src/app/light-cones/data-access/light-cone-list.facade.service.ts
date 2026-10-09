@@ -4,6 +4,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { LightCone } from 'honkai-star-rail-db';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Service()
 export class LightConeListFacadeService {
@@ -37,8 +38,8 @@ export class LightConeListFacadeService {
     });
   }
 
-  filter(criteria: LightConeSearchCriteria, page: number, size: number): void {
-    this._lightConeService.filter(criteria, page, size).subscribe({
+  filter(criteria: LightConeSearchCriteria, page: number, size: number, sort?: SortOptions<LightCone>): void {
+    this._lightConeService.filter(criteria, page, size, sort).subscribe({
       next: (value) => {
         this._lightConeSubject$.next(value);
       },

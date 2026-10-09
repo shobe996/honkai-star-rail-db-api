@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { LightCone, lightConeFilters } from 'honkai-star-rail-db';
 import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones/light-cone-criteria.types';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Service()
 export class LightConeService {
@@ -23,8 +24,9 @@ export class LightConeService {
     criteria: LightConeSearchCriteria,
     page: number,
     size: number,
+    sort?: SortOptions<LightCone>
   ): Observable<PaginatedResult<LightCone>> {
-    const lightCones = lightConeFilters.byAttributes(criteria, page, size);
+    const lightCones = lightConeFilters.byAttributes(criteria, page, size, sort);
     return of(lightCones);
   }
 

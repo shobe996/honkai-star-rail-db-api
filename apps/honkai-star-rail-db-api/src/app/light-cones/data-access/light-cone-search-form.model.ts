@@ -3,4 +3,6 @@ export interface LightConeSearchForm {
   path: string;
   effect: string;
   rarity: string;
+  sortBy: string;
+  sortDirection: string;
 }
