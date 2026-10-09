@@ -4,6 +4,7 @@ import { PlanarOrnamentService } from './planar-ornament.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { PlanarOrnament } from 'honkai-star-rail-db/dist/types';
 import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
+import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Service()
 export class PlanarOrnamentListFacadeService {
@@ -43,8 +44,9 @@ export class PlanarOrnamentListFacadeService {
     criteria: PlanarOrnamentSearchCriteria,
     page: number,
     size: number,
+    sort?: SortOptions<PlanarOrnament>,
   ): void {
-    this._planarOrnamentsService.filter(criteria, page, size).subscribe({
+    this._planarOrnamentsService.filter(criteria, page, size, sort).subscribe({
       next: (value) => {
         this._planarOrnamentsSubject$.next(value);
       },
