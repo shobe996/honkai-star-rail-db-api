@@ -11,7 +11,7 @@
     "@angular/forms": "~22.2.0",
     "@angular/platform-browser": "~22.2.0",
     "@angular/router": "~22.2.0",
-    "honkai-star-rail-db": "^1.12.1",
+    "honkai-star-rail-db": "^1.14.0",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {
