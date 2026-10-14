@@ -6,13 +6,6 @@ import {
   signal,
 } from '@angular/core';
 import {
-  Character,
-  characterRarityFilters,
-  factionFilters,
-  pathFilters,
-  typeFilters,
-} from 'honkai-star-rail-db';
-import {
   BadgeComponent,
   CardComponent,
   PaginatorComponent,
@@ -24,9 +17,10 @@ import { CharacterListFacadeService } from '../../data-access/character-list.fac
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/character-search-form.model';
-import { CharacterSearchCriteria } from 'honkai-star-rail-db/dist/types/characters/character-criteria.types';
 import { Router } from '@angular/router';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
+import { characterRarityFilters, pathFilters, typeFilters, factionFilters } from 'honkai-star-rail-db/filters';
+import { Character, CharacterSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+
 
 @Component({
   selector: 'app-list-component',
@@ -179,7 +173,7 @@ export class ListComponent {
     sortBy: string,
     sortDirection: string,
   ): SortOptions<Character> {
-    let sortOptions: SortOptions<Character> = {} as SortOptions<Character>;
+    const sortOptions: SortOptions<Character> = {} as SortOptions<Character>;
     if (sortBy && sortDirection) {
       switch (sortBy) {
         case 'id':

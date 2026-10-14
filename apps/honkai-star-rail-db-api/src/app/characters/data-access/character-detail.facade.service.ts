@@ -1,6 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { CharacterService } from './character.service';
-import { Character } from 'honkai-star-rail-db';
+import { Character } from 'honkai-star-rail-db/models';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
 @Service()
