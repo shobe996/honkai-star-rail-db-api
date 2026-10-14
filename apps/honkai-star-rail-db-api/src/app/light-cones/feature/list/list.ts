@@ -7,14 +7,11 @@ import {
 } from '@angular/core';
 import { LightConeListFacadeService } from '../../data-access/light-cone-list.facade.service';
 import { LightConeSearchForm } from '../../data-access/light-cone-search-form.model';
-import {
-  LightCone,
-  lightConeRarityFilters,
-  pathFilters,
-} from 'honkai-star-rail-db';
+import { LightCone, LightConeSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+import { lightConeRarityFilters, pathFilters } from 'honkai-star-rail-db/filters';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
-import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
+
 import {
   BadgeComponent,
   CardComponent,
@@ -24,7 +21,6 @@ import {
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
 import { Router } from '@angular/router';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
 
 @Component({
   selector: 'app-list-component',
@@ -158,7 +154,7 @@ export class ListComponent {
     sortBy: string,
     sortDirection: string,
   ): SortOptions<LightCone> {
-    let sortOptions: SortOptions<LightCone> = {} as SortOptions<LightCone>;
+    const sortOptions: SortOptions<LightCone> = {} as SortOptions<LightCone>;
     if (sortBy && sortDirection) {
       switch (sortBy) {
         case 'id':

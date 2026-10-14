@@ -1,10 +1,7 @@
 import { inject, Service } from '@angular/core';
 import { LightConeService } from './light-cone.service';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
-import { LightCone } from 'honkai-star-rail-db';
-import { LightConeSearchCriteria } from 'honkai-star-rail-db/dist/types/light-cones';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
+import { LightCone, LightConeSearchCriteria, PaginatedResult, SortOptions } from 'honkai-star-rail-db/models';
 
 @Service()
 export class LightConeListFacadeService {
