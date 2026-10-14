@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { PlanarOrnamentDetailFacadeService } from '../../data-access/planar-ornament-detail.facade.service';
@@ -9,7 +9,7 @@ import { PlanarOrnamentDetailFacadeService } from '../../data-access/planar-orna
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
   private _planarOrnamentDetailFacadeService = inject(PlanarOrnamentDetailFacadeService);
  
   private _route = inject(ActivatedRoute);
