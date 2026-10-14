@@ -1,10 +1,7 @@
 import { Service } from '@angular/core';
-import { planarOrnamentFilters } from 'honkai-star-rail-db/dist/filters';
-import { PaginatedResult } from 'honkai-star-rail-db/dist/types/pagination.types';
 import { Observable, of } from 'rxjs';
-import { PlanarOrnamentSearchCriteria } from 'honkai-star-rail-db/dist/types/planar-ornaments/planar-ornament-criteria.types';
-import { PlanarOrnament } from 'honkai-star-rail-db/dist/types';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
+import { PaginatedResult, PlanarOrnament, PlanarOrnamentSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+import { planarOrnamentFilters } from 'honkai-star-rail-db/filters';
 
 @Service()
 export class PlanarOrnamentService {

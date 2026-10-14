@@ -11,9 +11,7 @@ import { PlanarOrnamentSearchForm } from '../../data-access/planar-ornament-sear
 import { PlanarOrnamentListFacadeService } from '../../data-access/planar-ornament-list.facade.service';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { PlanarOrnament } from 'honkai-star-rail-db';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
-import { PlanarOrnamentSearchCriteria } from 'honkai-star-rail-db/dist/types/planar-ornaments/planar-ornament-criteria.types';
+import { PlanarOrnament, PlanarOrnamentSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
 
 @Component({
   selector: 'app-list-component',
@@ -125,7 +123,7 @@ export class ListComponent {
     sortBy: string,
     sortDirection: string,
   ): SortOptions<PlanarOrnament> {
-    let sortOptions: SortOptions<PlanarOrnament> =
+    const sortOptions: SortOptions<PlanarOrnament> =
       {} as SortOptions<PlanarOrnament>;
     if (sortBy && sortDirection) {
       switch (sortBy) {

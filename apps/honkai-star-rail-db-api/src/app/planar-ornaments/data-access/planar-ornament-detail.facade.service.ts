@@ -1,8 +1,8 @@
 import { inject, Service } from '@angular/core';
-import { PlanarOrnament } from 'honkai-star-rail-db/dist/types/planar-ornament.types';
 import { BehaviorSubject } from 'rxjs';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { PlanarOrnamentService } from './planar-ornament.service';
+import { PlanarOrnament } from 'honkai-star-rail-db/models';
 
 @Service()
 export class PlanarOrnamentDetailFacadeService {
