@@ -2,7 +2,7 @@ import { inject, Service } from '@angular/core';
 import { combineLatest } from 'rxjs/internal/observable/combineLatest';
 import { BehaviorSubject } from 'rxjs';
 import { CavernRelicService } from './cavern-relic.service';
-import { CavernRelic } from 'honkai-star-rail-db';
+import { CavernRelic } from 'honkai-star-rail-db/models';
 
 @Service()
 export class CavernRelicDetailFacadeService {
