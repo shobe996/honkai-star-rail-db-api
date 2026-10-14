@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CavernRelicDetailFacadeService } from '../../data-access/cavern-relic-detail.facade.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +9,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
    private _cavernRelicDetailFacadeService = inject(CavernRelicDetailFacadeService);
  
   private _route = inject(ActivatedRoute);
