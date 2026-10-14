@@ -6,7 +6,6 @@ import {
   signal,
 } from '@angular/core';
 import { CavernRelicSearchForm } from '../../data-access/cavern-relic-search-form.model';
-import type { CavernRelicSearchCriteria } from 'honkai-star-rail-db/dist/types/cavern-relics/cavern-relic-criteria.types';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
@@ -18,8 +17,7 @@ import {
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
 import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-list.facade.service';
-import { SortOptions } from 'honkai-star-rail-db/dist/filters/base.filters';
-import { CavernRelic } from 'honkai-star-rail-db';
+import { CavernRelic, CavernRelicSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
 
 @Component({
   selector: 'app-list-component',
@@ -132,7 +130,7 @@ export class ListComponent {
     sortBy: string,
     sortDirection: string,
   ): SortOptions<CavernRelic> {
-    let sortOptions: SortOptions<CavernRelic> = {} as SortOptions<CavernRelic>;
+    const sortOptions: SortOptions<CavernRelic> = {} as SortOptions<CavernRelic>;
     if (sortBy && sortDirection) {
       switch (sortBy) {
         case 'id':
