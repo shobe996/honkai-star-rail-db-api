@@ -1,10 +1,13 @@
 import { inject, Service } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { CharacterService } from './character.service';
 import { Character, CharacterSearchCriteria, PaginatedResult, SortOptions } from 'honkai-star-rail-db/models';
+import { characterActions } from '../state/character.actions';
 @Service()
 export class CharacterListFacadeService {
   private _characterService = inject(CharacterService);
+  private _store = inject(Store);
 
   private _characterSubject$ = new BehaviorSubject<PaginatedResult<Character>>({
     data: [],
@@ -35,15 +38,11 @@ export class CharacterListFacadeService {
   }
 
   filter(
-    criteria: CharacterSearchCriteria,
+    searchCriteria: CharacterSearchCriteria,
     page: number,
     size: number,
     sortOptions?: SortOptions<Character>,
   ): void {
-    this._characterService.filter(criteria, page, size, sortOptions).subscribe({
-      next: (value) => {
-        this._characterSubject$.next(value);
-      },
-    });
+    this._store.dispatch(characterActions.loadCharacters({ searchCriteria, page, size, sortOptions }));
   }
 }
