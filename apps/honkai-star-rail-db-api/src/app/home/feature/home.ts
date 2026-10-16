@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CharacterService } from '../../characters/data-access/character.service';
+import { CharacterService } from '../../characters/data-access/services/character.service';
 import { Character } from 'honkai-star-rail-db/models';
 export interface TeamMember {
   id: number;

@@ -59,7 +59,7 @@
     />
   </lib-filter-bar>
   <div class="card-list">
-    @for (character of viewModel().characters.data; track character.id) {
+    @for (character of viewModel().data; track character.id) {
     <lib-card
       [rarityValue]="character.rarity.value"
       [image]="character.icon_url"
@@ -110,10 +110,10 @@
     }
   </div>
   <lib-paginator
-    [total]="viewModel().characters.total"
-    [size]="viewModel().characters.size"
-    [page]="viewModel().characters.page"
-    [hasMore]="viewModel().characters.hasMore"
+    [total]="viewModel().total"
+    [size]="viewModel().size"
+    [page]="viewModel().page"
+    [hasMore]="viewModel().hasMore"
     label="Characters"
     (pageChange)="goToPage($event)"
     (sizeChange)="updatePageSize($event)"

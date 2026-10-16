@@ -7,7 +7,7 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
-import { CharacterDetailFacadeService } from '../../data-access/character-detail.facade.service';
+import { CharacterDetailFacadeService } from '../../data-access/services/character-detail.facade.service';
 
 @Component({
   selector: 'app-detail-component',

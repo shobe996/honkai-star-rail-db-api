@@ -12,6 +12,10 @@
     "@angular/platform-browser": "~22.2.0",
     "@angular/router": "~22.2.0",
     "honkai-star-rail-db": "^1.14.0",
+    "@ngrx/effects": "^22.0.0",
+    "@ngrx/signals": "^22.0.0",
+    "@ngrx/store": "^22.0.0",
+    "@ngrx/store-devtools": "^22.0.0",
     "rxjs": "~7.8.0"
   },
   "devDependencies": {

@@ -1,5 +1,5 @@
-<div class="hsr-input-wrapper">
 
+<div class="hsr-input-wrapper">
   <select
     [id]="selectId"
     [value]="value()"
@@ -10,8 +10,14 @@
     @if (label()) {
       <option value="">All {{ label() }}</option>
     }
+
     @for (opt of options(); track getOptionValue(opt)) {
-    <option [value]="getOptionValue(opt)">{{ getOptionLabel(opt) }}</option>
+      <option
+        [value]="getOptionValue(opt)"
+        [selected]="getOptionValue(opt) === value()"
+      >
+        {{ getOptionLabel(opt) }}
+      </option>
     }
   </select>
 </div>
