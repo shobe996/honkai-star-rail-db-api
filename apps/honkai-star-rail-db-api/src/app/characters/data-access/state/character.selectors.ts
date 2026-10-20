@@ -23,3 +23,8 @@ export const selectSearchCriteria = createSelector(
   selectCharacterState,
   (state) => state.searchCriteria
 );
+
+export const selectSortOptions = createSelector(
+  selectCharacterState,
+  (state) => ({ by: state.by, direction: state.direction })
+);

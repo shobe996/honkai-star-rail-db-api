@@ -9,7 +9,7 @@ import {
 export const characterActions = {
   loadCharacters: createAction(
     '[Character] Load Characters',
-    props<{ searchCriteria: CharacterSearchCriteria, page: number, size: number, sortOptions?: SortOptions<Character> }>(),
+    props<{ searchCriteria: CharacterSearchCriteria, page: number, size: number, by?: string, direction?:  string }>(),
   ),
   loadCharactersSuccess: createAction(
     '[Character] Load Characters Success',

@@ -41,8 +41,9 @@ export class CharacterListFacadeService {
     searchCriteria: CharacterSearchCriteria,
     page: number,
     size: number,
-    sortOptions?: SortOptions<Character>,
+    by?: string,
+    direction?: string,
   ): void {
-    this._store.dispatch(characterActions.loadCharacters({ searchCriteria, page, size, sortOptions }));
+    this._store.dispatch(characterActions.loadCharacters({ searchCriteria, page, size, by, direction  }));
   }
 }

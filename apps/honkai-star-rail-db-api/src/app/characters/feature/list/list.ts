@@ -34,6 +34,7 @@ import {
   selectSearchCriteria,
   selectPage,
   selectSize,
+  selectSortOptions,
 } from '../../data-access/state/character.selectors';
 
 @Component({
@@ -57,6 +58,7 @@ export class ListComponent {
   private store = inject(Store);
 
   private storeCriteria = this.store.selectSignal(selectSearchCriteria);
+  private storeSortOptions = this.store.selectSignal(selectSortOptions);
   private storePage = this.store.selectSignal(selectPage);
   private storeSize = this.store.selectSignal(selectSize);
 
@@ -73,8 +75,10 @@ export class ListComponent {
         ? String(this.storeCriteria().rarity)
         : '',
     faction: this.storeCriteria().faction ?? '',
-    sortBy: '',
-    sortDirection: '',
+    sortBy:
+      this.storeSortOptions()?.by ?? '',
+    sortDirection:
+      this.storeSortOptions()?.direction ?? ''
   });
 
   sortByOptions = [
@@ -102,15 +106,7 @@ export class ListComponent {
 
   viewModel = this.store.selectSignal(selectCharacters);
 
-  private readonly sortMapping: Record<string, (c: Character) => any> = {
-    id: (c) => c.id,
-    name: (c) => c.name,
-    rarity: (c) => c.rarity.value,
-    release_date: (c) => c.release_date,
-    faction: (c) => c.faction.name,
-    type: (c) => c.type.name,
-    path: (c) => c.path.name,
-  };
+  
 
   private isInitialized = false;
 
@@ -148,8 +144,16 @@ export class ListComponent {
   }
 
   private loadCharacters(): void {
-    const { name, description, path, type, rarity, faction, sortBy, sortDirection } =
-      this.searchForm().value();
+    const {
+      name,
+      description,
+      path,
+      type,
+      rarity,
+      faction,
+      sortBy,
+      sortDirection,
+    } = this.searchForm().value();
 
     const criteria: CharacterSearchCriteria = {
       name: name ?? '',
@@ -160,16 +164,12 @@ export class ListComponent {
       rarity: rarity ? Number.parseInt(rarity) : undefined,
     };
 
-    const sortOptions =
-      sortBy && sortDirection
-        ? this.generateSortOptions(sortBy, sortDirection)
-        : undefined;
-
     this._characterListFacadeService.filter(
       criteria,
       this._currentPage(),
       this._currentSize(),
-      sortOptions
+      sortBy,
+      sortDirection,
     );
   }
 
@@ -214,16 +214,5 @@ export class ListComponent {
 
   private isStateEmpty(): boolean {
     return !this.viewModel()?.data?.length;
-  }
-
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string
-  ): SortOptions<Character> {
-    const getter = this.sortMapping[sortBy];
-    return {
-      by: getter ?? ((c) => c.id),
-      direction: sortDirection as 'asc' | 'desc',
-    };
   }
 }
