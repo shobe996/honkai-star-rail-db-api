@@ -35,6 +35,7 @@ import {
   selectPage,
   selectSize,
   selectSortOptions,
+  selectPaths,
 } from '../../data-access/state/character.selectors';
 
 @Component({
@@ -97,15 +98,14 @@ export class ListComponent {
   ];
 
   searchForm = form(this.searchFormModel);
-  paths = pathFilters.all();
   types = typeFilters.all();
   rarities = characterRarityFilters.all();
   factions = factionFilters.all();
 
   statsToggleState = signal<Record<number, 'level1' | 'level80'>>({});
 
-  viewModel = this.store.selectSignal(selectCharacters);
-
+  characters = this.store.selectSignal(selectCharacters);
+  paths = this.store.selectSignal(selectPaths);
   
 
   private isInitialized = false;
@@ -117,11 +117,16 @@ export class ListComponent {
     this._currentPage.set(page);
     this._currentSize.set(size);
 
-    if (this.isStateEmpty()) {
+    if (this.areCharactersEmpty()) {
       console.log('State is empty, loading characters...');
       this.loadCharacters();
     } else {
       console.log('State found in store, restoring UI from cache...');
+    }
+
+    if (this.arePathsEmpty()) {
+      console.log('Paths are empty, loading paths...');
+      this._characterListFacadeService.getPaths();
     }
 
     effect(() => {
@@ -212,7 +217,11 @@ export class ListComponent {
     this._currentPage.set(1);
   }
 
-  private isStateEmpty(): boolean {
-    return !this.viewModel()?.data?.length;
+  private areCharactersEmpty(): boolean {
+    return !this.characters()?.data?.length;
+  }
+
+  private arePathsEmpty(): boolean {
+    return !this.paths().length;
   }
 }

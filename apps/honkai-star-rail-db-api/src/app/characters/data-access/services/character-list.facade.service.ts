@@ -46,4 +46,8 @@ export class CharacterListFacadeService {
   ): void {
     this._store.dispatch(characterActions.loadCharacters({ searchCriteria, page, size, by, direction  }));
   }
+
+  getPaths(): void {
+    this._store.dispatch(characterActions.loadPaths());
+  }
 }

@@ -16,4 +16,8 @@ export const characterReducer = createReducer(
     ...state,
     characters,
   })),
+  on(characterActions.loadPathsSuccess, (state, { paths }) => ({
+    ...state,
+    paths,
+  })),
 );

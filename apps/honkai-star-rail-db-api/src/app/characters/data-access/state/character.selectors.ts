@@ -28,3 +28,8 @@ export const selectSortOptions = createSelector(
   selectCharacterState,
   (state) => ({ by: state.by, direction: state.direction })
 );
+
+export const selectPaths = createSelector(
+  selectCharacterState,
+  (state) => state.paths
+);

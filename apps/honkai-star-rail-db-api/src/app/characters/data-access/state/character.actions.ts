@@ -3,7 +3,7 @@ import {
   CharacterSearchCriteria,
   PaginatedResult,
   Character,
-  SortOptions,
+  Path,
 } from 'honkai-star-rail-db/models';
 
 export const characterActions = {
@@ -18,5 +18,12 @@ export const characterActions = {
   selectCharacter: createAction(
     '[Character] Select Character',
     props<{ character: Character }>(),
+  ),
+  loadPaths: createAction(
+    '[Character] Load Paths',
+  ),
+  loadPathsSuccess: createAction(
+    '[Character] Load Paths Success',
+    props<{ paths: Path[] }>(),
   ),
 };

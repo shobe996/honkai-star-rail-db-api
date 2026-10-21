@@ -2,7 +2,7 @@ import {
   Character,
   CharacterSearchCriteria,
   PaginatedResult,
-  SortOptions,
+  Path,
 } from 'honkai-star-rail-db/models';
 
 export interface CharacterState {
@@ -13,6 +13,7 @@ export interface CharacterState {
   size: number;
   by?: string;
   direction?: string;
+  paths: Path[];
 }
 
 export const initialCharacterState: CharacterState = {
@@ -23,6 +24,7 @@ export const initialCharacterState: CharacterState = {
     size: 9,
     total: 0,
   } as PaginatedResult<Character>,
+  paths: [],
   searchCriteria: {} as CharacterSearchCriteria,
   selectedCharacter: {} as Character,
   page: 1,
