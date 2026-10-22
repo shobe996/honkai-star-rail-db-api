@@ -51,4 +51,8 @@ export const characterActions = {
     '[Character] Load Factions Success',
     props<{ factions: Faction[] }>(),
   ),
+  loadCharacterDetails: createAction(
+    '[Character] Load Character Details',
+    props<{ character: Character }>(),
+  ),
 };

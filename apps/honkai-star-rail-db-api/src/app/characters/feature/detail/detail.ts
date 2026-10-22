@@ -4,10 +4,10 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
-import { CharacterDetailFacadeService } from '../../data-access/services/character-detail.facade.service';
+import { Store } from '@ngrx/store';
+import { characterSelectors } from '../../data-access/state/character.selectors';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail-component',
@@ -17,28 +17,23 @@ import { CharacterDetailFacadeService } from '../../data-access/services/charact
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent implements OnInit {
-  private _characterDetailFacadeService = inject(CharacterDetailFacadeService);
+  private _router = inject(Router);
+  private _store = inject(Store);
+  character = this._store.selectSignal(characterSelectors.selectCharacter)
   currentLevel: 'level1' | 'level80' = 'level80';
 
-  private _route = inject(ActivatedRoute);
-
-  viewModel = toSignal(this._characterDetailFacadeService.viewModel$, {
-    initialValue: { character: null },
-  });
-
-  ngOnInit(): void {
-    const idString = this._route.snapshot.paramMap.get('id');
-    if (idString) {
-      const id = Number.parseInt(idString);
-      this._characterDetailFacadeService.getById(id);
-    }
-  }
 
   get activeStats() {
-    return this.viewModel().character?.stats[this.currentLevel];
+    return this.character().stats[this.currentLevel];
   }
 
   toggleLevel(level: 'level1' | 'level80') {
     this.currentLevel = level;
+  }
+  ngOnInit(): void {
+    const keys = Object.keys(this.character()?.stats ?? {})
+    if (!keys.length) {
+      this._router.navigate(['character', 'list']);
+    }
   }
 }

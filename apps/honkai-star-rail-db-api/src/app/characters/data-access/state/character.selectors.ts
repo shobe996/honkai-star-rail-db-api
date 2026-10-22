@@ -37,4 +37,9 @@ export const characterSelectors = {
     selectCharacterState,
     (state) => state.factions,
   ),
+
+  selectCharacter: createSelector(
+    selectCharacterState,
+    (state) => state.selectedCharacter,
+  ),
 };

@@ -65,8 +65,8 @@
       [image]="character.icon_url"
       [name]="character.name"
       [starIcon]="character.rarity.icon"
-      (imageClick)="toDetails(character.id)"
-      (nameClick)="toDetails(character.id)"
+      (imageClick)="toDetails(character)"
+      (nameClick)="toDetails(character)"
     >
       <div badges class="badge-container">
         <lib-badge

@@ -3,28 +3,28 @@
     <!-- Left Visual Area -->
     <div class="artwork-viewport">
       <img
-        [src]="viewModel().character?.splash_art_url"
+        [src]="character().splash_art_url"
         class="splash-art"
-        [alt]="viewModel().character?.name"
+        [alt]="character().name"
       />
-      <div class="name-overlay-bg">{{ viewModel().character?.name }}</div>
+      <div class="name-overlay-bg">{{ character().name }}</div>
     </div>
 
     <!-- Right Information Panel -->
     <div class="info-pane">
       <header class="char-header">
-        <div class="rarity-row">{{ viewModel().character?.rarity?.icon }}</div>
-        <h1 class="bold-name">{{ viewModel().character?.name }}</h1>
+        <div class="rarity-row">{{ character().rarity.icon }}</div>
+        <h1 class="bold-name">{{ character().name }}</h1>
 
         <div class="badge-row">
           <lib-badge
-            [icon]="viewModel().character?.path?.icon_url"
-            [label]="viewModel().character?.path?.name"
+            [icon]="character().path.icon_url"
+            [label]="character().path.name"
             variant="detail"
           ></lib-badge>
           <lib-badge
-            [icon]="viewModel().character?.type?.icon_url"
-            [label]="viewModel().character?.type?.name"
+            [icon]="character().type.icon_url"
+            [label]="character().type.name"
             variant="detail"
           ></lib-badge>
         </div>
@@ -32,13 +32,13 @@
 
       <div class="description-scroll">
         <div
-          [innerHTML]="viewModel().character?.desc"
+          [innerHTML]="character().desc"
           class="flavor-text"
         ></div>
 
         <div class="faction-row">
           <span class="faction-label">AFFILIATION</span>
-          <span class="faction-value">{{ viewModel().character?.faction?.name }}</span>
+          <span class="faction-value">{{ character().faction.name }}</span>
         </div>
       </div>
 
@@ -69,25 +69,25 @@
           <!-- Column 1: HP & DEF -->
           <div class="stat-box">
             <span class="stat-label">HP</span>
-            <span class="stat-value">{{ activeStats?.base_hp }}</span>
+            <span class="stat-value">{{ activeStats.base_hp }}</span>
           </div>
 
           <!-- Column 2: ATK -->
           <div class="stat-box">
             <span class="stat-label">ATK</span>
-            <span class="stat-value">{{ activeStats?.base_atk }}</span>
+            <span class="stat-value">{{ activeStats.base_atk }}</span>
           </div>
 
           <!-- Column 1: DEF -->
           <div class="stat-box">
             <span class="stat-label">DEF</span>
-            <span class="stat-value">{{ activeStats?.base_def }}</span>
+            <span class="stat-value">{{ activeStats.base_def }}</span>
           </div>
 
           <!-- Column 2: SPD -->
           <div class="stat-box">
             <span class="stat-label">SPD</span>
-            <span class="stat-value">{{ activeStats?.base_speed }}</span>
+            <span class="stat-value">{{ activeStats.base_speed }}</span>
           </div>
         </div>
       </section>

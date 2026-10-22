@@ -35,4 +35,8 @@ export const characterReducer = createReducer(
     ...state,
     factions,
   })),
+  on(characterActions.loadCharacterDetails, (state, { character }) => ({
+    ...state,
+    selectedCharacter: character,
+  })),
 );

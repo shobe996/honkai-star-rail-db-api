@@ -17,19 +17,9 @@ import { CharacterListFacadeService } from '../../data-access/services/character
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/models/character-search-form.model';
 import { Router } from '@angular/router';
-import {
-  characterRarityFilters,
-  typeFilters,
-  factionFilters,
-} from 'honkai-star-rail-db/filters';
-import {
-  Character,
-  CharacterSearchCriteria,
-} from 'honkai-star-rail-db/models';
+import { Character, CharacterSearchCriteria } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
-import {
-  characterSelectors,
-} from '../../data-access/state/character.selectors';
+import { characterSelectors } from '../../data-access/state/character.selectors';
 
 @Component({
   selector: 'app-list-component',
@@ -49,30 +39,32 @@ import {
 export class ListComponent {
   private _characterListFacadeService = inject(CharacterListFacadeService);
   private _router = inject(Router);
-  private store = inject(Store);
+  private _store = inject(Store);
 
-  private storeCriteria = this.store.selectSignal(characterSelectors.selectSearchCriteria);
-  private storeSortOptions = this.store.selectSignal(characterSelectors.selectSortOptions);
-  private storePage = this.store.selectSignal(characterSelectors.selectPage);
-  private storeSize = this.store.selectSignal(characterSelectors.selectSize);
+  private _storeCriteria = this._store.selectSignal(
+    characterSelectors.selectSearchCriteria,
+  );
+  private _storeSortOptions = this._store.selectSignal(
+    characterSelectors.selectSortOptions,
+  );
+  private _storePage = this._store.selectSignal(characterSelectors.selectPage);
+  private _storeSize = this._store.selectSignal(characterSelectors.selectSize);
 
-  _currentPage = signal(1);
-  _currentSize = signal(9);
+  private _currentPage = signal(1);
+  private _currentSize = signal(9);
 
   searchFormModel = signal<CharacterSearchForm>({
-    name: this.storeCriteria().name ?? '',
-    description: this.storeCriteria().description ?? '',
-    path: this.storeCriteria().path ?? '',
-    type: this.storeCriteria().type ?? '',
+    name: this._storeCriteria().name ?? '',
+    description: this._storeCriteria().description ?? '',
+    path: this._storeCriteria().path ?? '',
+    type: this._storeCriteria().type ?? '',
     rarity:
-      this.storeCriteria().rarity !== undefined
-        ? this.storeCriteria().rarity?.toString() + "-Star"
+      this._storeCriteria().rarity !== undefined
+        ? this._storeCriteria().rarity?.toString() + '-Star'
         : '',
-    faction: this.storeCriteria().faction ?? '',
-    sortBy:
-      this.storeSortOptions()?.by ?? '',
-    sortDirection:
-      this.storeSortOptions()?.direction ?? ''
+    faction: this._storeCriteria().faction ?? '',
+    sortBy: this._storeSortOptions()?.by ?? '',
+    sortDirection: this._storeSortOptions()?.direction ?? '',
   });
 
   sortByOptions = [
@@ -94,47 +86,22 @@ export class ListComponent {
 
   statsToggleState = signal<Record<number, 'level1' | 'level80'>>({});
 
-  characters = this.store.selectSignal(characterSelectors.selectCharacters);
-  paths = this.store.selectSignal(characterSelectors.selectPaths);
-  types = this.store.selectSignal(characterSelectors.selectTypes);
-  rarities = this.store.selectSignal(characterSelectors.selectRarities);
-  factions = this.store.selectSignal(characterSelectors.selectFactions);
+  characters = this._store.selectSignal(characterSelectors.selectCharacters);
+  paths = this._store.selectSignal(characterSelectors.selectPaths);
+  types = this._store.selectSignal(characterSelectors.selectTypes);
+  rarities = this._store.selectSignal(characterSelectors.selectRarities);
+  factions = this._store.selectSignal(characterSelectors.selectFactions);
 
   private isInitialized = false;
 
   constructor() {
-    const page = this.storePage();
-    const size = this.storeSize();
+    const page = this._storePage();
+    const size = this._storeSize();
 
     this._currentPage.set(page);
     this._currentSize.set(size);
 
-    if (this.areCharactersEmpty()) {
-      console.log('State is empty, loading characters...');
-      this.loadCharacters();
-    } else {
-      console.log('State found in store, restoring UI from cache...');
-    }
-
-    if (this.arePathsEmpty()) {
-      console.log('Paths are empty, loading paths...');
-      this._characterListFacadeService.getPaths();
-    }
-
-    if (this.areTypesEmpty()) {
-      console.log('Types are empty, loading types...');
-      this._characterListFacadeService.getTypes();
-    }
-
-    if (this.areRaritiesEmpty()) {
-      console.log('Rarities are empty, loading rarities...');
-      this._characterListFacadeService.getRarities();
-    }
-
-    if (this.areFactionsEmpty()) {
-      console.log('Factions are empty, loading factions...');
-      this._characterListFacadeService.getFactions();
-    }
+    this._loadOptions();
 
     effect(() => {
       this._currentPage();
@@ -151,8 +118,9 @@ export class ListComponent {
     });
   }
 
-  toDetails(id: number) {
-    this._router.navigate(['character', 'detail', id]);
+  toDetails(character: Character) {
+    this._characterListFacadeService.goToDetails(character);
+    this._router.navigate(['character', 'detail', character.id]);
   }
 
   private loadCharacters(): void {
@@ -242,5 +210,27 @@ export class ListComponent {
 
   private areFactionsEmpty(): boolean {
     return !this.factions().length;
+  }
+
+  private _loadOptions() {
+    if (this.areCharactersEmpty()) {
+      this.loadCharacters();
+    }
+
+    if (this.arePathsEmpty()) {
+      this._characterListFacadeService.getPaths();
+    }
+
+    if (this.areTypesEmpty()) {
+      this._characterListFacadeService.getTypes();
+    }
+
+    if (this.areRaritiesEmpty()) {
+      this._characterListFacadeService.getRarities();
+    }
+
+    if (this.areFactionsEmpty()) {
+      this._characterListFacadeService.getFactions();
+    }
   }
 }
