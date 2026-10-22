@@ -19,23 +19,16 @@ import { CharacterSearchForm } from '../../data-access/models/character-search-f
 import { Router } from '@angular/router';
 import {
   characterRarityFilters,
-  pathFilters,
   typeFilters,
   factionFilters,
 } from 'honkai-star-rail-db/filters';
 import {
   Character,
   CharacterSearchCriteria,
-  SortOptions,
 } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import {
-  selectCharacters,
-  selectSearchCriteria,
-  selectPage,
-  selectSize,
-  selectSortOptions,
-  selectPaths,
+  characterSelectors,
 } from '../../data-access/state/character.selectors';
 
 @Component({
@@ -58,10 +51,10 @@ export class ListComponent {
   private _router = inject(Router);
   private store = inject(Store);
 
-  private storeCriteria = this.store.selectSignal(selectSearchCriteria);
-  private storeSortOptions = this.store.selectSignal(selectSortOptions);
-  private storePage = this.store.selectSignal(selectPage);
-  private storeSize = this.store.selectSignal(selectSize);
+  private storeCriteria = this.store.selectSignal(characterSelectors.selectSearchCriteria);
+  private storeSortOptions = this.store.selectSignal(characterSelectors.selectSortOptions);
+  private storePage = this.store.selectSignal(characterSelectors.selectPage);
+  private storeSize = this.store.selectSignal(characterSelectors.selectSize);
 
   _currentPage = signal(1);
   _currentSize = signal(9);
@@ -73,7 +66,7 @@ export class ListComponent {
     type: this.storeCriteria().type ?? '',
     rarity:
       this.storeCriteria().rarity !== undefined
-        ? String(this.storeCriteria().rarity)
+        ? this.storeCriteria().rarity?.toString() + "-Star"
         : '',
     faction: this.storeCriteria().faction ?? '',
     sortBy:
@@ -98,15 +91,14 @@ export class ListComponent {
   ];
 
   searchForm = form(this.searchFormModel);
-  types = typeFilters.all();
-  rarities = characterRarityFilters.all();
-  factions = factionFilters.all();
 
   statsToggleState = signal<Record<number, 'level1' | 'level80'>>({});
 
-  characters = this.store.selectSignal(selectCharacters);
-  paths = this.store.selectSignal(selectPaths);
-  
+  characters = this.store.selectSignal(characterSelectors.selectCharacters);
+  paths = this.store.selectSignal(characterSelectors.selectPaths);
+  types = this.store.selectSignal(characterSelectors.selectTypes);
+  rarities = this.store.selectSignal(characterSelectors.selectRarities);
+  factions = this.store.selectSignal(characterSelectors.selectFactions);
 
   private isInitialized = false;
 
@@ -127,6 +119,21 @@ export class ListComponent {
     if (this.arePathsEmpty()) {
       console.log('Paths are empty, loading paths...');
       this._characterListFacadeService.getPaths();
+    }
+
+    if (this.areTypesEmpty()) {
+      console.log('Types are empty, loading types...');
+      this._characterListFacadeService.getTypes();
+    }
+
+    if (this.areRaritiesEmpty()) {
+      console.log('Rarities are empty, loading rarities...');
+      this._characterListFacadeService.getRarities();
+    }
+
+    if (this.areFactionsEmpty()) {
+      console.log('Factions are empty, loading factions...');
+      this._characterListFacadeService.getFactions();
     }
 
     effect(() => {
@@ -223,5 +230,17 @@ export class ListComponent {
 
   private arePathsEmpty(): boolean {
     return !this.paths().length;
+  }
+
+  private areTypesEmpty(): boolean {
+    return !this.types().length;
+  }
+
+  private areRaritiesEmpty(): boolean {
+    return !this.rarities().length;
+  }
+
+  private areFactionsEmpty(): boolean {
+    return !this.factions().length;
   }
 }

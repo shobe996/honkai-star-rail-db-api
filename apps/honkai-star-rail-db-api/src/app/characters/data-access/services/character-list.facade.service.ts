@@ -34,4 +34,16 @@ export class CharacterListFacadeService {
   getPaths(): void {
     this._store.dispatch(characterActions.loadPaths());
   }
+
+  getTypes(): void {
+    this._store.dispatch(characterActions.loadTypes());
+  }
+
+  getRarities(): void {
+    this._store.dispatch(characterActions.loadRarities());
+  }
+
+  getFactions(): void {
+    this._store.dispatch(characterActions.loadFactions());
+  }
 }

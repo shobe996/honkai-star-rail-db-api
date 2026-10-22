@@ -19,7 +19,7 @@
     />
   
     <lib-select
-      [options]="types"
+      [options]="types()"
       labelKey="name"
       valueKey="name"
       label="Types"
@@ -27,7 +27,7 @@
     />
   
     <lib-select
-      [options]="rarities"
+      [options]="rarities()"
       labelKey="name"
       valueKey="name"
       label="Rarities"
@@ -35,7 +35,7 @@
     />
   
     <lib-select
-      [options]="factions"
+      [options]="factions()"
       labelKey="name"
       valueKey="name"
       label="Factions"

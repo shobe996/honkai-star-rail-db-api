@@ -1,35 +1,40 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { CharacterState } from './character.state';
 
-export const selectCharacterState =
+const selectCharacterState =
   createFeatureSelector<CharacterState>('characters');
 
-export const selectCharacters = createSelector(
-  selectCharacterState,
-  (state) => state.characters
-);
+export const characterSelectors = {
+  selectCharacters: createSelector(
+    selectCharacterState,
+    (state) => state.characters,
+  ),
 
-export const selectPage = createSelector(
-  selectCharacterState,
-  (state) => state.page
-);
+  selectPage: createSelector(selectCharacterState, (state) => state.page),
 
-export const selectSize = createSelector(
-  selectCharacterState,
-  (state) => state.size
-);
+  selectSize: createSelector(selectCharacterState, (state) => state.size),
 
-export const selectSearchCriteria = createSelector(
-  selectCharacterState,
-  (state) => state.searchCriteria
-);
+  selectSearchCriteria: createSelector(
+    selectCharacterState,
+    (state) => state.searchCriteria,
+  ),
 
-export const selectSortOptions = createSelector(
-  selectCharacterState,
-  (state) => ({ by: state.by, direction: state.direction })
-);
+  selectSortOptions: createSelector(selectCharacterState, (state) => ({
+    by: state.by,
+    direction: state.direction,
+  })),
 
-export const selectPaths = createSelector(
-  selectCharacterState,
-  (state) => state.paths
-);
+  selectPaths: createSelector(selectCharacterState, (state) => state.paths),
+
+  selectTypes: createSelector(selectCharacterState, (state) => state.types),
+
+  selectRarities: createSelector(
+    selectCharacterState,
+    (state) => state.rarities,
+  ),
+  
+  selectFactions: createSelector(
+    selectCharacterState,
+    (state) => state.factions,
+  ),
+};
