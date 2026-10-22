@@ -21,22 +21,6 @@ export class PlanarOrnamentListFacadeService {
     planarOrnaments: this._planarOrnamentsSubject$.asObservable(),
   });
 
-  getAll(): void {
-    this._planarOrnamentsService.getAll().subscribe({
-      next: (value) => {
-        this._planarOrnamentsSubject$.next(value);
-      },
-    });
-  }
-
-  getAllPaginated(page: number, size: number): void {
-    this._planarOrnamentsService.getAllPaginated(page, size).subscribe({
-      next: (value) => {
-        this._planarOrnamentsSubject$.next(value);
-      },
-    });
-  }
-
   filter(
     criteria: PlanarOrnamentSearchCriteria,
     page: number,

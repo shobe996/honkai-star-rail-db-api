@@ -19,22 +19,6 @@ export class LightConeListFacadeService {
     lightCones: this._lightConeSubject$.asObservable(),
   });
 
-  getAll(): void {
-    this._lightConeService.getAll().subscribe({
-      next: (value) => {
-        this._lightConeSubject$.next(value);
-      },
-    });
-  }
-
-  getAllPaginated(page: number, size: number): void {
-    this._lightConeService.getAllPaginated(page, size).subscribe({
-      next: (value) => {
-        this._lightConeSubject$.next(value);
-      },
-    });
-  }
-
   filter(criteria: LightConeSearchCriteria, page: number, size: number, sort?: SortOptions<LightCone>): void {
     this._lightConeService.filter(criteria, page, size, sort).subscribe({
       next: (value) => {

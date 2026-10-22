@@ -5,16 +5,8 @@ import { planarOrnamentFilters } from 'honkai-star-rail-db/filters';
 
 @Service()
 export class PlanarOrnamentService {
-    getAll(): Observable<PaginatedResult<PlanarOrnament>> {
+    getAll(): Observable<PlanarOrnament[]> {
         const planarOrnaments = planarOrnamentFilters.all();
-        return of(planarOrnaments);
-    }
-
-    getAllPaginated(
-        page: number,
-        size: number,
-    ): Observable<PaginatedResult<PlanarOrnament>> {
-        const planarOrnaments = planarOrnamentFilters.all(page, size);
         return of(planarOrnaments);
     }
 

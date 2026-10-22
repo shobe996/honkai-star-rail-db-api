@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 @Service()
 export class PathService {
 
-    getAll(): Observable<PaginatedResult<Path>> {
+    getAll(): Observable<Path[]> {
         const paths = pathFilters.all();
         return of(paths);
       }

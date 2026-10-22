@@ -35,7 +35,7 @@ export class CharacterEffects {
       ofType(characterActions.loadPaths),
       switchMap(() =>
         this.pathService.getAll().pipe(
-          map((paths) => characterActions.loadPathsSuccess({ paths:paths.data })),
+          map((paths) => characterActions.loadPathsSuccess({ paths })),
         ),
       ),
     ),

@@ -5,18 +5,6 @@ import { Observable, of } from 'rxjs';
 
 @Service()
 export class CharacterService {
-  getAll(): Observable<PaginatedResult<Character>> {
-    const characters = characterFilters.all();
-    return of(characters);
-  }
-
-  getAllPaginated(
-    page: number,
-    size: number,
-  ): Observable<PaginatedResult<Character>> {
-    const characters = characterFilters.all(page, size);
-    return of(characters);
-  }
 
   filter(
     criteria: CharacterSearchCriteria,

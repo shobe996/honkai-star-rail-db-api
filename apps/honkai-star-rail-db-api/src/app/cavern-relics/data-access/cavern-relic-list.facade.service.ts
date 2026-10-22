@@ -19,22 +19,6 @@ export class CavernRelicListFacadeService {
     cavernRelics: this._cavernRelicSubject$.asObservable(),
   });
 
-  getAll(): void {
-    this._cavernRelicService.getAll().subscribe({
-      next: (value) => {
-        this._cavernRelicSubject$.next(value);
-      },
-    });
-  }
-
-  getAllPaginated(page: number, size: number): void {
-    this._cavernRelicService.getAllPaginated(page, size).subscribe({
-      next: (value) => {
-        this._cavernRelicSubject$.next(value);
-      },
-    });
-  }
-
   filter(criteria: CavernRelicSearchCriteria, page: number, size: number, sort?: SortOptions<CavernRelic>): void {
     this._cavernRelicService.filter(criteria, page, size, sort).subscribe({
       next: (value) => {

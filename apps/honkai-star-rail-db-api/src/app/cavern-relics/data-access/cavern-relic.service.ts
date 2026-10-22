@@ -5,18 +5,6 @@ import { cavernRelicFilters } from 'honkai-star-rail-db/filters';
 
 @Service()
 export class CavernRelicService {
-  getAll(): Observable<PaginatedResult<CavernRelic>> {
-      const cavernRelics = cavernRelicFilters.all();
-      return of(cavernRelics);
-    }
-  
-    getAllPaginated(
-      page: number,
-      size: number,
-    ): Observable<PaginatedResult<CavernRelic>> {
-      const cavernRelics = cavernRelicFilters.all(page, size);
-      return of(cavernRelics);
-    }
   
     filter(
       criteria: CavernRelicSearchCriteria,

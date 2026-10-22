@@ -21,22 +21,6 @@ export class CharacterListFacadeService {
     characters: this._characterSubject$.asObservable(),
   });
 
-  getAll(): void {
-    this._characterService.getAll().subscribe({
-      next: (value) => {
-        this._characterSubject$.next(value);
-      },
-    });
-  }
-
-  getAllPaginated(page: number, size: number): void {
-    this._characterService.getAllPaginated(page, size).subscribe({
-      next: (value) => {
-        this._characterSubject$.next(value);
-      },
-    });
-  }
-
   filter(
     searchCriteria: CharacterSearchCriteria,
     page: number,
