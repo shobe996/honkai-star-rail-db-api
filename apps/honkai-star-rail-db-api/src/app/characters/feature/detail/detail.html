@@ -3,11 +3,24 @@
     <!-- Left Visual Area -->
     <div class="artwork-viewport">
       <img
-        [src]="character().splash_art_url"
+        [src]="activeArtwork()"
         class="splash-art"
         [alt]="character().name"
       />
       <div class="name-overlay-bg">{{ character().name }}</div>
+      @if (artworks().length > 1) {
+        <div class="art-switcher">
+          @for (art of artworks(); track $index) {
+            <lib-button
+              variant="round"
+              [active]="selectedArtIndex() === $index"
+              (click)="selectArtwork($index)"
+            >
+              {{ $index === 0 ? 'S' : $index }}
+            </lib-button>
+          }
+        </div>
+      }
     </div>
 
     <!-- Right Information Panel -->

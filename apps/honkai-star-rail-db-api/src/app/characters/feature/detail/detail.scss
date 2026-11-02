@@ -23,6 +23,22 @@
   overflow: hidden;
 }
 
+.art-switcher {
+  position: absolute;
+  top: 50%;
+  right: 1.5rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 3;
+
+  lib-button {
+    flex: 0 0 auto;
+  }
+}
+
 .artwork-viewport {
   flex: 1.4;
   height: 100%;

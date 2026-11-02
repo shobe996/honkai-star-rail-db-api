@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
+  signal,
   OnInit,
 } from '@angular/core';
 import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
@@ -22,6 +24,20 @@ export class DetailComponent implements OnInit {
   character = this._store.selectSignal(characterSelectors.selectCharacter)
   currentLevel: 'level1' | 'level80' = 'level80';
 
+  // Index 0 is the splash art, 1..n are the outfits
+  selectedArtIndex = signal(0);
+  artworks = computed(() => {
+    const { splash_art_url, outfits } = this.character();
+    return [splash_art_url, ...(outfits ?? [])].filter(Boolean);
+  });
+  activeArtwork = computed(() => {
+    const arts = this.artworks();
+    return arts[this.selectedArtIndex()] ?? arts[0];
+  });
+
+  selectArtwork(index: number) {
+    this.selectedArtIndex.set(index);
+  }
 
   get activeStats() {
     return this.character().stats[this.currentLevel];
