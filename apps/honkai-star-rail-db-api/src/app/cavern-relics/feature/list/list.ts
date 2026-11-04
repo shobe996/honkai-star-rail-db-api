@@ -5,7 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CavernRelicSearchForm } from '../../data-access/cavern-relic-search-form.model';
+import { CavernRelicSearchForm } from '../../data-access/models/cavern-relic-search-form.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import {
   PaginatorComponent,
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
-import { CavernRelicListFacadeService } from '../../data-access/cavern-relic-list.facade.service';
+import { CavernRelicListFacadeService } from '../../data-access/services/cavern-relic-list.facade.service';
 import { CavernRelic, CavernRelicSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
 
 @Component({
