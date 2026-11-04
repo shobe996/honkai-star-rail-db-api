@@ -4,9 +4,7 @@ import {
   PaginatedResult,
   LightCone,
   Path,
-  Type,
   Rarity,
-  Faction,
 } from 'honkai-star-rail-db/models';
 
 export const lightConeActions = {
@@ -29,14 +27,6 @@ export const lightConeActions = {
     '[LightCone] Load Paths Success',
     props<{ paths: Path[] }>(),
   ),
-
-  loadTypes: createAction(
-    '[LightCone] Load Types',
-  ),
-  loadTypesSuccess: createAction(
-    '[LightCone] Load Types Success',
-    props<{ types: Type[] }>(),
-  ),
   loadRarities: createAction(
     '[LightCone] Load Rarities',
   ),
@@ -44,13 +34,6 @@ export const lightConeActions = {
     '[LightCone] Load Rarities Success',
     props<{ rarities: Rarity[] }>(),
   ), 
-  loadFactions: createAction(
-    '[LightCone] Load Factions',
-  ),
-  loadFactionsSuccess: createAction(
-    '[LightCone] Load Factions Success',
-    props<{ factions: Faction[] }>(),
-  ),
   loadLightConeDetails: createAction(
     '[LightCone] Load LightCone Details',
     props<{ lightCone: LightCone }>(),

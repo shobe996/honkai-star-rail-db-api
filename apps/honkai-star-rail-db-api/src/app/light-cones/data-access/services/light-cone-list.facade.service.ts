@@ -1,29 +1,31 @@
 import { inject, Service } from '@angular/core';
-import { LightConeService } from './light-cone.service';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { LightCone, LightConeSearchCriteria, PaginatedResult, SortOptions } from 'honkai-star-rail-db/models';
+import { LightCone, LightConeSearchCriteria } from 'honkai-star-rail-db/models';
+import { Store } from '@ngrx/store';
+import { lightConeActions } from '../state/light-cone.actions';
 
 @Service()
 export class LightConeListFacadeService {
-  private _lightConeService = inject(LightConeService);
+  private _store = inject(Store);
 
-  private _lightConeSubject$ = new BehaviorSubject<PaginatedResult<LightCone>>({
-    data: [],
-    total: 0,
-    hasMore: false,
-    page: 0,
-    size: 0,
-  });
+  filter(
+    searchCriteria: LightConeSearchCriteria,
+    page: number,
+    size: number,
+    by?: string,
+    direction?: string,
+  ): void {
+    this._store.dispatch(lightConeActions.loadLightCones({ searchCriteria, page, size, by, direction  }));
+  }
 
-  viewModel$ = combineLatest({
-    lightCones: this._lightConeSubject$.asObservable(),
-  });
+  getPaths(): void {
+    this._store.dispatch(lightConeActions.loadPaths());
+  }
+  
+  getRarities(): void {
+    this._store.dispatch(lightConeActions.loadRarities());
+  }
 
-  filter(criteria: LightConeSearchCriteria, page: number, size: number, sort?: SortOptions<LightCone>): void {
-    this._lightConeService.filter(criteria, page, size, sort).subscribe({
-      next: (value) => {
-        this._lightConeSubject$.next(value);
-      },
-    });
+  goToDetails(lightCone: LightCone): void {  
+    this._store.dispatch(lightConeActions.loadLightConeDetails({ lightCone }));
   }
 }

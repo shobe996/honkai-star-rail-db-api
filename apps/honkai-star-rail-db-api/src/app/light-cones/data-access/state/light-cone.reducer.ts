@@ -23,17 +23,9 @@ export const lightConeReducer = createReducer(
     ...state,
     paths,
   })),
-  on(lightConeActions.loadTypesSuccess, (state, { types }) => ({
-    ...state,
-    types,
-  })),
   on(lightConeActions.loadRaritiesSuccess, (state, { rarities }) => ({
     ...state,
     rarities,
-  })),
-  on(lightConeActions.loadFactionsSuccess, (state, { factions }) => ({
-    ...state,
-    factions,
   })),
   on(lightConeActions.loadLightConeDetails, (state, { lightCone }) => ({
     ...state,
