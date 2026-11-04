@@ -9,12 +9,15 @@ import { characterReducer } from './characters/data-access/state/character.reduc
 import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { CharacterEffects } from './characters/data-access/state/character.effects';
+import { lightConeReducer } from './light-cones/data-access/state/light-cone.reducer';
+import { LightConeEffects } from './light-cones/data-access/state/light-cone.effects';
 
 const store = {
   characters: characterReducer,
+  lightCones: lightConeReducer,
 };
 
-const effects = [CharacterEffects];
+const effects = [CharacterEffects, LightConeEffects];
 
 export const appConfig: ApplicationConfig = {
   providers: [

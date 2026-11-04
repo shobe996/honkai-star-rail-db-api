@@ -5,11 +5,12 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { LightConeListFacadeService } from '../../data-access/light-cone-list.facade.service';
-import { LightConeSearchForm } from '../../data-access/light-cone-search-form.model';
-import { LightCone, LightConeSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
-import { lightConeRarityFilters, pathFilters } from 'honkai-star-rail-db/filters';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { LightConeListFacadeService } from '../../data-access/services/light-cone-list.facade.service';
+import { LightConeSearchForm } from '../../data-access/models/light-cone-search-form.model';
+import {
+  LightCone,
+  LightConeSearchCriteria,
+} from 'honkai-star-rail-db/models';
 import { form, FormField } from '@angular/forms/signals';
 
 import {
@@ -21,6 +22,8 @@ import {
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { lightConeSelectors } from '../../data-access/state/light-cone.selectors';
 
 @Component({
   selector: 'app-list-component',
@@ -40,16 +43,29 @@ import { Router } from '@angular/router';
 export class ListComponent {
   private _lightConeListFacadeSerice = inject(LightConeListFacadeService);
   private _router = inject(Router);
+  private _store = inject(Store);
+
+  private _storeCriteria = this._store.selectSignal(
+    lightConeSelectors.selectSearchCriteria,
+  );
+  private _storeSortOptions = this._store.selectSignal(
+    lightConeSelectors.selectSortOptions,
+  );
+  private _storePage = this._store.selectSignal(lightConeSelectors.selectPage);
+  private _storeSize = this._store.selectSignal(lightConeSelectors.selectSize);
+
   private _currentPage = signal(1);
   private _currentSize = signal(9);
 
   searchFormModel = signal<LightConeSearchForm>({
-    name: '',
-    path: '',
-    rarity: '',
-    effect: '',
-    sortBy: '',
-    sortDirection: '',
+    name: this._storeCriteria().name ?? '',
+    path: this._storeCriteria().path ?? '',
+    rarity: this._storeCriteria().rarity
+      ? this._storeCriteria().rarity + '-Star'
+      : '',
+    effect: this._storeCriteria().effect ?? '',
+    sortBy: this._storeSortOptions().by ?? '',
+    sortDirection: this._storeSortOptions().direction ?? '',
   });
 
   sortByOptions = [
@@ -64,55 +80,61 @@ export class ListComponent {
   ];
 
   searchForm = form(this.searchFormModel);
-  paths = pathFilters.all();
-  rarities = lightConeRarityFilters.all();
-  toDetails(id: number) {
-    this._router.navigate(['light-cone', 'detail', id]);
-  }
+  lightCones = this._store.selectSignal(lightConeSelectors.selectLightCones);
+  paths = this._store.selectSignal(lightConeSelectors.selectPaths);
+  rarities = this._store.selectSignal(lightConeSelectors.selectRarities);
+
+  private isInitialized = false;
+
   statsToggleState = new Map<number, 'level1' | 'level80'>();
-  viewModel = toSignal(this._lightConeListFacadeSerice.viewModel$, {
-    initialValue: {
-      lightCones: {
-        data: [],
-        total: 0,
-        hasMore: false,
-        page: 0,
-        size: 0,
-      },
-    },
-  });
 
   constructor() {
+    const page = this._storePage();
+    const size = this._storeSize();
+
+    this._currentPage.set(page);
+    this._currentSize.set(size);
+
+    this._loadOptions();
+
     effect(() => {
-      const { name, path, rarity, effect, sortBy, sortDirection } =
-        this.searchForm().value();
+      this._currentPage();
+      this._currentSize();
+      this.searchForm().value();
 
-      const criteria: LightConeSearchCriteria = {
-        name: name ?? '',
-        path: path ?? '',
-        effect: effect ?? '',
-        rarity: rarity ? Number.parseInt(rarity) : undefined,
-      };
-
-      if (sortBy && sortDirection) {
-        const sortOptions: SortOptions<LightCone> = this.generateSortOptions(
-          sortBy,
-          sortDirection,
-        );
-        this._lightConeListFacadeSerice.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-          sortOptions,
-        );
-      } else {
-        this._lightConeListFacadeSerice.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-        );
+      if (!this.isInitialized) {
+        this.isInitialized = true;
+        return;
       }
+
+      console.log('User action detected, fetching new data...');
+      this.loadLightCones();
     });
+  }
+
+  toDetails(lightCone: LightCone) {
+    this._lightConeListFacadeSerice.goToDetails(lightCone);
+    this._router.navigate(['light-cone', 'detail', lightCone.id]);
+  }
+
+  private loadLightCones(): void {
+    const { name, effect, path, rarity, sortBy, sortDirection } =
+      this.searchForm().value();
+
+    const criteria: LightConeSearchCriteria = {
+      name: name ?? '',
+      effect: effect ?? '',
+      path: path ?? '',
+      rarity: rarity ? Number.parseInt(rarity) : undefined,
+    };
+
+    this._lightConeListFacadeSerice.filter(
+      criteria,
+      this._currentPage(),
+      this._currentSize(),
+      sortBy,
+      sortDirection,
+    );
   }
 
   toggleStats(lightConeId: number) {
@@ -150,28 +172,29 @@ export class ListComponent {
     this._currentPage.set(1);
   }
 
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string,
-  ): SortOptions<LightCone> {
-    const sortOptions: SortOptions<LightCone> = {} as SortOptions<LightCone>;
-    if (sortBy && sortDirection) {
-      switch (sortBy) {
-        case 'id':
-          sortOptions.by = (lightCone) => lightCone.id;
-          break;
-        case 'name':
-          sortOptions.by = (lightCone) => lightCone.name;
-          break;
-        case 'rarity':
-          sortOptions.by = (lightCone) => lightCone.rarity.value;
-          break;
-        case 'path':
-          sortOptions.by = (lightCone) => lightCone.path.name;
-          break;
-      }
-      sortOptions.direction = sortDirection as 'asc' | 'desc';
+  private _loadOptions() {
+    if (this.areLightConesEmpty()) {
+      this.loadLightCones();
     }
-    return sortOptions;
+
+    if (this.arePathsEmpty()) {
+      this._lightConeListFacadeSerice.getPaths();
+    }
+
+    if (this.areRaritiesEmpty()) {
+      this._lightConeListFacadeSerice.getRarities();
+    }
+  }
+
+  private areLightConesEmpty(): boolean {
+    return !this.lightCones()?.data?.length;
+  }
+
+  private arePathsEmpty(): boolean {
+    return !this.paths().length;
+  }
+
+  private areRaritiesEmpty(): boolean {
+    return !this.rarities().length;
   }
 }

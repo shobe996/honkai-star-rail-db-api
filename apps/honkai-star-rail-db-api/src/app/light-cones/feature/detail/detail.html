@@ -3,23 +3,23 @@
     <!-- Artwork Area -->
     <div class="artwork-viewport">
       <img
-        [src]="viewModel().lightCone?.full_artwork_url"
+        [src]="lightCone().full_artwork_url"
         class="splash-art"
-        [alt]="viewModel().lightCone?.name"
+        [alt]="lightCone().name"
       />
-      <div class="name-overlay-bg">{{ viewModel().lightCone?.name }}</div>
+      <div class="name-overlay-bg">{{ lightCone().name }}</div>
     </div>
 
     <!-- Info Pane -->
     <div class="info-pane">
       <header class="char-header">
-        <div class="rarity-row">{{ viewModel().lightCone?.rarity?.icon }}</div>
-        <h1 class="bold-name">{{ viewModel().lightCone?.name }}</h1>
+        <div class="rarity-row">{{ lightCone().rarity.icon }}</div>
+        <h1 class="bold-name">{{ lightCone().name }}</h1>
 
         <div class="badge-row">
           <lib-badge
-            [icon]="viewModel().lightCone?.path?.icon_url"
-            [label]="viewModel().lightCone?.path?.name"
+            [icon]="lightCone().path.icon_url"
+            [label]="lightCone().path.name"
             variant="detail"
           ></lib-badge>
         </div>
@@ -28,7 +28,7 @@
       <!-- Description Section -->
       <div class="description-scroll">
         <div
-          [innerHTML]="viewModel().lightCone?.effect"
+          [innerHTML]="lightCone().effect"
           class="flavor-text"
         ></div>
       </div>
@@ -59,15 +59,15 @@
         <div class="stat-grid-3col">
           <div class="stat-box">
             <span class="stat-label">HP</span>
-            <span class="stat-value">{{ activeStats?.base_hp }}</span>
+            <span class="stat-value">{{ activeStats.base_hp }}</span>
           </div>
           <div class="stat-box">
             <span class="stat-label">ATK</span>
-            <span class="stat-value">{{ activeStats?.base_atk }}</span>
+            <span class="stat-value">{{ activeStats.base_atk }}</span>
           </div>
           <div class="stat-box">
             <span class="stat-label">DEF</span>
-            <span class="stat-value">{{ activeStats?.base_def }}</span>
+            <span class="stat-value">{{ activeStats.base_def }}</span>
           </div>
         </div>
       </section>

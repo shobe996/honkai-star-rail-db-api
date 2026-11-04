@@ -11,7 +11,7 @@
     />
   
     <lib-select
-      [options]="paths"
+      [options]="paths()"
       labelKey="name"
       valueKey="name"
       label="Paths"
@@ -19,7 +19,7 @@
     />
   
     <lib-select
-      [options]="rarities"
+      [options]="rarities()"
       labelKey="name"
       valueKey="name"
       label="Rarities"
@@ -44,14 +44,14 @@
 
   </lib-filter-bar>
   <div class="card-list">
-    @for (lightCone of viewModel().lightCones.data; track lightCone.id) {
+    @for (lightCone of lightCones().data; track lightCone.id) {
     <lib-card
       [rarityValue]="lightCone.rarity.value"
       [image]="lightCone.icon_url"
       [name]="lightCone.name"
       [starIcon]="lightCone.rarity.icon"
-      (imageClick)="toDetails(lightCone.id)"
-      (nameClick)="toDetails(lightCone.id)"
+      (imageClick)="toDetails(lightCone)"
+      (nameClick)="toDetails(lightCone)"
     >
       <div badges class="badge-container">
         <lib-badge
@@ -85,10 +85,10 @@
     }
   </div>
   <lib-paginator
-    [total]="viewModel().lightCones.total"
-    [size]="viewModel().lightCones.size"
-    [page]="viewModel().lightCones.page"
-    [hasMore]="viewModel().lightCones.hasMore"
+    [total]="lightCones().total"
+    [size]="lightCones().size"
+    [page]="lightCones().page"
+    [hasMore]="lightCones().hasMore"
     label="Light Cones"
     (pageChange)="goToPage($event)"
     (sizeChange)="updatePageSize($event)"
