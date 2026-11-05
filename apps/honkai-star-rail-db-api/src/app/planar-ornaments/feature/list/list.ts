@@ -7,7 +7,7 @@ import {
   PaginatorComponent,
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
-import { PlanarOrnamentSearchForm } from '../../data-access/planar-ornament-search-form-model';
+import { PlanarOrnamentSearchForm } from '../../data-access/models/planar-ornament-search-form-model';
 import { PlanarOrnamentListFacadeService } from '../../data-access/services/planar-ornament-list.facade.service';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
