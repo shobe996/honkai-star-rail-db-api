@@ -1,29 +1,20 @@
 import { inject, Service } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { CavernRelicService } from './cavern-relic.service';
-import { CavernRelic, CavernRelicSearchCriteria, PaginatedResult, SortOptions } from 'honkai-star-rail-db/models';
+import { CavernRelic, CavernRelicSearchCriteria, PaginatedResult } from 'honkai-star-rail-db/models';
+import { Store } from '@ngrx/store';
+import { cavernRelicActions } from '../state/cavern-relic.actions';
 
 @Service()
 export class CavernRelicListFacadeService {
-  private _cavernRelicService = inject(CavernRelicService);
+  private _store = inject(Store);
 
-  private _cavernRelicSubject$ = new BehaviorSubject<PaginatedResult<CavernRelic>>({
-    data: [],
-    total: 0,
-    hasMore: false,
-    page: 0,
-    size: 0,
-  });
-
-  viewModel$ = combineLatest({
-    cavernRelics: this._cavernRelicSubject$.asObservable(),
-  });
-
-  filter(criteria: CavernRelicSearchCriteria, page: number, size: number, sort?: SortOptions<CavernRelic>): void {
-    this._cavernRelicService.filter(criteria, page, size, sort).subscribe({
-      next: (value) => {
-        this._cavernRelicSubject$.next(value);
-      },
-    });
-  }
+  filter(
+      searchCriteria: CavernRelicSearchCriteria,
+      page: number,
+      size: number,
+      by?: string,
+      direction?: string,
+    ): void {
+      this._store.dispatch(cavernRelicActions.loadCavernRelics({ searchCriteria, page, size, by, direction  }));
+    }
 }

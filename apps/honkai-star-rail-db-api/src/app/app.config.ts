@@ -11,13 +11,16 @@ import { provideEffects } from '@ngrx/effects';
 import { CharacterEffects } from './characters/data-access/state/character.effects';
 import { lightConeReducer } from './light-cones/data-access/state/light-cone.reducer';
 import { LightConeEffects } from './light-cones/data-access/state/light-cone.effects';
+import { cavernRelicReducer } from './cavern-relics/data-access/state/cavern-relic.reducer';
+import { CavernRelicEffects } from './cavern-relics/data-access/state/cavern-relic.effects';
 
 const store = {
   characters: characterReducer,
   lightCones: lightConeReducer,
+  cavernRelics: cavernRelicReducer,
 };
 
-const effects = [CharacterEffects, LightConeEffects];
+const effects = [CharacterEffects, LightConeEffects, CavernRelicEffects];
 
 export const appConfig: ApplicationConfig = {
   providers: [

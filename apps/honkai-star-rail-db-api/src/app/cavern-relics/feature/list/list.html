@@ -28,7 +28,7 @@
   </lib-filter-bar>
 
   <div class="card-list">
-    @for (relic of viewModel().cavernRelics.data; track relic.id) {
+    @for (relic of cavernRelics().data; track relic.id) {
     <lib-card
       [rarityValue]="5"
       [image]="relic.icons.icon_url"
@@ -60,10 +60,10 @@
   </div>
 
   <lib-paginator
-    [total]="viewModel().cavernRelics.total"
-    [size]="viewModel().cavernRelics.size"
-    [page]="viewModel().cavernRelics.page"
-    [hasMore]="viewModel().cavernRelics.hasMore"
+    [total]="cavernRelics().total"
+    [size]="cavernRelics().size"
+    [page]="cavernRelics().page"
+    [hasMore]="cavernRelics().hasMore"
     label="Cavern Relics"
     (pageChange)="goToPage($event)"
     (sizeChange)="updatePageSize($event)"

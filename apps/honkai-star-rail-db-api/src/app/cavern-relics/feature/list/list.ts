@@ -17,7 +17,13 @@ import {
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
 import { CavernRelicListFacadeService } from '../../data-access/services/cavern-relic-list.facade.service';
-import { CavernRelic, CavernRelicSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+import {
+  CavernRelic,
+  CavernRelicSearchCriteria,
+  SortOptions,
+} from 'honkai-star-rail-db/models';
+import { Store } from '@ngrx/store';
+import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selectors';
 
 @Component({
   selector: 'app-list-component',
@@ -36,15 +42,31 @@ import { CavernRelic, CavernRelicSearchCriteria, SortOptions } from 'honkai-star
 export class ListComponent {
   private _cavernRelicListFacadeService = inject(CavernRelicListFacadeService);
   private _router = inject(Router);
+  private _store = inject(Store);
+
+  cavernRelics = this._store.selectSignal(cavernRelicSelectors.selectCavernRelics);
+
+  private _storeCriteria = this._store.selectSignal(
+    cavernRelicSelectors.selectSearchCriteria,
+  );
+  private _storeSortOptions = this._store.selectSignal(
+    cavernRelicSelectors.selectSortOptions,
+  );
+  private _storePage = this._store.selectSignal(
+    cavernRelicSelectors.selectPage,
+  );
+  private _storeSize = this._store.selectSignal(
+    cavernRelicSelectors.selectSize,
+  );
 
   private _currentPage = signal(1);
   private _currentSize = signal(9);
 
   searchFormModel = signal<CavernRelicSearchForm>({
-    name: '',
-    effect: '',
-    sortBy: '',
-    sortDirection: '',
+    name: this._storeCriteria().name ?? '',
+    effect: this._storeCriteria().effect ?? '',
+    sortBy: this._storeSortOptions().by ?? '',
+    sortDirection: this._storeSortOptions().direction ?? '',
   });
 
   sortByOptions = [
@@ -60,50 +82,53 @@ export class ListComponent {
 
   searchForm = form(this.searchFormModel);
 
-  viewModel = toSignal(this._cavernRelicListFacadeService.viewModel$, {
-    initialValue: {
-      cavernRelics: {
-        data: [],
-        total: 0,
-        hasMore: false,
-        page: 0,
-        size: 0,
-      },
-    },
-  });
+  private isInitialized = false;
 
   constructor() {
+    const page = this._storePage();
+    const size = this._storeSize();
+
+    this._currentPage.set(page);
+    this._currentSize.set(size);
+
+    if (this.areCavernRelicsEmpty()) {
+      this.loadCavernRelics();
+    }
+
     effect(() => {
-      const { name, effect, sortBy, sortDirection } = this.searchForm().value();
+      this._currentPage();
+      this._currentSize();
+      this.searchForm().value();
 
-      const criteria: CavernRelicSearchCriteria = {
-        name: name ?? '',
-        effect: effect ?? '',
-      };
-
-      if (sortBy && sortDirection) {
-        const sortOptions: SortOptions<CavernRelic> = this.generateSortOptions(
-          sortBy,
-          sortDirection,
-        );
-        this._cavernRelicListFacadeService.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-          sortOptions,
-        );
-      } else {
-        this._cavernRelicListFacadeService.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-        );
+      if (!this.isInitialized) {
+        this.isInitialized = true;
+        return;
       }
+
+      console.log('User action detected, fetching new data...');
+      this.loadCavernRelics();
     });
   }
 
   toDetails(id: number) {
     this._router.navigate(['cavern-relic', 'detail', id]);
+  }
+
+  loadCavernRelics() {
+    const { name, effect, sortBy, sortDirection } = this.searchForm().value();
+
+    const criteria: CavernRelicSearchCriteria = {
+      name: name ?? '',
+      effect: effect ?? '',
+    };
+
+    this._cavernRelicListFacadeService.filter(
+      criteria,
+      this._currentPage(),
+      this._currentSize(),
+      sortBy,
+      sortDirection,
+    );
   }
 
   goToPage(page: number) {
@@ -126,28 +151,8 @@ export class ListComponent {
     this._currentPage.set(1);
   }
 
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string,
-  ): SortOptions<CavernRelic> {
-    const sortOptions: SortOptions<CavernRelic> = {} as SortOptions<CavernRelic>;
-    if (sortBy && sortDirection) {
-      switch (sortBy) {
-        case 'id':
-          sortOptions.by = (cavernRelic) => cavernRelic.id;
-          break;
-        case 'name':
-          sortOptions.by = (cavernRelic) => cavernRelic.name;
-          break;
-        case 'two_set_effect':
-          sortOptions.by = (cavernRelic) => cavernRelic.two_set_effect;
-          break;
-        case 'four_set_effect':
-          sortOptions.by = (cavernRelic) => cavernRelic.four_set_effect;
-          break;
-      }
-      sortOptions.direction = sortDirection as 'asc' | 'desc';
-    }
-    return sortOptions;
+  private areCavernRelicsEmpty(): boolean {
+    return !this.cavernRelics()?.data?.length;
   }
+
 }
