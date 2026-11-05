@@ -8,7 +8,7 @@ import {
   SelectComponent,
 } from '@honkai-star-rail-db/webkit';
 import { PlanarOrnamentSearchForm } from '../../data-access/planar-ornament-search-form-model';
-import { PlanarOrnamentListFacadeService } from '../../data-access/planar-ornament-list.facade.service';
+import { PlanarOrnamentListFacadeService } from '../../data-access/services/planar-ornament-list.facade.service';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { PlanarOrnament, PlanarOrnamentSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';

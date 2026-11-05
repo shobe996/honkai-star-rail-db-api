@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
-import { PlanarOrnamentDetailFacadeService } from '../../data-access/planar-ornament-detail.facade.service';
+import { PlanarOrnamentDetailFacadeService } from '../../data-access/services/planar-ornament-detail.facade.service';
 
 @Component({
   selector: 'app-detail-component',
