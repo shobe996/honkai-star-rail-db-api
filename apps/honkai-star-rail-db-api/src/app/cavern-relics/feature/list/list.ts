@@ -6,7 +6,6 @@ import {
   signal,
 } from '@angular/core';
 import { CavernRelicSearchForm } from '../../data-access/models/cavern-relic-search-form.model';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { form, FormField } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import {
@@ -20,7 +19,6 @@ import { CavernRelicListFacadeService } from '../../data-access/services/cavern-
 import {
   CavernRelic,
   CavernRelicSearchCriteria,
-  SortOptions,
 } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selectors';
@@ -110,8 +108,9 @@ export class ListComponent {
     });
   }
 
-  toDetails(id: number) {
-    this._router.navigate(['cavern-relic', 'detail', id]);
+  toDetails(cavernRelic: CavernRelic) {
+    this._cavernRelicListFacadeService.goToDetails(cavernRelic);
+    this._router.navigate(['cavern-relic', 'detail', cavernRelic.id]);
   }
 
   loadCavernRelics() {

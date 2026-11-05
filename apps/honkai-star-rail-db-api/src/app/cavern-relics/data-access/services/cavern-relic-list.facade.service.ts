@@ -1,6 +1,5 @@
 import { inject, Service } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { CavernRelic, CavernRelicSearchCriteria, PaginatedResult } from 'honkai-star-rail-db/models';
+import { CavernRelic, CavernRelicSearchCriteria } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import { cavernRelicActions } from '../state/cavern-relic.actions';
 
@@ -17,4 +16,8 @@ export class CavernRelicListFacadeService {
     ): void {
       this._store.dispatch(cavernRelicActions.loadCavernRelics({ searchCriteria, page, size, by, direction  }));
     }
+
+    goToDetails(cavernRelic: CavernRelic): void {  
+        this._store.dispatch(cavernRelicActions.loadCavernRelicDetails({ cavernRelic }));
+      }
 }

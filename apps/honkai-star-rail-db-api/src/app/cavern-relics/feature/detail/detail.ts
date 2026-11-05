@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CavernRelicDetailFacadeService } from '../../data-access/services/cavern-relic-detail.facade.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selectors';
 
 @Component({
   selector: 'app-detail-component',
@@ -9,20 +8,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
 })
-export class DetailComponent implements OnInit {
-   private _cavernRelicDetailFacadeService = inject(CavernRelicDetailFacadeService);
- 
-  private _route = inject(ActivatedRoute);
+export class DetailComponent {
+  private _store = inject(Store);
 
-  viewModel = toSignal(this._cavernRelicDetailFacadeService.viewModel$, {
-    initialValue: { cavernRelic: null },
-  });
-
-  ngOnInit(): void {
-    const idString = this._route.snapshot.paramMap.get('id');
-    if (idString) {
-      const id = Number.parseInt(idString);
-      this._cavernRelicDetailFacadeService.getById(id);
-    }
-  }
+  cavernRelic = this._store.selectSignal(cavernRelicSelectors.selectCavernRelic)
 }
