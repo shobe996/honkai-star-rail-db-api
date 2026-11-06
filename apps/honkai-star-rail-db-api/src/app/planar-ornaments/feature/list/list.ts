@@ -11,7 +11,13 @@ import { PlanarOrnamentSearchForm } from '../../data-access/models/planar-orname
 import { PlanarOrnamentListFacadeService } from '../../data-access/services/planar-ornament-list.facade.service';
 import { Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { PlanarOrnament, PlanarOrnamentSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+import {
+  PlanarOrnament,
+  PlanarOrnamentSearchCriteria,
+  SortOptions,
+} from 'honkai-star-rail-db/models';
+import { Store } from '@ngrx/store';
+import { planarOrnamentSelectors } from '../../data-access/state/planar-ornament.selectors';
 
 @Component({
   selector: 'app-list-component',
@@ -31,15 +37,33 @@ export class ListComponent {
     PlanarOrnamentListFacadeService,
   );
   private _router = inject(Router);
+  private _store = inject(Store);
+
+  planarOrnaments = this._store.selectSignal(
+    planarOrnamentSelectors.selectPlanarOrnaments,
+  );
+
+  private _storeCriteria = this._store.selectSignal(
+    planarOrnamentSelectors.selectSearchCriteria,
+  );
+  private _storeSortOptions = this._store.selectSignal(
+    planarOrnamentSelectors.selectSortOptions,
+  );
+  private _storePage = this._store.selectSignal(
+    planarOrnamentSelectors.selectPage,
+  );
+  private _storeSize = this._store.selectSignal(
+    planarOrnamentSelectors.selectSize,
+  );
 
   private _currentPage = signal(1);
   private _currentSize = signal(9);
 
   searchFormModel = signal<PlanarOrnamentSearchForm>({
-    name: '',
-    effect: '',
-    sortBy: '',
-    sortDirection: '',
+    name: this._storeCriteria().name ?? '',
+    effect: this._storeCriteria().effect ?? '',
+    sortBy: this._storeSortOptions().by ?? '',
+    sortDirection: this._storeSortOptions().direction ?? '',
   });
 
   sortByOptions = [
@@ -54,49 +78,37 @@ export class ListComponent {
 
   searchForm = form(this.searchFormModel);
 
-  viewModel = toSignal(this._planarOrnamentsListFacadeService.viewModel$, {
-    initialValue: {
-      planarOrnaments: {
-        data: [],
-        total: 0,
-        hasMore: false,
-        page: 0,
-        size: 0,
-      },
-    },
-  });
+  private isInitialized = false;
 
   constructor() {
+    const page = this._storePage();
+    const size = this._storeSize();
+
+    this._currentPage.set(page);
+    this._currentSize.set(size);
+
+    if (this.arePlanarOrnamentsEmpty()) {
+      this.loadPlanarOrnaments();
+    }
+
     effect(() => {
-      const { name, effect, sortBy, sortDirection } = this.searchForm().value();
+      this._currentPage();
+      this._currentSize();
+      this.searchForm().value();
 
-      const criteria: PlanarOrnamentSearchCriteria = {
-        name: name ?? '',
-        effect: effect ?? '',
-      };
-
-      if (sortBy && sortDirection) {
-        const sortOptions: SortOptions<PlanarOrnament> =
-          this.generateSortOptions(sortBy, sortDirection);
-
-        this._planarOrnamentsListFacadeService.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-          sortOptions,
-        );
-      } else {
-        this._planarOrnamentsListFacadeService.filter(
-          criteria,
-          this._currentPage(),
-          this._currentSize(),
-        );
+      if (!this.isInitialized) {
+        this.isInitialized = true;
+        return;
       }
+
+      console.log('User action detected, fetching new data...');
+      this.loadPlanarOrnaments();
     });
   }
 
-  toDetails(id: number) {
-    this._router.navigate(['planar-ornament', 'detail', id]);
+  toDetails(planarOrnament: PlanarOrnament) {
+    this._planarOrnamentsListFacadeService.goToDetails(planarOrnament);
+    this._router.navigate(['planar-ornament', 'detail', planarOrnament.id]);
   }
 
   goToPage(page: number) {
@@ -119,26 +131,24 @@ export class ListComponent {
     this._currentPage.set(1);
   }
 
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string,
-  ): SortOptions<PlanarOrnament> {
-    const sortOptions: SortOptions<PlanarOrnament> =
-      {} as SortOptions<PlanarOrnament>;
-    if (sortBy && sortDirection) {
-      switch (sortBy) {
-        case 'id':
-          sortOptions.by = (planarOrnament) => planarOrnament.id;
-          break;
-        case 'name':
-          sortOptions.by = (planarOrnament) => planarOrnament.name;
-          break;
-        case 'two_set_effect':
-          sortOptions.by = (planarOrnament) => planarOrnament.two_set_effect;
-          break;
-      }
-      sortOptions.direction = sortDirection as 'asc' | 'desc';
-    }
-    return sortOptions;
+  loadPlanarOrnaments() {
+    const { name, effect, sortBy, sortDirection } = this.searchForm().value();
+
+    const criteria: PlanarOrnamentSearchCriteria = {
+      name: name ?? '',
+      effect: effect ?? '',
+    };
+
+    this._planarOrnamentsListFacadeService.filter(
+      criteria,
+      this._currentPage(),
+      this._currentSize(),
+      sortBy,
+      sortDirection,
+    );
+  }
+
+   private arePlanarOrnamentsEmpty(): boolean {
+    return !this.planarOrnaments()?.data?.length;
   }
 }

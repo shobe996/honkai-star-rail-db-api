@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute } from '@angular/router';
-import { PlanarOrnamentDetailFacadeService } from '../../data-access/services/planar-ornament-detail.facade.service';
+import { Component, inject } from '@angular/core';
+import { planarOrnamentSelectors } from '../../data-access/state/planar-ornament.selectors';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-detail-component',
@@ -9,20 +8,8 @@ import { PlanarOrnamentDetailFacadeService } from '../../data-access/services/pl
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
 })
-export class DetailComponent implements OnInit {
-  private _planarOrnamentDetailFacadeService = inject(PlanarOrnamentDetailFacadeService);
- 
-  private _route = inject(ActivatedRoute);
+export class DetailComponent {
+  private _store = inject(Store);
 
-  viewModel = toSignal(this._planarOrnamentDetailFacadeService.viewModel$, {
-    initialValue: { planarOrnament: null },
-  });
-
-  ngOnInit(): void {
-    const idString = this._route.snapshot.paramMap.get('id');
-    if (idString) {
-      const id = Number.parseInt(idString);
-      this._planarOrnamentDetailFacadeService.getById(id);
-    }
-  }
+  planarOrnament = this._store.selectSignal(planarOrnamentSelectors.selectPlanarOrnament)
 }

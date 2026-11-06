@@ -5,7 +5,7 @@
       <div class="ornament-grid-showcase">
         <div class="ornament-piece-card">
           <img
-            [src]="viewModel().planarOrnament?.icons?.sphere_icon_url"
+            [src]="planarOrnament().icons.sphere_icon_url"
             alt="Sphere"
             class="piece-art"
           />
@@ -14,7 +14,7 @@
 
         <div class="ornament-piece-card">
           <img
-            [src]="viewModel().planarOrnament?.icons?.rope_icon_url"
+            [src]="planarOrnament().icons.rope_icon_url"
             alt="Rope"
             class="piece-art"
           />
@@ -22,14 +22,14 @@
         </div>
       </div>
 
-      <div class="name-overlay-bg">{{ viewModel().planarOrnament?.name }}</div>
+      <div class="name-overlay-bg">{{ planarOrnament().name }}</div>
     </div>
 
     <!-- Right Information Panel -->
     <div class="info-pane">
       <header class="ornament-header">
-        <span class="set-type-tag">{{ viewModel().planarOrnament?.set }}</span>
-        <h1 class="bold-name">{{ viewModel().planarOrnament?.name }}</h1>
+        <span class="set-type-tag">{{ planarOrnament().set }}</span>
+        <h1 class="bold-name">{{ planarOrnament().name }}</h1>
       </header>
 
       <!-- Set Effects Panel -->
@@ -37,7 +37,7 @@
         <div class="effect-group">
           <span class="effect-badge">2-PIECE SET</span>
           <p class="effect-description">
-            {{ viewModel().planarOrnament?.two_set_effect }}
+            {{ planarOrnament().two_set_effect }}
           </p>
         </div>
       </section>

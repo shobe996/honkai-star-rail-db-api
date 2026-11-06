@@ -1,36 +1,38 @@
 import { Service, inject } from '@angular/core';
-import { PlanarOrnamentService } from './planar-ornament.service';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { PaginatedResult, PlanarOrnament, PlanarOrnamentSearchCriteria, SortOptions } from 'honkai-star-rail-db/models';
+import {
+  PlanarOrnamentSearchCriteria,
+  PlanarOrnament,
+} from 'honkai-star-rail-db/models';
+import { Store } from '@ngrx/store';
+import { planarOrnamentActions } from '../state/planar-ornament.actions';
 
 @Service()
 export class PlanarOrnamentListFacadeService {
-  private _planarOrnamentsService = inject(PlanarOrnamentService);
-
-  private _planarOrnamentsSubject$ = new BehaviorSubject<
-    PaginatedResult<PlanarOrnament>
-  >({
-    data: [],
-    total: 0,
-    hasMore: false,
-    page: 0,
-    size: 0,
-  });
-
-  viewModel$ = combineLatest({
-    planarOrnaments: this._planarOrnamentsSubject$.asObservable(),
-  });
+  private _store = inject(Store);
 
   filter(
-    criteria: PlanarOrnamentSearchCriteria,
+    searchCriteria: PlanarOrnamentSearchCriteria,
     page: number,
     size: number,
-    sort?: SortOptions<PlanarOrnament>,
+    by?: string,
+    direction?: string,
   ): void {
-    this._planarOrnamentsService.filter(criteria, page, size, sort).subscribe({
-      next: (value) => {
-        this._planarOrnamentsSubject$.next(value);
-      },
-    });
+    this._store.dispatch(
+      planarOrnamentActions.loadPlanarOrnaments({
+        searchCriteria,
+        page,
+        size,
+        by,
+        direction,
+      }),
+    );
+  }
+
+  goToDetails(selectedPlanarOrnament: PlanarOrnament): void {
+    this._store.dispatch(
+      planarOrnamentActions.loadPlanarOrnamentDetails({
+        selectedPlanarOrnament,
+      }),
+    );
   }
 }

@@ -28,13 +28,13 @@
   </lib-filter-bar>
 
   <div class="card-list">
-    @for (ornament of viewModel().planarOrnaments.data; track ornament.id) {
+    @for (ornament of planarOrnaments().data; track ornament.id) {
     <lib-card
       [rarityValue]="5"
       [image]="ornament.icons.icon_url"
       [name]="ornament.name"
-      (imageClick)="toDetails(ornament.id)"
-      (nameClick)="toDetails(ornament.id)"
+      (imageClick)="toDetails(ornament)"
+      (nameClick)="toDetails(ornament)"
     >
       <div stats class="effects-section">
         <div class="effect-box">
@@ -49,10 +49,10 @@
   </div>
 
   <lib-paginator
-    [total]="viewModel().planarOrnaments.total"
-    [size]="viewModel().planarOrnaments.size"
-    [page]="viewModel().planarOrnaments.page"
-    [hasMore]="viewModel().planarOrnaments.hasMore"
+    [total]="planarOrnaments().total"
+    [size]="planarOrnaments().size"
+    [page]="planarOrnaments().page"
+    [hasMore]="planarOrnaments().hasMore"
     label="Planar Ornaments"
     (pageChange)="goToPage($event)"
     (sizeChange)="updatePageSize($event)"

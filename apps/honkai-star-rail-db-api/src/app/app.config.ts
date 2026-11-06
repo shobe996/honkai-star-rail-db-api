@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { planarOrnamentReducer } from './planar-ornaments/data-access/state/planar-ornament.reducer';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
@@ -13,14 +14,16 @@ import { lightConeReducer } from './light-cones/data-access/state/light-cone.red
 import { LightConeEffects } from './light-cones/data-access/state/light-cone.effects';
 import { cavernRelicReducer } from './cavern-relics/data-access/state/cavern-relic.reducer';
 import { CavernRelicEffects } from './cavern-relics/data-access/state/cavern-relic.effects';
+import { PlanarOrnamentEffects } from './planar-ornaments/data-access/state/planar-ornament.effects';
 
 const store = {
   characters: characterReducer,
   lightCones: lightConeReducer,
   cavernRelics: cavernRelicReducer,
+  planarOrnaments: planarOrnamentReducer,
 };
 
-const effects = [CharacterEffects, LightConeEffects, CavernRelicEffects];
+const effects = [CharacterEffects, LightConeEffects, CavernRelicEffects, PlanarOrnamentEffects];
 
 export const appConfig: ApplicationConfig = {
   providers: [
