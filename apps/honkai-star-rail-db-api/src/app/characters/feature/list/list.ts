@@ -91,6 +91,7 @@ export class ListComponent {
   types = this._store.selectSignal(characterSelectors.selectTypes);
   rarities = this._store.selectSignal(characterSelectors.selectRarities);
   factions = this._store.selectSignal(characterSelectors.selectFactions);
+  selectedCharacter = this._store.selectSignal(characterSelectors.selectCharacter);
 
   private isInitialized = false;
 
@@ -119,7 +120,9 @@ export class ListComponent {
   }
 
   toDetails(character: Character) {
-    this._characterListFacadeService.goToDetails(character);
+    if (character.id !== this.selectedCharacter().id) {
+      this._characterListFacadeService.goToDetails(character);
+    }
     this._router.navigate(['character', 'detail', character.id]);
   }
 

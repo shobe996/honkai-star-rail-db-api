@@ -23,13 +23,7 @@ export interface CharacterState {
 }
 
 export const initialCharacterState: CharacterState = {
-  characters: {
-    data: [],
-    hasMore: false,
-    page: 1,
-    size: 9,
-    total: 0,
-  } as PaginatedResult<Character>,
+  characters: {} as PaginatedResult<Character>,
   paths: [],
   types: [],
   rarities: [],
@@ -40,4 +34,4 @@ export const initialCharacterState: CharacterState = {
   size: 9,
   by: undefined,
   direction: undefined,
-} as CharacterState;
+};

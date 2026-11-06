@@ -3,11 +3,12 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { characterActions } from './character.actions';
 import { CharacterService } from '../services/character.service';
 import { map, switchMap } from 'rxjs';
-import { Character, SortOptions } from 'honkai-star-rail-db/models';
+import { Character } from 'honkai-star-rail-db/models';
 import { PathService } from '../../../paths/data-access/services/path.service';
 import { TypeService } from '../../../types/data-access/services/type.service';
 import { RarityService } from '../../../rarities/data-access/services/rarity.service';
 import { FactionService } from '../../../factions/data-access/services/faction.service';
+import { generateSortOptions } from '../../../shared/utils/sort-options';
 
 @Injectable()
 export class CharacterEffects {
@@ -24,7 +25,7 @@ export class CharacterEffects {
       ofType(characterActions.loadCharacters),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this.generateSortOptions(by, direction) : undefined;
+          by && direction ? this.getCharacterSort(by, direction) : undefined;
         return this.characterService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
@@ -80,27 +81,17 @@ export class CharacterEffects {
     ),
   );
 
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string,
-  ): SortOptions<Character> {
-    const getter = this.sortMapping[sortBy];
-    return {
-      by: getter ?? ((c) => c.id),
-      direction: sortDirection as 'asc' | 'desc',
+  getCharacterSort(sortBy: string, sortDirection: string) {
+    const characterMapping: Record<string, (c: Character) => number | string | Date> = {
+      id: (c) => c.id,
+      name: (c) => c.name,
+      rarity: (c) => c.rarity.value,
+      release_date: (c) => c.release_date,
+      faction: (c) => c.faction.name,
+      type: (c) => c.type.name,
+      path: (c) => c.path.name,
     };
-  }
 
-  private sortMapping: Record<
-    string,
-    (c: Character) => number | string | Date
-  > = {
-    id: (c) => c.id,
-    name: (c) => c.name,
-    rarity: (c) => c.rarity.value,
-    release_date: (c) => c.release_date,
-    faction: (c) => c.faction.name,
-    type: (c) => c.type.name,
-    path: (c) => c.path.name,
-  };
+    return generateSortOptions<Character>(sortBy, sortDirection, characterMapping);
+  }
 }

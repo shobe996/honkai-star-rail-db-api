@@ -18,10 +18,6 @@ export const characterActions = {
     '[Character] Load Characters Success',
     props<{ characters: PaginatedResult<Character> }>(),
   ),
-  selectCharacter: createAction(
-    '[Character] Select Character',
-    props<{ character: Character }>(),
-  ),
   loadPaths: createAction(
     '[Character] Load Paths',
   ),
