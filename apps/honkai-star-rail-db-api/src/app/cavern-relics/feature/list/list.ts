@@ -57,6 +57,10 @@ export class ListComponent {
     cavernRelicSelectors.selectSize,
   );
 
+  private _selectedCavernRelic = this._store.selectSignal(
+    cavernRelicSelectors.selectCavernRelic,
+  );
+
   private _currentPage = signal(1);
   private _currentSize = signal(9);
 
@@ -109,7 +113,9 @@ export class ListComponent {
   }
 
   toDetails(cavernRelic: CavernRelic) {
-    this._cavernRelicListFacadeService.goToDetails(cavernRelic);
+    if (cavernRelic.id !== this._selectedCavernRelic()?.id) {
+      this._cavernRelicListFacadeService.goToDetails(cavernRelic);
+    }
     this._router.navigate(['cavern-relic', 'detail', cavernRelic.id]);
   }
 
