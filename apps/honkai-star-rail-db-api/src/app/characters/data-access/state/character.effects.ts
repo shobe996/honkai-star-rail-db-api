@@ -19,7 +19,6 @@ export class CharacterEffects {
   private readonly rarityService = inject(RarityService);
   private readonly factionService = inject(FactionService);
   
-
   loadCharacters$ = createEffect(() =>
     this.actions$.pipe(
       ofType(characterActions.loadCharacters),
@@ -81,7 +80,7 @@ export class CharacterEffects {
     ),
   );
 
-  getCharacterSort(sortBy: string, sortDirection: string) {
+  private getCharacterSort(sortBy: string, sortDirection: string) {
     const characterMapping: Record<string, (c: Character) => number | string | Date> = {
       id: (c) => c.id,
       name: (c) => c.name,

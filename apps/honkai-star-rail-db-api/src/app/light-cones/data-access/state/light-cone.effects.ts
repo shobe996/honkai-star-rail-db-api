@@ -3,9 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { lightConeActions } from './light-cone.actions';
 import { LightConeService } from '../services/light-cone.service';
 import { map, switchMap } from 'rxjs';
-import { LightCone, SortOptions } from 'honkai-star-rail-db/models';
+import { LightCone } from 'honkai-star-rail-db/models';
 import { PathService } from '../../../paths/data-access/services/path.service';
 import { RarityService } from '../../../rarities/data-access/services/rarity.service';
+import { generateSortOptions } from '../../../shared/utils/sort-options';
 
 @Injectable()
 export class LightConeEffects {
@@ -13,14 +14,13 @@ export class LightConeEffects {
   private readonly lightConeService = inject(LightConeService);
   private readonly pathService = inject(PathService);
   private readonly rarityService = inject(RarityService);
-  
 
   loadLightCones$ = createEffect(() =>
     this.actions$.pipe(
       ofType(lightConeActions.loadLightCones),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this.generateSortOptions(by, direction) : undefined;
+          by && direction ? this.getLightConeSort(by, direction) : undefined;
         return this.lightConeService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
@@ -36,9 +36,9 @@ export class LightConeEffects {
     this.actions$.pipe(
       ofType(lightConeActions.loadPaths),
       switchMap(() =>
-        this.pathService.getAll().pipe(
-          map((paths) => lightConeActions.loadPathsSuccess({ paths })),
-        ),
+        this.pathService
+          .getAll()
+          .pipe(map((paths) => lightConeActions.loadPathsSuccess({ paths }))),
       ),
     ),
   );
@@ -47,31 +47,28 @@ export class LightConeEffects {
     this.actions$.pipe(
       ofType(lightConeActions.loadRarities),
       switchMap(() =>
-        this.rarityService.getAllLightConeRarities().pipe(
-          map((rarities) => lightConeActions.loadRaritiesSuccess({ rarities })),
-        ),
+        this.rarityService
+          .getAllLightConeRarities()
+          .pipe(
+            map((rarities) =>
+              lightConeActions.loadRaritiesSuccess({ rarities }),
+            ),
+          ),
       ),
     ),
   );
 
-  private generateSortOptions(
-    sortBy: string,
-    sortDirection: string,
-  ): SortOptions<LightCone> {
-    const getter = this.sortMapping[sortBy];
-    return {
-      by: getter ?? ((c) => c.id),
-      direction: sortDirection as 'asc' | 'desc',
+  private getLightConeSort(sortBy: string, sortDirection: string) {
+    const lightConeMapping: Record<
+      string,
+      (l: LightCone) => number | string | Date
+    > = {
+      id: (l) => l.id,
+      name: (l) => l.name,
+      rarity: (l) => l.rarity.value,
+      path: (l) => l.path.name,
     };
-  }
 
-  private sortMapping: Record<
-    string,
-    (c: LightCone) => number | string | Date
-  > = {
-    id: (c) => c.id,
-    name: (c) => c.name,
-    rarity: (c) => c.rarity.value,
-    path: (c) => c.path.name,
-  };
+    return generateSortOptions<LightCone>(sortBy, sortDirection, lightConeMapping);
+  }
 }

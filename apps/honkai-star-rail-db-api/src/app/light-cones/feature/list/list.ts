@@ -7,10 +7,7 @@ import {
 } from '@angular/core';
 import { LightConeListFacadeService } from '../../data-access/services/light-cone-list.facade.service';
 import { LightConeSearchForm } from '../../data-access/models/light-cone-search-form.model';
-import {
-  LightCone,
-  LightConeSearchCriteria,
-} from 'honkai-star-rail-db/models';
+import { LightCone, LightConeSearchCriteria } from 'honkai-star-rail-db/models';
 import { form, FormField } from '@angular/forms/signals';
 
 import {
@@ -83,6 +80,9 @@ export class ListComponent {
   lightCones = this._store.selectSignal(lightConeSelectors.selectLightCones);
   paths = this._store.selectSignal(lightConeSelectors.selectPaths);
   rarities = this._store.selectSignal(lightConeSelectors.selectRarities);
+  selectedLightCone = this._store.selectSignal(
+    lightConeSelectors.selectLightCone,
+  );
 
   private isInitialized = false;
 
@@ -113,7 +113,9 @@ export class ListComponent {
   }
 
   toDetails(lightCone: LightCone) {
-    this._lightConeListFacadeSerice.goToDetails(lightCone);
+    if (lightCone.id !== this.selectedLightCone()?.id) {
+      this._lightConeListFacadeSerice.goToDetails(lightCone);
+    }
     this._router.navigate(['light-cone', 'detail', lightCone.id]);
   }
 
