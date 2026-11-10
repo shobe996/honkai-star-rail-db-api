@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlanarOrnamentService } from '../services/planar-ornament.service';
-import { PlanarOrnament, SortOptions } from 'honkai-star-rail-db/models';
+import { PlanarOrnament } from 'honkai-star-rail-db/models';
 import { switchMap, map } from 'rxjs/operators';
 import { planarOrnamentActions } from './planar-ornament.actions';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
