@@ -1,5 +1,8 @@
 import { Route } from '@angular/router';
 
+/**
+ * Routes for the cavern relic feature.
+ */
 export const cavernRelicRoutes: Route[] = [
   {
     path: 'cavern-relic',
