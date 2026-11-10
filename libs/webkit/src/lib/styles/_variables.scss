@@ -1,6 +1,7 @@
 // HSR Core Palette
 $hsr-gold: #f6c438;
-$hsr-gold-glow: rgba(246, 196, 56, 0.3);
+$hsr-gold-rgb: rgb(246, 196, 56);
+$hsr-gold-glow: rgba($hsr-gold, 0.3);
 $hsr-bg-dark: #050505;
 $hsr-card-bg: #0d0e12;
 $hsr-white: #eee;
@@ -10,14 +11,23 @@ $hsr-ghost: #888;
 $hsr-label-2: #555;
 $hsr-label: #666;
 $hsr-black: #000;
+$hsr-border-black-3-color: #333;
 
 // Rarity Colors
 $rarity-5: #d0aa6e;
 $rarity-4: #9c65d7;
 $rarity-3: #4c86c9;
 
+$rarity-5-gradient: linear-gradient(180deg, #a35d55, $rarity-5);
+$rarity-4-gradient: linear-gradient(180deg, #3f4064, $rarity-4);
+$rarity-3-gradient: linear-gradient(180deg, #3a3b62, $rarity-3);
+
 // Borders
-$hsr-border: 1px solid rgba(246, 196, 56, 0.5);
-$hsr-border-black: 1px solid rgba(255, 255, 255, 0.08);
-$hsr-border-black-2: 1px solid rgba(255, 255, 255, 0.1);
-$hsr-shadow: rgba(246, 196, 56, 0.2);
+$hsr-border: 1px solid rgba($hsr-gold, 0.5);
+$hsr-border-black: 1px solid rgba($hsr-color, 0.08);
+$hsr-border-black-2: 1px solid rgba($hsr-color, 0.1);
+$hsr-border-black-3: 1px solid $hsr-border-black-3-color;
+$hsr-shadow: rgba($hsr-gold, 0.2);
+
+$hsr-background: rgba(0, 0, 0, 0.3);
+$hsr-button-background: #252932;
