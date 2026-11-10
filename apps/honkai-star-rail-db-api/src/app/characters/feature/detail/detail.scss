@@ -43,7 +43,7 @@
   flex: 1.4;
   height: 100%;
   position: relative;
-  background: radial-gradient(circle at center, #1a1c20 0%, hsr.$hsr-bg-dark 100%);
+  background: radial-gradient(circle at center, hsr.$hsr-artwork-bg 0%, hsr.$hsr-bg-dark 100%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,7 +65,7 @@
     left: -20px;
     font-size: 15rem;
     font-family: hsr.$font-display;
-    color: rgba(255, 255, 255, 0.03);
+    color: rgba(hsr.$hsr-color, 0.03);
     text-transform: uppercase;
     white-space: nowrap;
     z-index: 1;
@@ -112,7 +112,7 @@
 
   .flavor-text {
     font-size: 1rem;
-    color: #bbb;
+    color: hsr.$text-description-color;
     line-height: 1.6;
     font-style: italic;
     margin-bottom: 1.5rem;
@@ -122,7 +122,7 @@
 .faction-row {
   margin-top: 1rem;
   padding: 10px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(hsr.$hsr-color, 0.1);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -146,7 +146,7 @@
 
 /* --- STATS PANEL & GRID FIXES --- */
 .stats-panel {
-  background: #15171c;
+  background: hsr.$hsr-piece-card-bg;
   padding: 1.5rem;
   border-radius: 8px;
   margin-top: auto; // Anchors to bottom of info-pane
@@ -174,7 +174,7 @@
 }
 
 .stat-box {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(hsr.$hsr-color, 0.08);
   display: flex;
   justify-content: space-between;
   align-items: baseline; // Aligns text baselines cleanly
