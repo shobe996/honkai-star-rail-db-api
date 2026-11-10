@@ -36,12 +36,6 @@
       (imageClick)="toDetails(relic)"
       (nameClick)="toDetails(relic)"
     >
-      <div badges class="piece-icons-container">
-        <img [src]="relic.icons.head_icon_url" alt="Head" class="piece-icon" title="Head" />
-        <img [src]="relic.icons.hand_icon_url" alt="Hands" class="piece-icon" title="Hands" />
-        <img [src]="relic.icons.body_icon_url" alt="Body" class="piece-icon" title="Body" />
-        <img [src]="relic.icons.feet_icon_url" alt="Feet" class="piece-icon" title="Feet" />
-      </div>
 
       <div stats class="effects-section">
         <div class="effect-box">
@@ -61,8 +55,8 @@
 
   <lib-paginator
     [total]="cavernRelics().total"
-    [size]="cavernRelics().size"
-    [page]="cavernRelics().page"
+    [size]="currentSize()"
+    [page]="currentPage()"
     [hasMore]="cavernRelics().hasMore"
     label="Cavern Relics"
     (pageChange)="goToPage($event)"

@@ -22,7 +22,11 @@ import {
 } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selectors';
+import { sortDirectionOptions } from '../../../shared/consts/sort-direction-options';
 
+/**
+ * List component for displaying cavern relics.
+ */
 @Component({
   selector: 'app-list-component',
   imports: [
@@ -38,80 +42,105 @@ import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selec
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
+
+  // Cavern relic list facade service for handling business logic.
   private _cavernRelicListFacadeService = inject(CavernRelicListFacadeService);
+
+  // Injected router for navigation
   private _router = inject(Router);
+
+  // Store instance for accessing application state.
   private _store = inject(Store);
 
-  cavernRelics = this._store.selectSignal(cavernRelicSelectors.selectCavernRelics);
+  /**
+   * Signal for the list of cavern relics.
+   */
+  cavernRelics = this._store.selectSignal(
+    cavernRelicSelectors.selectCavernRelics,
+  );
 
+  // Signal for the search criteria from the store.
   private _storeCriteria = this._store.selectSignal(
     cavernRelicSelectors.selectSearchCriteria,
   );
+
+  // Signal for the sort options from the store.
   private _storeSortOptions = this._store.selectSignal(
     cavernRelicSelectors.selectSortOptions,
   );
-  private _storePage = this._store.selectSignal(
-    cavernRelicSelectors.selectPage,
-  );
-  private _storeSize = this._store.selectSignal(
-    cavernRelicSelectors.selectSize,
-  );
 
+  // Signal for the currently selected cavern relic.
   private _selectedCavernRelic = this._store.selectSignal(
     cavernRelicSelectors.selectCavernRelic,
   );
 
-  private _currentPage = signal(1);
-  private _currentSize = signal(9);
+  /**
+   * Signal for the current page number.
+   */
+  currentPage = this._store.selectSignal(
+    cavernRelicSelectors.selectPage,
+  );
 
-  searchFormModel = signal<CavernRelicSearchForm>({
+  /**
+   * Signal for the current page size.
+   */
+  currentSize = this._store.selectSignal(
+    cavernRelicSelectors.selectSize,
+  );
+
+  // Signal for the search form model.
+  private _searchFormModel = signal<CavernRelicSearchForm>({
     name: this._storeCriteria().name ?? '',
     effect: this._storeCriteria().effect ?? '',
     sortBy: this._storeSortOptions().by ?? '',
     sortDirection: this._storeSortOptions().direction ?? '',
   });
 
+  /**
+   * Options for sorting by different fields.
+   */
   sortByOptions = [
     { label: 'ID', value: 'id' },
     { label: 'Name', value: 'name' },
     { label: 'Two Set Effect', value: 'two_set_effect' },
     { label: 'Four Set Effect', value: 'four_set_effect' },
   ];
-  sortDirectionOptions = [
-    { label: 'Ascending', value: 'asc' },
-    { label: 'Descending', value: 'desc' },
-  ];
 
-  searchForm = form(this.searchFormModel);
+  // Options for sorting by direction.
+  sortDirectionOptions = sortDirectionOptions;
 
-  private isInitialized = false;
+  /**
+   * Form instance for the search form.
+   */
+  searchForm = form(this._searchFormModel);
+
+  // Flag to indicate if the component has been initialized.
+  private _isInitialized = false;
 
   constructor() {
-    const page = this._storePage();
-    const size = this._storeSize();
 
-    this._currentPage.set(page);
-    this._currentSize.set(size);
-
-    if (this.areCavernRelicsEmpty()) {
-      this.loadCavernRelics();
+    if (this._areCavernRelicsEmpty()) {
+      this._loadCavernRelics();
     }
 
     effect(() => {
-      this._currentPage();
-      this._currentSize();
+      this.currentPage();
+      this.currentSize();
       this.searchForm().value();
 
-      if (!this.isInitialized) {
-        this.isInitialized = true;
+      if (!this._isInitialized) {
+        this._isInitialized = true;
         return;
       }
 
-      console.log('User action detected, fetching new data...');
-      this.loadCavernRelics();
+      this._loadCavernRelics();
     });
   }
 
+  /**
+   * Navigate to the details page of a specific cavern relic.
+   * @param cavernRelic The cavern relic to navigate to the details page for.
+   */
   toDetails(cavernRelic: CavernRelic) {
     if (cavernRelic.id !== this._selectedCavernRelic()?.id) {
       this._cavernRelicListFacadeService.goToDetails(cavernRelic);
@@ -119,7 +148,44 @@ export class ListComponent {
     this._router.navigate(['cavern-relic', 'detail', cavernRelic.id]);
   }
 
-  loadCavernRelics() {
+  /**
+   * Navigate to a specific page of the cavern relic list.
+   * @param page The page number to navigate to.
+   */
+  goToPage(page: number) {
+    this._cavernRelicListFacadeService.updatePage(page);
+  }
+
+  /**
+   * Update the number of items displayed per page and reset to the first page.
+   * @param size The new page size.
+   */
+  updatePageSize(size: number) {
+    this._cavernRelicListFacadeService.updateSize(size);
+    this._cavernRelicListFacadeService.updatePage(1);
+  }
+
+  /**
+   * Reset the search filters to their initial state.
+   */
+  resetFilters() {
+    const initial: CavernRelicSearchForm = {
+      name: '',
+      effect: '',
+      sortBy: '',
+      sortDirection: '',
+    };
+    this.searchForm().reset(initial);
+    this._cavernRelicListFacadeService.updatePage(1);
+  }
+
+  // Check if the list of cavern relics is empty.
+  private _areCavernRelicsEmpty(): boolean {
+    return !this.cavernRelics()?.data?.length;
+  }
+
+  // Load the list of cavern relics based on the current search criteria, page, and size.
+  private _loadCavernRelics() {
     const { name, effect, sortBy, sortDirection } = this.searchForm().value();
 
     const criteria: CavernRelicSearchCriteria = {
@@ -129,35 +195,10 @@ export class ListComponent {
 
     this._cavernRelicListFacadeService.filter(
       criteria,
-      this._currentPage(),
-      this._currentSize(),
+      this.currentPage(),
+      this.currentSize(),
       sortBy,
       sortDirection,
     );
   }
-
-  goToPage(page: number) {
-    this._currentPage.set(page);
-  }
-
-  updatePageSize(size: number) {
-    this._currentSize.set(size);
-    this._currentPage.set(1);
-  }
-
-  resetFilters() {
-    const initial: CavernRelicSearchForm = {
-      name: '',
-      effect: '',
-      sortBy: '',
-      sortDirection: '',
-    };
-    this.searchForm().reset(initial);
-    this._currentPage.set(1);
-  }
-
-  private areCavernRelicsEmpty(): boolean {
-    return !this.cavernRelics()?.data?.length;
-  }
-
 }

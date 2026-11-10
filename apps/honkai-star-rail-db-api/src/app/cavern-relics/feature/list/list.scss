@@ -1,5 +1,6 @@
 @use 'theme' as hsr;
 
+// Styles for the cavern relics list component
 .page-container {
   background: hsr.$hsr-bg-dark;
   display: flex;
@@ -9,6 +10,7 @@
   overflow: hidden;
 }
 
+// Styles for the card list container
 .card-list {
   display: flex;
   flex-wrap: wrap;
@@ -28,24 +30,7 @@
   }
 }
 
-.piece-icons-container {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-
-  .piece-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    opacity: 0.85;
-    transition: opacity 0.2s ease;
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-}
-
+// Styles for the effects section within each card
 .effects-section {
   display: flex;
   flex-direction: column;
@@ -67,7 +52,7 @@
     }
 
     .effect-text {
-      color: #bbb;
+      color: hsr.$text-description-color;
       font-size: 0.82rem;
       line-height: 1.35;
       margin: 0;
@@ -80,6 +65,7 @@
   }
 }
 
+// Styles for the relic footer within each card
 .relic-footer {
   color: hsr.$hsr-ghost;
   font-size: 0.75rem;
@@ -88,13 +74,14 @@
   font-weight: 700;
 }
 
-/* Responsive breakpoints */
+// Responsive breakpoints for the card list layout
 @media (max-width: 1200px) {
   .card-list lib-card { 
     width: calc(50% - 8px); 
   }
 }
 
+// Responsive breakpoints for smaller screens
 @media (max-width: 768px) {
   .card-list lib-card { 
     width: 100%; 
