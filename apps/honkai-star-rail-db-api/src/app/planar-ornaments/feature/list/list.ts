@@ -53,6 +53,9 @@ export class ListComponent {
   private _storeSize = this._store.selectSignal(
     planarOrnamentSelectors.selectSize,
   );
+  private _selectedPlanarOrnament = this._store.selectSignal(
+    planarOrnamentSelectors.selectPlanarOrnament,
+  );
 
   private _currentPage = signal(1);
   private _currentSize = signal(9);
@@ -105,7 +108,9 @@ export class ListComponent {
   }
 
   toDetails(planarOrnament: PlanarOrnament) {
-    this._planarOrnamentsListFacadeService.goToDetails(planarOrnament);
+    if (planarOrnament.id !== this._selectedPlanarOrnament().id) {
+      this._planarOrnamentsListFacadeService.goToDetails(planarOrnament);
+    }
     this._router.navigate(['planar-ornament', 'detail', planarOrnament.id]);
   }
 

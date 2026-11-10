@@ -20,10 +20,6 @@ export const cavernRelicActions = {
     '[Cavern Relic] Load Cavern Relics Success',
     props<{ cavernRelics: PaginatedResult<CavernRelic> }>(),
   ),
-  selectCavernRelic: createAction(
-    '[Cavern Relic] Select Cavern Relic',
-    props<{ cavernRelic: CavernRelic }>(),
-  ),
   loadCavernRelicDetails: createAction(
     '[Cavern Relic] Load Cavern Relic Details',
     props<{ cavernRelic: CavernRelic }>(),

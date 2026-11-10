@@ -16,10 +16,6 @@ export const lightConeActions = {
     '[LightCone] Load LightCones Success',
     props<{ lightCones: PaginatedResult<LightCone> }>(),
   ),
-  selectLightCone: createAction(
-    '[LightCone] Select LightCone',
-    props<{ lightCone: LightCone }>(),
-  ),
   loadPaths: createAction(
     '[LightCone] Load Paths',
   ),
