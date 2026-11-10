@@ -1,38 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
+import { planarOrnamentSelectors } from '../../data-access/state/planar-ornament.selectors';
 import { Store } from '@ngrx/store';
-import { lightConeSelectors } from '../../data-access/state/light-cone.selectors';
-
 
 /**
- * Detail component for displaying light cone details.
+ * Detail component for displaying planar ornament information.
  */
 @Component({
   selector: 'app-detail-component',
-  imports: [BadgeComponent, ButtonComponent],
+  imports: [],
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent {
-  
-  // Injected store for state management
+
+  // Store instance for accessing application state.
   private _store = inject(Store);
-  
-  // Signal for the currently selected light cone
-  lightCone = this._store.selectSignal(lightConeSelectors.selectLightCone)
 
-  // Current level for displaying stats
-  currentLevel: 'level1' | 'level80' = 'level80';
+  // Signal for the currently selected planar ornament.
 
-
-  // Getter for the active stats based on the current level
-  get activeStats() {
-    return this.lightCone()?.stats[this.currentLevel];
-  }
-
-  // Toggles the current level between level1 and level80
-  toggleLevel(level: 'level1' | 'level80') {
-    this.currentLevel = level;
-  }
+  planarOrnament = this._store.selectSignal(planarOrnamentSelectors.selectPlanarOrnament)
 }
