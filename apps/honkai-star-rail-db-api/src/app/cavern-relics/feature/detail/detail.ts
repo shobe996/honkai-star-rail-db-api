@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selectors';
 
@@ -10,6 +10,7 @@ import { cavernRelicSelectors } from '../../data-access/state/cavern-relic.selec
   imports: [],
   templateUrl: './detail.html',
   styleUrl: './detail.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DetailComponent {
 
