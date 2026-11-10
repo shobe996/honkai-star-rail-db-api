@@ -54,7 +54,7 @@
 .nav {
   &:first-child, 
   &:last-child {
-    border-color: rgba(246, 196, 56, 0.3);
+    border-color: rgba(hsr.$hsr-gold, 0.3);
   }
 }
 
