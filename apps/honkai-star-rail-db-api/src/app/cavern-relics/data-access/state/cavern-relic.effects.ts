@@ -7,29 +7,38 @@ import { map, switchMap } from 'rxjs';
 import { CavernRelic, SortOptions } from 'honkai-star-rail-db/models';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
 
+/**
+ * Effects class for handling cavern relic related actions.
+ */
 @Injectable()
 export class CavernRelicEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly cavernRelicService = inject(CavernRelicService);
 
+  // Injected actions stream
+  private readonly _actions$ = inject(Actions);
+
+  // Cavern relic service for making API calls related to cavern relics.
+  private readonly _cavernRelicService = inject(CavernRelicService);
+
+  // Effect for loading cavern relics based on search criteria and pagination.
   loadCavernRelics$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(cavernRelicActions.loadCavernRelics),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this.getCavernRelicSort(by, direction) : undefined;
-        return this.cavernRelicService
+          by && direction ? this._getCavernRelicSort(by, direction) : undefined;
+        return this._cavernRelicService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
             map((cavernRelics) =>
-              cavernRelicActions.loadCavernRelicsSucess({ cavernRelics }),
+              cavernRelicActions.loadCavernRelicsSuccess({ cavernRelics }),
             ),
           );
       }),
     ),
   );
 
-  private getCavernRelicSort(
+  // Helper method to generate sort options for cavern relics based on the provided criteria.
+  private _getCavernRelicSort(
     by: string,
     direction: string,
   ): SortOptions<CavernRelic> {

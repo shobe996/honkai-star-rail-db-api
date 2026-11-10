@@ -18,7 +18,7 @@ export const cavernRelicReducer = createReducer(
     }),
   ),
   on(
-    cavernRelicActions.loadCavernRelicsSucess,
+    cavernRelicActions.loadCavernRelicsSuccess,
     (state, { cavernRelics }) => ({
       ...state,
       cavernRelics,
@@ -29,6 +29,20 @@ export const cavernRelicReducer = createReducer(
     (state, { cavernRelic }) => ({
       ...state,
       selectedCavernRelic: cavernRelic,
+    }),
+  ),
+  on(
+    cavernRelicActions.updatePage,
+    (state, { page }) => ({
+      ...state,
+      page,
+    }),
+  ),
+  on(
+    cavernRelicActions.updateSize,
+    (state, { size }) => ({
+      ...state,
+      size,
     }),
   )
 );
