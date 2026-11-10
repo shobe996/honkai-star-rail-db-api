@@ -1,11 +1,13 @@
 @use '../../styles/theme' as hsr;
 
+// Navbar component styles for both horizontal and vertical orientations
 :host {
   display: block;
 }
 
+// Host element styles for the navbar component
 .hsr-navbar {
-  background: #0d0e12;
+  background: hsr.$hsr-card-bg;
   box-sizing: border-box;
   display: flex;
   z-index: 100;
@@ -17,7 +19,7 @@
     flex-direction: row;
     align-items: center;
     padding: 0 2rem;
-    border-bottom: 1px solid rgba(246, 196, 56, 0.2);
+    border-bottom: 1px solid hsr.$hsr-shadow;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
     .nav-brand {
@@ -45,8 +47,8 @@
     height: 100vh;
     flex-direction: column;
     padding: 2rem 1rem;
-    border-right: 1px solid rgba(246, 196, 56, 0.2);
-    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    border-right: 1px solid hsr.$hsr-shadow;
+    box-shadow: 10px 0 30px rgba(hsr.$hsr-black, 0.5);
 
     .nav-brand {
       margin-bottom: 3rem;
@@ -76,7 +78,7 @@
     padding: 10px 16px;
     color: hsr.$hsr-ghost;
     text-decoration: none;
-    font-family: hsr.$font-display; // Oswald
+    font-family: hsr.$font-display;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -91,13 +93,13 @@
     }
 
     &:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.05);
+      color: hsr.$hsr-color;
+      background: rgba(hsr.$hsr-color, 0.05);
     }
 
     &.active {
       color: hsr.$hsr-gold;
-      background: rgba(246, 196, 56, 0.08);
+      background: rgba(hsr.$hsr-gold, 0.08);
       border-left-color: hsr.$hsr-gold;
     }
   }
