@@ -1,11 +1,13 @@
 @use '../../styles/theme' as hsr;
 
+// Styles for the filter bar component
 .filter-bar {
   padding: 20px;
   background: hsr.$hsr-card-bg;
   border-bottom: hsr.$hsr-border-black-2;
 }
 
+// Styles for the filter content within the filter bar
 .filter-content {
   display: flex;
   flex-wrap: wrap;
@@ -13,6 +15,7 @@
   align-items: center;
 }
 
+// Responsive styles for the filter bar and its content
 @media (max-width: 768px) {
   .filter-bar {
     flex-direction: column;
