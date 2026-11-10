@@ -9,7 +9,7 @@
 .home-container {
   min-height: 100vh;
   background: #050505;
-  color: #fff;
+  color: hsr.$hsr-color;
   padding: 3rem;
   box-sizing: border-box;
   overflow-y: auto; // Ensures page can scroll when content exceeds viewport
@@ -43,15 +43,15 @@
 }
 
 .team-card {
-  background: #0d0e12;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: hsr.$hsr-card-bg;
+  border: 1px solid rgba(hsr.$hsr-color, 0.08);
   border-radius: 8px;
   padding: 1.5rem 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
   .team-header {
     margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(hsr.$hsr-color, 0.05);
     padding-bottom: 0.8rem;
     display: flex;
     justify-content: space-between;
@@ -61,12 +61,12 @@
       font-family: hsr.$font-display;
       font-size: 1.8rem;
       margin: 0;
-      color: #fff;
+      color: hsr.$hsr-color;
       letter-spacing: 1px;
     }
 
     .team-desc {
-      color: #666;
+      color: hsr.$hsr-label;
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -84,7 +84,7 @@
 }
 
 .character-slot {
-  background: #15171c;
+  background: hsr.$hsr-piece-card-bg;
   border-radius: 6px;
   padding: 1rem;
   display: flex;
@@ -95,12 +95,12 @@
   transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 
   &.five-star .portrait-wrapper {
-    background: linear-gradient(180deg, #a35d55, hsr.$rarity-5);
+    background: hsr.$rarity-5-gradient;
     border-bottom: 2px solid hsr.$hsr-gold;
   }
 
   &.four-star .portrait-wrapper {
-    background: linear-gradient(180deg, #3f4064, hsr.$rarity-4);
+    background: hsr.$rarity-4-gradient;
     border-bottom: 2px solid #9a6ade;
   }
 
@@ -135,14 +135,14 @@
   &:hover {
     transform: translateY(-4px);
     border-color: hsr.$hsr-gold;
-    box-shadow: 0 8px 20px rgba(246, 196, 56, 0.15);
+    box-shadow: 0 8px 20px rgba(hsr.$hsr-gold-rgb, 0.15);
 
     .portrait-wrapper .character-icon {
       transform: scale(1.08);
     }
 
     .character-name {
-      color: #fff;
+      color: hsr.$hsr-color;
     }
   }
 }
