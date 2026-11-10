@@ -1,9 +1,12 @@
+@use 'sass:color';
 @use '../../styles/theme' as hsr;
 
+// Styles for the card component
 :host {
   display: block;
 }
 
+// Character card container styles
 .character-card {
   display: flex;
   background: hsr.$hsr-card-bg;
@@ -16,7 +19,7 @@
   &:hover {
     border-color: hsr.$hsr-gold;
     transform: translateY(-4px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 15px color.change(hsr.$hsr-black, $alpha: 0.5);
 
     .image-side img {
       transform: scale(1.05);
@@ -24,21 +27,21 @@
   }
 }
 
+// Image side styles
 .image-side {
   flex: 0 0 188px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
 
-  // Gradients matching your screenshots exactly
   &.rarity-5 {
-    background: linear-gradient(180deg, #a35d55, hsr.$rarity-5);
+    background: hsr.$rarity-5-gradient;
   }
   &.rarity-4 {
-    background: linear-gradient(180deg, #3f4064, hsr.$rarity-4);
+    background: hsr.$rarity-4-gradient;
   }
   &.rarity-3 {
-    background: linear-gradient(180deg, #3a3b62, hsr.$rarity-3);
+    background: hsr.$rarity-3-gradient;
   }
 
   img {
@@ -49,6 +52,7 @@
   }
 }
 
+// Info content styles
 .info-content {
   flex: 1;
   padding: 12px;
@@ -58,6 +62,7 @@
   font-family: hsr.$font-body;
 }
 
+// Rarity stars styles
 .rarity-stars {
   color: hsr.$hsr-gold;
   font-size: 10px;
@@ -66,6 +71,7 @@
   margin-bottom: 2px;
 }
 
+// Name text styles
 .name-text {
   font-family: hsr.$font-display;
   color: hsr.$hsr-color;
@@ -79,6 +85,7 @@
   text-overflow: ellipsis;
 }
 
+// Footer slot styles
 .footer-slot {
   font-size: 10px;
   color: hsr.$hsr-label-2;
