@@ -20,7 +20,11 @@ import { Router } from '@angular/router';
 import { Character, CharacterSearchCriteria } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import { characterSelectors } from '../../data-access/state/character.selectors';
+import { sortDirectionOptions } from '../../../shared/consts/sort-direction-options';
 
+/**
+ * List component for displaying characters.
+ */
 @Component({
   selector: 'app-list-component',
   imports: [
@@ -37,23 +41,37 @@ import { characterSelectors } from '../../data-access/state/character.selectors'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
+  // Character list facade service for handling business logic.
   private _characterListFacadeService = inject(CharacterListFacadeService);
+
+  // Injected router for navigation
   private _router = inject(Router);
+
+  // Store instance for accessing application state.
   private _store = inject(Store);
 
+  // Signal for the search criteria from the store.
   private _storeCriteria = this._store.selectSignal(
     characterSelectors.selectSearchCriteria,
   );
+
+  // Signal for the sort options from the store.
   private _storeSortOptions = this._store.selectSignal(
     characterSelectors.selectSortOptions,
   );
-  private _storePage = this._store.selectSignal(characterSelectors.selectPage);
-  private _storeSize = this._store.selectSignal(characterSelectors.selectSize);
 
-  private _currentPage = signal(1);
-  private _currentSize = signal(9);
+  /**
+   * Signal for the current page number.
+   */
+  currentPage = this._store.selectSignal(characterSelectors.selectPage);
 
-  searchFormModel = signal<CharacterSearchForm>({
+  /**
+   * Signal for the current page size.
+   */
+  currentSize = this._store.selectSignal(characterSelectors.selectSize);
+
+  // Signal for the search form model.
+  private _searchFormModel = signal<CharacterSearchForm>({
     name: this._storeCriteria().name ?? '',
     description: this._storeCriteria().description ?? '',
     path: this._storeCriteria().path ?? '',
@@ -67,6 +85,9 @@ export class ListComponent {
     sortDirection: this._storeSortOptions()?.direction ?? '',
   });
 
+  /**
+   * Options for sorting by different fields.
+   */
   sortByOptions = [
     { label: 'ID', value: 'id' },
     { label: 'Name', value: 'name' },
@@ -77,56 +98,77 @@ export class ListComponent {
     { label: 'Path', value: 'path' },
   ];
 
-  sortDirectionOptions = [
-    { label: 'Ascending', value: 'asc' },
-    { label: 'Descending', value: 'desc' },
-  ];
+  /**
+   * Options for sorting by direction.
+   */
+  sortDirectionOptions = sortDirectionOptions;
 
-  searchForm = form(this.searchFormModel);
+  /**
+   * Form instance for the search form.
+   */
+  searchForm = form(this._searchFormModel);
 
-  statsToggleState = signal<Record<number, 'level1' | 'level80'>>({});
+  // Signal for the toggle state of character stats (level1 or level80).
+  private _statsToggleState = signal<Record<number, 'level1' | 'level80'>>({});
 
+  /**
+   * Signal for the list of characters.
+   */
   characters = this._store.selectSignal(characterSelectors.selectCharacters);
-  paths = this._store.selectSignal(characterSelectors.selectPaths);
-  types = this._store.selectSignal(characterSelectors.selectTypes);
-  rarities = this._store.selectSignal(characterSelectors.selectRarities);
-  factions = this._store.selectSignal(characterSelectors.selectFactions);
-  selectedCharacter = this._store.selectSignal(characterSelectors.selectCharacter);
 
-  private isInitialized = false;
+  /**
+   * Signal for the available paths.
+   */
+  paths = this._store.selectSignal(characterSelectors.selectPaths);
+
+  /**
+   * Signal for the available types.
+   */
+  types = this._store.selectSignal(characterSelectors.selectTypes);
+
+  /**
+   * Signal for the available rarities.
+   */
+  rarities = this._store.selectSignal(characterSelectors.selectRarities);
+
+  /**
+   * Signal for the available factions.
+   */
+  factions = this._store.selectSignal(characterSelectors.selectFactions);
+
+  // Signal for the currently selected character.
+  private _selectedCharacter = this._store.selectSignal(
+    characterSelectors.selectCharacter,
+  );
+
+  // Flag to indicate if the component has been initialized.
+  private _isInitialized = false;
 
   constructor() {
-    const page = this._storePage();
-    const size = this._storeSize();
-
-    this._currentPage.set(page);
-    this._currentSize.set(size);
-
     this._loadOptions();
 
     effect(() => {
-      this._currentPage();
-      this._currentSize();
+      this.currentPage();
+      this.currentSize();
       this.searchForm().value();
 
-      if (!this.isInitialized) {
-        this.isInitialized = true;
+      if (!this._isInitialized) {
+        this._isInitialized = true;
         return;
       }
 
-      console.log('User action detected, fetching new data...');
-      this.loadCharacters();
+      this._loadCharacters();
     });
   }
 
   toDetails(character: Character) {
-    if (character.id !== this.selectedCharacter().id) {
+    if (character.id !== this._selectedCharacter().id) {
       this._characterListFacadeService.goToDetails(character);
     }
     this._router.navigate(['character', 'detail', character.id]);
   }
 
-  private loadCharacters(): void {
+  private _loadCharacters(): void {
     const {
       name,
       description,
@@ -149,15 +191,15 @@ export class ListComponent {
 
     this._characterListFacadeService.filter(
       criteria,
-      this._currentPage(),
-      this._currentSize(),
+      this.currentPage(),
+      this.currentSize(),
       sortBy,
       sortDirection,
     );
   }
 
   toggleStats(characterId: number) {
-    this.statsToggleState.update((state) => {
+    this._statsToggleState.update((state) => {
       const current = state[characterId] || 'level1';
       return {
         ...state,
@@ -166,20 +208,37 @@ export class ListComponent {
     });
   }
 
+  /**
+   * Get the stats for a character based on the current toggle state.
+   * @param character The character whose stats are being retrieved.
+   * @param id The ID of the character.
+   * @returns The stats for the specified level.
+   */
   getStats(character: Character, id: number) {
-    const level = this.statsToggleState()[id] || 'level1';
+    const level = this._statsToggleState()[id] || 'level1';
     return character.stats[level];
   }
 
+  /**
+   * Navigate to a specific page of the cavern relic list.
+   * @param page The page number to navigate to.
+   */
   goToPage(page: number) {
-    this._currentPage.set(page);
+    this._characterListFacadeService.updatePage(page);
   }
 
+  /**
+   * Update the number of items displayed per page and reset to the first page.
+   * @param size The new page size.
+   */
   updatePageSize(size: number) {
-    this._currentSize.set(size);
-    this._currentPage.set(1);
+    this._characterListFacadeService.updateSize(size);
+    this._characterListFacadeService.updatePage(1);
   }
 
+  /**
+   * Reset the search filters to their initial state.
+   */
   resetFilters() {
     const initial: CharacterSearchForm = {
       name: '',
@@ -192,47 +251,53 @@ export class ListComponent {
       sortDirection: '',
     };
     this.searchForm().reset(initial);
-    this._currentPage.set(1);
+    this._characterListFacadeService.updatePage(1);
   }
 
-  private areCharactersEmpty(): boolean {
+  // Check if the list of characters is empty.
+  private _areCharactersEmpty(): boolean {
     return !this.characters()?.data?.length;
   }
 
-  private arePathsEmpty(): boolean {
+  // Check if the list of paths is empty.
+  private _arePathsEmpty(): boolean {
     return !this.paths().length;
   }
 
-  private areTypesEmpty(): boolean {
+  // Check if the list of types is empty.
+  private _areTypesEmpty(): boolean {
     return !this.types().length;
   }
 
-  private areRaritiesEmpty(): boolean {
+  // Check if the list of rarities is empty.
+  private _areRaritiesEmpty(): boolean {
     return !this.rarities().length;
   }
 
-  private areFactionsEmpty(): boolean {
+  // Check if the list of factions is empty.
+  private _areFactionsEmpty(): boolean {
     return !this.factions().length;
   }
 
+  // Load the options for characters, paths, types, rarities, and factions if they are empty.
   private _loadOptions() {
-    if (this.areCharactersEmpty()) {
-      this.loadCharacters();
+    if (this._areCharactersEmpty()) {
+      this._loadCharacters();
     }
 
-    if (this.arePathsEmpty()) {
+    if (this._arePathsEmpty()) {
       this._characterListFacadeService.getPaths();
     }
 
-    if (this.areTypesEmpty()) {
+    if (this._areTypesEmpty()) {
       this._characterListFacadeService.getTypes();
     }
 
-    if (this.areRaritiesEmpty()) {
+    if (this._areRaritiesEmpty()) {
       this._characterListFacadeService.getRarities();
     }
 
-    if (this.areFactionsEmpty()) {
+    if (this._areFactionsEmpty()) {
       this._characterListFacadeService.getFactions();
     }
   }

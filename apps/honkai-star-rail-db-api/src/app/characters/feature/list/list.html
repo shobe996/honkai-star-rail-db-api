@@ -111,8 +111,8 @@
   </div>
   <lib-paginator
     [total]="characters().total"
-    [size]="characters().size"
-    [page]="characters().page"
+    [size]="currentSize()"
+    [page]="currentPage()"
     [hasMore]="characters().hasMore"
     label="Characters"
     (pageChange)="goToPage($event)"
