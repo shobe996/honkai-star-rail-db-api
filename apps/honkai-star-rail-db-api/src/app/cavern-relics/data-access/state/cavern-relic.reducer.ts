@@ -1,9 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
-
 import { initialCavernRelicState } from './cavern-relic.state';
-
 import { cavernRelicActions } from './cavern-relic.actions';
 
+/**
+ * Reducer for managing cavern relic state.
+ */
 export const cavernRelicReducer = createReducer(
   initialCavernRelicState,
   on(
