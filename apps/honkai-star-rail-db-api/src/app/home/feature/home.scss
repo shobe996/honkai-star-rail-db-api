@@ -1,20 +1,23 @@
 @use '../styles/theme' as hsr;
 
+// Styles for the home component
 :host {
   display: block;
   height: 100%;
-  overflow-y: auto; // Enables vertical scrolling inside the component boundary
+  overflow-y: auto;
 }
 
+// Container for the home component content
 .home-container {
   min-height: 100vh;
-  background: #050505;
+  background: hsr.$hsr-bg-dark;
   color: hsr.$hsr-color;
   padding: 3rem;
   box-sizing: border-box;
-  overflow-y: auto; // Ensures page can scroll when content exceeds viewport
+  overflow-y: auto;
 }
 
+// Header section of the home component
 .home-header {
   margin-bottom: 3rem;
 
@@ -34,20 +37,22 @@
   }
 }
 
+// Wrapper for the list of teams
 .teams-wrapper {
   display: flex;
   flex-direction: column;
   gap: 2.5rem;
-  max-width: 1200px; // Limits maximum card width
-  margin: 0 auto;    // Centers the container on large screens
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+// Individual team card styles
 .team-card {
   background: hsr.$hsr-card-bg;
   border: 1px solid rgba(hsr.$hsr-color, 0.08);
   border-radius: 8px;
   padding: 1.5rem 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(hsr.$hsr-black, 0.5);
 
   .team-header {
     margin-bottom: 1.5rem;
@@ -74,15 +79,16 @@
   }
 }
 
+// Grid layout for team members within a team card
 .members-grid {
   display: grid;
-  // Use 1fr so all 4 slots expand evenly across the card container width
   grid-template-columns: repeat(4, 1fr); 
   gap: 1.5rem;
   width: 100%;
   box-sizing: border-box;
 }
 
+// Individual character slot within the members grid
 .character-slot {
   background: hsr.$hsr-piece-card-bg;
   border-radius: 6px;
@@ -117,8 +123,8 @@
     .character-icon {
       width: 100%;
       height: 100%;
-      object-fit: cover; // Fills slot crisp without distorting aspect ratio
-      image-rendering: -webkit-optimize-contrast; // Enhances sharpness on scaled assets
+      object-fit: cover;
+      image-rendering: -webkit-optimize-contrast;
       transition: transform 0.25s ease;
     }
   }

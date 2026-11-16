@@ -58,7 +58,10 @@ export class HomeComponent {
     characterSelectors.selectCharacter,
   );
 
-  // Sample data signal — in a real app, this would come from a team service
+  /**
+   * Sample data signal representing a list of character teams.
+   * In a real app, this would come from a team service.
+   */
   teams = signal<CharacterTeam[]>([
     this.buildTeam(
       1,
@@ -110,7 +113,10 @@ export class HomeComponent {
     ),
   ]);
 
-  // Navigates to the individual character detail page
+  /**
+   * Navigates to the individual character detail page.
+   * @param character - The character to navigate to.
+   */
   navigateToCharacter(character: Character): void {
     if (character.id !== this._selectedCharacter().id) {
       this._store.dispatch(
@@ -120,7 +126,14 @@ export class HomeComponent {
     this._router.navigate(['/character/detail', character.id]);
   }
 
-  // Builds a team object from the given parameters
+  /**
+   * Builds a team object from the given parameters.
+   * @param id - The ID of the team.
+   * @param name - The name of the team.
+   * @param description - The description of the team.
+   * @param membersIds - The IDs of the team members.
+   * @returns A CharacterTeam object.
+   */
   buildTeam(
     id: number,
     name: string,
