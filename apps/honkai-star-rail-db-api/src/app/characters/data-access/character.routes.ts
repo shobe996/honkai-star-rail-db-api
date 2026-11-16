@@ -1,5 +1,8 @@
 import { Route } from '@angular/router';
 
+/**
+ * Routes for the character feature.
+ */
 export const characterRoutes: Route[] = [
   {
     path: 'character',
