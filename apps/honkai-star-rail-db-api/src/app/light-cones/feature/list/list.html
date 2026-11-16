@@ -86,8 +86,8 @@
   </div>
   <lib-paginator
     [total]="lightCones().total"
-    [size]="lightCones().size"
-    [page]="lightCones().page"
+    [size]="currentSize()"
+    [page]="currentPage()"
     [hasMore]="lightCones().hasMore"
     label="Light Cones"
     (pageChange)="goToPage($event)"

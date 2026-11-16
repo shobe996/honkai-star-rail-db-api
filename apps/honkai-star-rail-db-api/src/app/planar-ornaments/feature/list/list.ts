@@ -16,7 +16,11 @@ import {
 } from 'honkai-star-rail-db/models';
 import { Store } from '@ngrx/store';
 import { planarOrnamentSelectors } from '../../data-access/state/planar-ornament.selectors';
+import { sortDirectionOptions } from '../../../shared/consts/sort-direction-options';
 
+/**
+ * List component for displaying planar ornaments.
+ */
 @Component({
   selector: 'app-list-component',
   imports: [
@@ -31,35 +35,52 @@ import { planarOrnamentSelectors } from '../../data-access/state/planar-ornament
   styleUrl: './list.scss',
 })
 export class ListComponent {
+  // Planar ornament list facade service for handling business logic.
   private _planarOrnamentsListFacadeService = inject(
     PlanarOrnamentListFacadeService,
   );
+
+  // Injected router for navigation
   private _router = inject(Router);
+
+  // Store instance for accessing application state.
   private _store = inject(Store);
 
+  /**
+   * Signal for the list of planar ornaments.
+   */
   planarOrnaments = this._store.selectSignal(
     planarOrnamentSelectors.selectPlanarOrnaments,
   );
 
+  // Signal for the search criteria from the store.
   private _storeCriteria = this._store.selectSignal(
     planarOrnamentSelectors.selectSearchCriteria,
   );
+
+  // Signal for the sort options from the store.
   private _storeSortOptions = this._store.selectSignal(
     planarOrnamentSelectors.selectSortOptions,
   );
-  private _storePage = this._store.selectSignal(
-    planarOrnamentSelectors.selectPage,
-  );
-  private _storeSize = this._store.selectSignal(
-    planarOrnamentSelectors.selectSize,
-  );
+
+  // Signal for the currently selected planar ornament.
   private _selectedPlanarOrnament = this._store.selectSignal(
     planarOrnamentSelectors.selectPlanarOrnament,
   );
 
-  private _currentPage = signal(1);
-  private _currentSize = signal(9);
+  /**
+   * Signal for the current page number.
+   */
+  currentPage = this._store.selectSignal(planarOrnamentSelectors.selectPage);
 
+  /**
+   * Signal for the current page size.
+   */
+  currentSize = this._store.selectSignal(planarOrnamentSelectors.selectSize);
+
+  /**
+   * Signal for the search form model.
+   */
   searchFormModel = signal<PlanarOrnamentSearchForm>({
     name: this._storeCriteria().name ?? '',
     effect: this._storeCriteria().effect ?? '',
@@ -67,63 +88,78 @@ export class ListComponent {
     sortDirection: this._storeSortOptions().direction ?? '',
   });
 
+  /**
+   * Options for sorting by different fields.
+   */
   sortByOptions = [
     { label: 'ID', value: 'id' },
     { label: 'Name', value: 'name' },
     { label: 'Two Set Effect', value: 'two_set_effect' },
   ];
-  sortDirectionOptions = [
-    { label: 'Ascending', value: 'asc' },
-    { label: 'Descending', value: 'desc' },
-  ];
+
+  /**
+   * Options for sorting by direction.
+   */
+  sortDirectionOptions = sortDirectionOptions;
 
   searchForm = form(this.searchFormModel);
 
-  private isInitialized = false;
+  // Flag to indicate if the component has been initialized.
+  private _isInitialized = false;
 
   constructor() {
-    const page = this._storePage();
-    const size = this._storeSize();
 
-    this._currentPage.set(page);
-    this._currentSize.set(size);
-
-    if (this.arePlanarOrnamentsEmpty()) {
-      this.loadPlanarOrnaments();
+    if (this._arePlanarOrnamentsEmpty()) {
+      this._loadPlanarOrnaments();
     }
 
     effect(() => {
-      this._currentPage();
-      this._currentSize();
+      this.currentPage();
+      this.currentSize();
       this.searchForm().value();
 
-      if (!this.isInitialized) {
-        this.isInitialized = true;
+      if (!this._isInitialized) {
+        this._isInitialized = true;
         return;
       }
 
       console.log('User action detected, fetching new data...');
-      this.loadPlanarOrnaments();
+      this._loadPlanarOrnaments();
     });
   }
 
-  toDetails(planarOrnament: PlanarOrnament) {
+  /**
+   * Navigate to the details page of a specific planar ornament.
+   * @param planarOrnament The planar ornament to navigate to the details page for.
+   */
+  toDetails(planarOrnament: PlanarOrnament): void {
     if (planarOrnament.id !== this._selectedPlanarOrnament().id) {
       this._planarOrnamentsListFacadeService.goToDetails(planarOrnament);
     }
     this._router.navigate(['planar-ornament', 'detail', planarOrnament.id]);
   }
 
-  goToPage(page: number) {
-    this._currentPage.set(page);
+  /**
+   * Navigate to a specific page of the planar ornament list.
+   * @param page The page number to navigate to.
+   */
+  goToPage(page: number): void {
+    this._planarOrnamentsListFacadeService.updatePage(page);
   }
 
-  updatePageSize(size: number) {
-    this._currentSize.set(size);
-    this._currentPage.set(1);
+  /**
+   * Update the number of items displayed per page and reset to the first page.
+   * @param size The new page size.
+   */
+  updatePageSize(size: number): void {
+    this._planarOrnamentsListFacadeService.updateSize(size);
+    this._planarOrnamentsListFacadeService.updatePage(1);
   }
 
-  resetFilters() {
+  /**
+   * Reset the search filters to their initial state.
+   */
+  resetFilters(): void {
     const initial: PlanarOrnamentSearchForm = {
       name: '',
       effect: '',
@@ -131,10 +167,11 @@ export class ListComponent {
       sortDirection: '',
     };
     this.searchForm().reset(initial);
-    this._currentPage.set(1);
+    this._planarOrnamentsListFacadeService.updatePage(1);
   }
 
-  loadPlanarOrnaments() {
+  // Load the list of planar ornaments based on the current search criteria, page, and size.
+  private _loadPlanarOrnaments(): void {
     const { name, effect, sortBy, sortDirection } = this.searchForm().value();
 
     const criteria: PlanarOrnamentSearchCriteria = {
@@ -144,14 +181,15 @@ export class ListComponent {
 
     this._planarOrnamentsListFacadeService.filter(
       criteria,
-      this._currentPage(),
-      this._currentSize(),
+      this.currentPage(),
+      this.currentSize(),
       sortBy,
       sortDirection,
     );
   }
 
-   private arePlanarOrnamentsEmpty(): boolean {
+  // Check if the list of planar ornaments is empty.
+  private _arePlanarOrnamentsEmpty(): boolean {
     return !this.planarOrnaments()?.data?.length;
   }
 }

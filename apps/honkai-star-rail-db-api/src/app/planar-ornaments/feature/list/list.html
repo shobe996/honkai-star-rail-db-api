@@ -50,8 +50,8 @@
 
   <lib-paginator
     [total]="planarOrnaments().total"
-    [size]="planarOrnaments().size"
-    [page]="planarOrnaments().page"
+    [size]="currentSize()"
+    [page]="currentPage()"
     [hasMore]="planarOrnaments().hasMore"
     label="Planar Ornaments"
     (pageChange)="goToPage($event)"

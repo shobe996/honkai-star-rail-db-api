@@ -7,9 +7,9 @@ import { CavernRelicState } from './cavern-relic.state';
 const selectCavernRelicState =
   createFeatureSelector<CavernRelicState>('cavernRelics');
 
-/*
-  Selectors for the cavern relic feature state.
-*/
+/**
+ * Selectors for the cavern relic feature state.
+ */
 export const cavernRelicSelectors = {
 
   /**

@@ -21,7 +21,11 @@ import {
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { lightConeSelectors } from '../../data-access/state/light-cone.selectors';
+import { sortDirectionOptions } from '../../../shared/consts/sort-direction-options';
 
+/**
+ * List component for displaying light cones.
+ */
 @Component({
   selector: 'app-list-component',
   imports: [
@@ -38,23 +42,37 @@ import { lightConeSelectors } from '../../data-access/state/light-cone.selectors
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
-  private _lightConeListFacadeSerice = inject(LightConeListFacadeService);
+  // Light cone list facade service for handling business logic.
+  private _lightConeListFacadeService = inject(LightConeListFacadeService);
+
+  // Injected router for navigation
   private _router = inject(Router);
+
+  // Store instance for accessing application state.
   private _store = inject(Store);
 
+  // Signal for the search criteria from the store.
   private _storeCriteria = this._store.selectSignal(
     lightConeSelectors.selectSearchCriteria,
   );
+
+  // Signal for the sort options from the store.
   private _storeSortOptions = this._store.selectSignal(
     lightConeSelectors.selectSortOptions,
   );
-  private _storePage = this._store.selectSignal(lightConeSelectors.selectPage);
-  private _storeSize = this._store.selectSignal(lightConeSelectors.selectSize);
 
-  private _currentPage = signal(1);
-  private _currentSize = signal(9);
+  /**
+   * Signal for the current page number.
+   */
+  currentPage = this._store.selectSignal(lightConeSelectors.selectPage);
 
-  searchFormModel = signal<LightConeSearchForm>({
+  /**
+   * Signal for the current page size.
+   */
+  currentSize = this._store.selectSignal(lightConeSelectors.selectSize);
+
+  // Signal for the search form model.
+  private _searchFormModel = signal<LightConeSearchForm>({
     name: this._storeCriteria().name ?? '',
     path: this._storeCriteria().path ?? '',
     rarity: this._storeCriteria().rarity
@@ -65,61 +83,84 @@ export class ListComponent {
     sortDirection: this._storeSortOptions().direction ?? '',
   });
 
+  /**
+   * Options for sorting by different fields.
+   */
   sortByOptions = [
     { label: 'ID', value: 'id' },
     { label: 'Name', value: 'name' },
     { label: 'Rarity', value: 'rarity' },
     { label: 'Path', value: 'path' },
   ];
-  sortDirectionOptions = [
-    { label: 'Ascending', value: 'asc' },
-    { label: 'Descending', value: 'desc' },
-  ];
+  /**
+   * Options for sorting by direction.
+   */
+  sortDirectionOptions = sortDirectionOptions;
 
-  searchForm = form(this.searchFormModel);
+  /**
+   * Form instance for the search form.
+   */
+  searchForm = form(this._searchFormModel);
+
+  /**
+   * Signal for the list of light cones.
+   */
   lightCones = this._store.selectSignal(lightConeSelectors.selectLightCones);
+
+  /**
+   * Available paths for filtering.
+   */
   paths = this._store.selectSignal(lightConeSelectors.selectPaths);
+  
+  /**
+   * Available rarities for filtering.
+   */
   rarities = this._store.selectSignal(lightConeSelectors.selectRarities);
+  
+  // Signal for the currently selected character.
   selectedLightCone = this._store.selectSignal(
     lightConeSelectors.selectLightCone,
   );
 
-  private isInitialized = false;
+  // Flag to indicate if the component has been initialized.
+  private _isInitialized = false;
 
+  // Signal for the toggle state of character stats (level1 or level80).
   statsToggleState = new Map<number, 'level1' | 'level80'>();
 
   constructor() {
-    const page = this._storePage();
-    const size = this._storeSize();
-
-    this._currentPage.set(page);
-    this._currentSize.set(size);
-
     this._loadOptions();
 
     effect(() => {
-      this._currentPage();
-      this._currentSize();
+      this.currentPage();
+      this.currentSize();
       this.searchForm().value();
 
-      if (!this.isInitialized) {
-        this.isInitialized = true;
+      if (!this._isInitialized) {
+        this._isInitialized = true;
         return;
       }
 
       console.log('User action detected, fetching new data...');
-      this.loadLightCones();
+      this._loadLightCones();
     });
   }
 
+  /**
+   * Navigate to the details page of a specific light cone.
+   * @param lightCone The light cone to navigate to the details page for.
+   */
   toDetails(lightCone: LightCone) {
     if (lightCone.id !== this.selectedLightCone()?.id) {
-      this._lightConeListFacadeSerice.goToDetails(lightCone);
+      this._lightConeListFacadeService.goToDetails(lightCone);
     }
     this._router.navigate(['light-cone', 'detail', lightCone.id]);
   }
 
-  private loadLightCones(): void {
+  /**
+   * Load the list of light cones based on the current search criteria and pagination.
+   */
+  private _loadLightCones(): void {
     const { name, effect, path, rarity, sortBy, sortDirection } =
       this.searchForm().value();
 
@@ -130,16 +171,19 @@ export class ListComponent {
       rarity: rarity ? Number.parseInt(rarity) : undefined,
     };
 
-    this._lightConeListFacadeSerice.filter(
+    this._lightConeListFacadeService.filter(
       criteria,
-      this._currentPage(),
-      this._currentSize(),
+      this.currentPage(),
+      this.currentSize(),
       sortBy,
       sortDirection,
     );
   }
 
-  toggleStats(lightConeId: number) {
+  /**
+   * Toggle the stats view for a specific light cone between level1 and level80.
+   */
+  toggleStats(lightConeId: number): void {
     const current = this.statsToggleState.get(lightConeId) || 'level1';
     this.statsToggleState.set(
       lightConeId,
@@ -147,21 +191,38 @@ export class ListComponent {
     );
   }
 
+  /**
+   * Get the stats for a light cone based on the current toggle state.
+   * @param lightCone The light cone whose stats are being retrieved.
+   * @param id The ID of the light cone.
+   * @returns The stats for the specified level.
+   */
   getStats(lightCone: LightCone, id: number) {
     const level = this.statsToggleState.get(id) || 'level1';
     return lightCone.stats[level];
   }
 
-  goToPage(page: number) {
-    this._currentPage.set(page);
+  /**
+   * Navigate to a specific page of the character list.
+   * @param page The page number to navigate to.
+   */
+  goToPage(page: number): void {
+    this._lightConeListFacadeService.updatePage(page);
   }
 
-  updatePageSize(size: number) {
-    this._currentSize.set(size);
-    this._currentPage.set(1);
+  /**
+   * Update the number of items displayed per page and reset to the first page.
+   * @param size The new page size.
+   */
+  updatePageSize(size: number): void {
+    this._lightConeListFacadeService.updateSize(size);
+    this._lightConeListFacadeService.updatePage(1);
   }
 
-  resetFilters() {
+    /**
+   * Reset the search filters to their initial state.
+   */
+  resetFilters(): void {
     const initial: LightConeSearchForm = {
       name: '',
       path: '',
@@ -171,31 +232,35 @@ export class ListComponent {
       sortDirection: '',
     };
     this.searchForm().reset(initial);
-    this._currentPage.set(1);
+    this._lightConeListFacadeService.updatePage(1);
   }
 
-  private _loadOptions() {
+   // Load the options for characters, paths, types, rarities, and factions if they are empty.
+  private _loadOptions(): void {
     if (this.areLightConesEmpty()) {
-      this.loadLightCones();
+      this._loadLightCones();
     }
 
     if (this.arePathsEmpty()) {
-      this._lightConeListFacadeSerice.getPaths();
+      this._lightConeListFacadeService.getPaths();
     }
 
     if (this.areRaritiesEmpty()) {
-      this._lightConeListFacadeSerice.getRarities();
+      this._lightConeListFacadeService.getRarities();
     }
   }
 
+  // Check if the light cone list is empty.
   private areLightConesEmpty(): boolean {
     return !this.lightCones()?.data?.length;
   }
 
+  // Check if the path options are empty.
   private arePathsEmpty(): boolean {
     return !this.paths().length;
   }
 
+  // Check if the rarity options are empty.
   private areRaritiesEmpty(): boolean {
     return !this.rarities().length;
   }

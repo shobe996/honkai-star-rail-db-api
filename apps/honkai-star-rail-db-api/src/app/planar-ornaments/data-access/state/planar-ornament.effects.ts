@@ -6,18 +6,25 @@ import { switchMap, map } from 'rxjs/operators';
 import { planarOrnamentActions } from './planar-ornament.actions';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
 
+/**
+ * Effects class for handling planar ornament related actions.
+ */
 @Injectable()
 export class PlanarOrnamentEffects {
-  private readonly actions$ = inject(Actions);
-  private planarOrnamentService = inject(PlanarOrnamentService);
+
+  // Injected actions stream
+  private readonly _actions$ = inject(Actions);
+
+  // Planar ornament service for making API calls related to planar ornaments.
+  private readonly _planarOrnamentService = inject(PlanarOrnamentService);
 
   loadPlanarOrnaments$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(planarOrnamentActions.loadPlanarOrnaments),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
           by && direction ? this._getPlanarOrnamentSort(by, direction) : undefined;
-        return this.planarOrnamentService
+        return this._planarOrnamentService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
             map((planarOrnaments) =>
@@ -30,6 +37,7 @@ export class PlanarOrnamentEffects {
     ),
   );
 
+  // Helper method to generate sort options for planar ornaments based on the provided criteria.
   private _getPlanarOrnamentSort(sortBy: string, sortDirection: string) {
     const planarOrnamentSort: Record<
       string,

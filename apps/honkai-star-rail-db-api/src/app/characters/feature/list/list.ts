@@ -161,6 +161,10 @@ export class ListComponent {
     });
   }
 
+  /**
+   * Navigate to the details page of a specific character.
+   * @param character The character to navigate to the details page for.
+   */
   toDetails(character: Character) {
     if (character.id !== this._selectedCharacter().id) {
       this._characterListFacadeService.goToDetails(character);
@@ -168,6 +172,7 @@ export class ListComponent {
     this._router.navigate(['character', 'detail', character.id]);
   }
 
+  // Load the list of characters based on the current search criteria, page, and size.
   private _loadCharacters(): void {
     const {
       name,
@@ -198,6 +203,9 @@ export class ListComponent {
     );
   }
 
+  /**
+   * Toggle the stats view for a specific character between level1 and level80.
+   */
   toggleStats(characterId: number) {
     this._statsToggleState.update((state) => {
       const current = state[characterId] || 'level1';
@@ -220,7 +228,7 @@ export class ListComponent {
   }
 
   /**
-   * Navigate to a specific page of the cavern relic list.
+   * Navigate to a specific page of the character list.
    * @param page The page number to navigate to.
    */
   goToPage(page: number) {

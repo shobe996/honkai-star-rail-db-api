@@ -52,7 +52,6 @@ export class CharacterEffects {
     ),
   );
 
-  // Effect for loading paths.
   loadPaths$ = createEffect(() =>
     this._actions$.pipe(
       ofType(characterActions.loadPaths),
@@ -75,7 +74,6 @@ export class CharacterEffects {
     ),
   );
 
-  // Effect for loading rarities.
   loadRarities$ = createEffect(() =>
     this._actions$.pipe(
       ofType(characterActions.loadRarities),
@@ -87,7 +85,6 @@ export class CharacterEffects {
     ),
   );
 
-  // Effect for loading factions.
   loadFactions$ = createEffect(() =>
     this._actions$.pipe(
       ofType(characterActions.loadFactions),

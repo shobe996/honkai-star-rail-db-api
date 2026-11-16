@@ -2,6 +2,10 @@ import { createReducer, on } from '@ngrx/store';
 import { planarOrnamentActions } from './planar-ornament.actions';
 import { initialPlanarOrnamentState } from './planar-ornament.state';
 
+/**
+/**
+ * Reducer for managing planar ornament state.
+ */
 export const planarOrnamentReducer = createReducer(
   initialPlanarOrnamentState,
   on(
