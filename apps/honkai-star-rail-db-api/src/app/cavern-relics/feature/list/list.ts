@@ -106,7 +106,9 @@ export class ListComponent {
     { label: 'Four Set Effect', value: 'four_set_effect' },
   ];
 
-  // Options for sorting by direction.
+  /**
+   * Options for sorting by direction.
+   */
   sortDirectionOptions = sortDirectionOptions;
 
   /**
