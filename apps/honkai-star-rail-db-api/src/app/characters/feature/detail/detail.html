@@ -1,6 +1,5 @@
 <div class="page-wrapper">
   <div class="detail-container">
-    <!-- Left Visual Area -->
     <div class="artwork-viewport">
       <img
         [src]="activeArtwork()"
@@ -23,7 +22,6 @@
       }
     </div>
 
-    <!-- Right Information Panel -->
     <div class="info-pane">
       <header class="char-header">
         <div class="rarity-row">{{ character().rarity.icon }}</div>
@@ -55,7 +53,6 @@
         </div>
       </div>
 
-      <!-- Stats Panel -->
       <section class="stats-panel">
         <div class="stats-header">
           <span class="label">BASE STATS</span>
@@ -79,25 +76,21 @@
         </div>
 
         <div class="stat-grid">
-          <!-- Column 1: HP & DEF -->
           <div class="stat-box">
             <span class="stat-label">HP</span>
             <span class="stat-value">{{ activeStats.base_hp }}</span>
           </div>
 
-          <!-- Column 2: ATK -->
           <div class="stat-box">
             <span class="stat-label">ATK</span>
             <span class="stat-value">{{ activeStats.base_atk }}</span>
           </div>
 
-          <!-- Column 1: DEF -->
           <div class="stat-box">
             <span class="stat-label">DEF</span>
             <span class="stat-value">{{ activeStats.base_def }}</span>
           </div>
 
-          <!-- Column 2: SPD -->
           <div class="stat-box">
             <span class="stat-label">SPD</span>
             <span class="stat-value">{{ activeStats.base_speed }}</span>

@@ -1,21 +1,24 @@
 @use 'theme' as hsr;
 
+// Character Detail Page Styles
 :host {
   display: block;
   width: 100%;
   height: 100%;
 }
 
+// Page Wrapper Styles
 .page-wrapper {
   background: hsr.$hsr-bg-dark;
   height: 100vh;
-  width: 100%; // Use 100% instead of 100vw to avoid horizontal overflow next to the sidebar
+  width: 100%;
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
   font-family: hsr.$font-body;
 }
 
+// Detail Container Styles
 .detail-container {
   display: flex;
   width: 100%;
@@ -23,6 +26,7 @@
   overflow: hidden;
 }
 
+// Artwork Switcher Styles
 .art-switcher {
   position: absolute;
   top: 50%;
@@ -39,6 +43,7 @@
   }
 }
 
+// Artwork Viewport Styles
 .artwork-viewport {
   flex: 1.4;
   height: 100%;
@@ -56,7 +61,7 @@
     max-width: 95%;
     object-fit: contain;
     z-index: 2;
-    filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 0 50px rgba(hsr.$hsr-black, 0.8));
   }
 
   .name-overlay-bg {
@@ -73,6 +78,7 @@
   }
 }
 
+// Right Information Panel Styles
 .info-pane {
   flex: 1;
   height: 100%;
@@ -81,15 +87,17 @@
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+  box-shadow: -20px 0 50px rgba(hsr.$hsr-black, 0.5);
   box-sizing: border-box;
-  overflow-y: auto; // Enables scrolling on smaller screens or taller content
+  overflow-y: auto;
 }
 
+// Rarity Row Styles
 .rarity-row {
   color: hsr.$hsr-gold;
 }
 
+// Bold Name Styles
 .bold-name {
   font-family: hsr.$font-display;
   font-size: 4rem;
@@ -100,11 +108,13 @@
   letter-spacing: -1px;
 }
 
+// Badge Row Styles
 .badge-row {
   display: flex;
   gap: 1rem;
 }
 
+// Description Scroll Styles
 .description-scroll {
   margin: 1.5rem 0;
   display: flex;
@@ -119,6 +129,7 @@
   }
 }
 
+// Faction Row Styles
 .faction-row {
   margin-top: 1rem;
   padding: 10px 0;
@@ -144,12 +155,12 @@
   }
 }
 
-/* --- STATS PANEL & GRID FIXES --- */
+// Stats Panel & Grid Fixes
 .stats-panel {
   background: hsr.$hsr-piece-card-bg;
   padding: 1.5rem;
   border-radius: 8px;
-  margin-top: auto; // Anchors to bottom of info-pane
+  margin-top: auto;
 
   .stats-header {
     display: flex;
@@ -166,22 +177,24 @@
   }
 }
 
+// Stat Grid Styles
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  column-gap: 2.5rem; // Expands space between the HP/DEF column and ATK/SPD column
+  column-gap: 2.5rem;
   row-gap: 1rem;
 }
 
+// Stat Box Styles
 .stat-box {
   border-bottom: 1px solid rgba(hsr.$hsr-color, 0.08);
   display: flex;
   justify-content: space-between;
-  align-items: baseline; // Aligns text baselines cleanly
+  align-items: baseline;
   padding: 8px 0;
 
   .stat-label {
-    color: #777;
+    color: hsr.$stat-label-color;
     font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 1px;
@@ -195,6 +208,7 @@
   }
 }
 
+// Level Selector Styles
 .level-selector {
   display: flex;
   gap: 5px;
