@@ -8,20 +8,31 @@ import { PathService } from '../../../paths/data-access/services/path.service';
 import { RarityService } from '../../../rarities/data-access/services/rarity.service';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
 
+/**
+ * Effects for managing light cone state.
+ */
 @Injectable()
 export class LightConeEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly lightConeService = inject(LightConeService);
-  private readonly pathService = inject(PathService);
-  private readonly rarityService = inject(RarityService);
+
+   // Injected actions stream
+  private readonly _actions$ = inject(Actions);
+
+  // Light cone service for making API calls related to light cones.
+  private readonly _lightConeService = inject(LightConeService);
+
+  // Path service for making API calls related to paths.
+  private readonly _pathService = inject(PathService);
+
+  // Rarity service for making API calls related to rarities.
+  private readonly _rarityService = inject(RarityService);
 
   loadLightCones$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(lightConeActions.loadLightCones),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this.getLightConeSort(by, direction) : undefined;
-        return this.lightConeService
+          by && direction ? this._getLightConeSort(by, direction) : undefined;
+        return this._lightConeService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
             map((lightCones) =>
@@ -33,10 +44,10 @@ export class LightConeEffects {
   );
 
   loadPaths$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(lightConeActions.loadPaths),
       switchMap(() =>
-        this.pathService
+        this._pathService
           .getAll()
           .pipe(map((paths) => lightConeActions.loadPathsSuccess({ paths }))),
       ),
@@ -44,10 +55,10 @@ export class LightConeEffects {
   );
 
   loadRarities$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(lightConeActions.loadRarities),
       switchMap(() =>
-        this.rarityService
+        this._rarityService
           .getAllLightConeRarities()
           .pipe(
             map((rarities) =>
@@ -58,7 +69,8 @@ export class LightConeEffects {
     ),
   );
 
-  private getLightConeSort(sortBy: string, sortDirection: string) {
+   // Helper method to generate sort options for light cones based on the provided criteria.
+  private _getLightConeSort(sortBy: string, sortDirection: string) {
     const lightConeMapping: Record<
       string,
       (l: LightCone) => number | string | Date

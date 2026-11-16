@@ -67,6 +67,9 @@ export interface CharacterState {
   factions: Faction[];
 }
 
+/**
+ * Initial state for the character feature.
+ */
 export const initialCharacterState: CharacterState = {
   characters: {} as PaginatedResult<Character>,
   paths: [],

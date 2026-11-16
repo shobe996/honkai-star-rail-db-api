@@ -11,6 +11,8 @@ import { cavernRelicActions } from '../state/cavern-relic.actions';
  */
 @Service()
 export class CavernRelicListFacadeService {
+
+  // Store instance for dispatching actions.
   private _store = inject(Store);
 
   /**

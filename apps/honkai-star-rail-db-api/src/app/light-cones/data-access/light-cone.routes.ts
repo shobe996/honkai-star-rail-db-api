@@ -1,5 +1,8 @@
 import { Route } from '@angular/router';
 
+/**
+ * Routes for the light cone feature.
+ */
 export const lightConeRoutes: Route[] = [
     {
     path: 'light-cone',

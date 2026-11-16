@@ -2,6 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import { initialLightConeState } from './light-cone.state';
 import { lightConeActions } from './light-cone.actions';
 
+/**
+ * Reducer for managing light cone state.
+ */
 export const lightConeReducer = createReducer(
   initialLightConeState,
   on(

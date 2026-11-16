@@ -8,6 +8,8 @@ import { characterActions } from '../state/character.actions';
  */
 @Service()
 export class CharacterListFacadeService {
+  
+  // Store instance for dispatching actions.
   private _store = inject(Store);
 
   /**

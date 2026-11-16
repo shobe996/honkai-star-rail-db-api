@@ -111,7 +111,7 @@ export const characterActions = {
    * @prop page The new page number.
    */
   updatePage: createAction(
-    '[Cavern Relic] Update Page',
+    '[Character] Update Page',
     props<{ page: number }>(),
   ),
   
@@ -120,7 +120,7 @@ export const characterActions = {
    * @prop size The new page size.
    */
   updateSize: createAction(
-    '[Cavern Relic] Update Size',
+    '[Character] Update Size',
     props<{ size: number }>(),
   ),
 };

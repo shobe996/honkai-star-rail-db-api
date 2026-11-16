@@ -1,21 +1,24 @@
 @use 'theme' as hsr;
 
+// Styles for the light cone detail component
 :host {
   display: block;
   width: 100%;
   height: 100%;
 }
 
+// Page wrapper for the detail view
 .page-wrapper {
   background: hsr.$hsr-bg-dark;
   height: 100vh;
-  width: 100%; // Fixes overflow past vertical sidebar
+  width: 100%;
   display: flex;
   overflow: hidden;
   box-sizing: border-box;
   font-family: hsr.$font-body;
 }
 
+// Container for the artwork and info panes
 .detail-container {
   display: flex;
   width: 100%;
@@ -23,6 +26,7 @@
   overflow: hidden;
 }
 
+// Artwork viewport containing the splash art and name overlay
 .artwork-viewport {
   flex: 1.4;
   height: 100%;
@@ -40,7 +44,7 @@
     max-width: 90%;
     object-fit: contain;
     z-index: 2;
-    filter: drop-shadow(0 0 50px rgba(0, 0, 0, 0.8));
+    filter: drop-shadow(0 0 50px rgba(hsr.$hsr-black, 0.8));
   }
 
   .name-overlay-bg {
@@ -57,6 +61,7 @@
   }
 }
 
+// Info pane containing character details, description, and stats
 .info-pane {
   flex: 1;
   height: 100%;
@@ -65,15 +70,17 @@
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
-  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.5);
+  box-shadow: -20px 0 50px rgba(hsr.$hsr-black, 0.5);
   box-sizing: border-box;
   overflow-y: auto;
 }
 
+// Rarity row styling
 .rarity-row {
   color: hsr.$hsr-gold;
 }
 
+// Bold name styling for the light cone title
 .bold-name {
   font-family: hsr.$font-display;
   font-size: 4rem;
@@ -84,6 +91,7 @@
   letter-spacing: -1px;
 }
 
+// Description scroll area for the light cone effect text
 .description-scroll {
   margin: 1.5rem 0;
   flex-grow: 1;
@@ -103,12 +111,12 @@
   }
 }
 
-/* --- STATS PANEL (3-Column Layout for Light Cones) --- */
+// Stats panel containing base stats and level selector
 .stats-panel {
   background: hsr.$hsr-piece-card-bg;
   padding: 1.5rem;
   border-radius: 8px;
-  margin-top: auto; // Pins stats section to the bottom
+  margin-top: auto;
 
   .stats-header {
     display: flex;
@@ -125,13 +133,14 @@
   }
 }
 
-// 3-Column grid perfectly spaces HP, ATK, and DEF in a single row
+// 3-Column grid for displaying HP, ATK, and DEF stats
 .stat-grid-3col {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
+// Individual stat box containing label and value
 .stat-box {
   border-bottom: 1px solid rgba(hsr.$hsr-color, 0.08);
   display: flex;
@@ -140,7 +149,7 @@
   padding: 8px 0;
 
   .stat-label {
-    color: #777;
+    color: hsr.$stat-label-color;
     font-weight: 700;
     font-size: 0.85rem;
     letter-spacing: 1px;
@@ -154,6 +163,7 @@
   }
 }
 
+// Level selector containing buttons for different levels
 .level-selector {
   display: flex;
   gap: 5px;
