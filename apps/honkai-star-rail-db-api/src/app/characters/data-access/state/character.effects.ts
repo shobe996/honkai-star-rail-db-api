@@ -10,22 +10,38 @@ import { RarityService } from '../../../rarities/data-access/services/rarity.ser
 import { FactionService } from '../../../factions/data-access/services/faction.service';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
 
+/**
+ * Effects class for handling character related actions.
+ */
 @Injectable()
 export class CharacterEffects {
-  private readonly actions$ = inject(Actions);
-  private readonly characterService = inject(CharacterService);
-  private readonly pathService = inject(PathService);
-  private readonly typeService = inject(TypeService);
-  private readonly rarityService = inject(RarityService);
-  private readonly factionService = inject(FactionService);
+
+  // Injected actions stream
+  private readonly _actions$ = inject(Actions);
+
+  // Character service for making API calls related to characters`.
+  private readonly _characterService = inject(CharacterService);
+
+  // Path service for making API calls related to paths.
+  private readonly _pathService = inject(PathService);
+
+  // Type service for making API calls related to types.
+  private readonly _typeService = inject(TypeService);
+
+  // Rarity service for making API calls related to rarities.
+  private readonly _rarityService = inject(RarityService);
+
+  // Faction service for making API calls related to factions.
+  private readonly _factionService = inject(FactionService);
   
+  // Effect for loading characters based on search criteria and pagination.
   loadCharacters$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(characterActions.loadCharacters),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this.getCharacterSort(by, direction) : undefined;
-        return this.characterService
+          by && direction ? this._getCharacterSort(by, direction) : undefined;
+        return this._characterService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
             map((characters) =>
@@ -36,11 +52,12 @@ export class CharacterEffects {
     ),
   );
 
+  // Effect for loading paths.
   loadPaths$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(characterActions.loadPaths),
       switchMap(() =>
-        this.pathService.getAll().pipe(
+        this._pathService.getAll().pipe(
           map((paths) => characterActions.loadPathsSuccess({ paths })),
         ),
       ),
@@ -48,39 +65,42 @@ export class CharacterEffects {
   );
 
   loadTypes$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(characterActions.loadTypes),
       switchMap(() =>
-        this.typeService.getAll().pipe(
+        this._typeService.getAll().pipe(
           map((types) => characterActions.loadTypesSuccess({ types })),
         ),
       ),
     ),
   );
 
+  // Effect for loading rarities.
   loadRarities$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(characterActions.loadRarities),
       switchMap(() =>
-        this.rarityService.getAllCharacterRarities().pipe(
+        this._rarityService.getAllCharacterRarities().pipe(
           map((rarities) => characterActions.loadRaritiesSuccess({ rarities })),
         ),
       ),
     ),
   );
 
+  // Effect for loading factions.
   loadFactions$ = createEffect(() =>
-    this.actions$.pipe(
+    this._actions$.pipe(
       ofType(characterActions.loadFactions),
       switchMap(() =>
-        this.factionService.getAll().pipe(
+        this._factionService.getAll().pipe(
           map((factions) => characterActions.loadFactionsSuccess({ factions })),
         ),
       ),
     ),
   );
 
-  private getCharacterSort(sortBy: string, sortDirection: string) {
+  // Helper method to generate sort options for characters based on the provided criteria.
+  private _getCharacterSort(sortBy: string, sortDirection: string) {
     const characterMapping: Record<string, (c: Character) => number | string | Date> = {
       id: (c) => c.id,
       name: (c) => c.name,

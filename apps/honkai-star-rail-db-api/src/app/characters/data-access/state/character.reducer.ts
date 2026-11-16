@@ -2,6 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import { initialCharacterState } from './character.state';
 import { characterActions } from './character.actions';
 
+/**
+ * Reducer for managing character state.
+ */
 export const characterReducer = createReducer(
   initialCharacterState,
   on(
@@ -38,5 +41,13 @@ export const characterReducer = createReducer(
   on(characterActions.loadCharacterDetails, (state, { character }) => ({
     ...state,
     selectedCharacter: character,
+  })),
+  on(characterActions.updatePage, (state, { page }) => ({
+    ...state,
+    page,
+  })),
+  on(characterActions.updateSize, (state, { size }) => ({
+    ...state,
+    size,
   })),
 );
