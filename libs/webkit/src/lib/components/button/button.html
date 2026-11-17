@@ -1,5 +1,6 @@
-<button 
-  [disabled]="disabled()" 
+<!-- Button component template -->
+<button
+  [disabled]="disabled()"
   [type]="type()"
   class="hsr-button-base"
   [class]="variant()"
@@ -13,13 +14,12 @@
     'round': variant() === 'round',
     'active': active()
   }"
-  >
-  
-  <!-- <span class="button-content"> -->
-    <ng-content></ng-content>
-  <!-- </span> -->
+>
+  <!-- Button content -->
+  <ng-content></ng-content>
 
+  <!-- Border accent for primary and reset variants -->
   @if (variant() === 'primary' || variant() === 'reset') {
-    <div class="hsr-border-accent"></div>
+  <div class="hsr-border-accent"></div>
   }
 </button>

@@ -19,19 +19,24 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
+  /** The variant of the button component.
+   * @default 'primary'
+   */
+  variant = input<'primary' | 'secondary' | 'reset' | 'nav' | 'round'>(
+    'primary',
+  );
 
-  // Variant for the button component
-  variant = input<'primary' | 'secondary' | 'reset' | 'nav' | 'round'>('primary');
-
-  // Disabled state for the button component
+  /** Whether the button is disabled. */
   disabled = input<boolean>(false);
 
-  // Type of the button element
+  /** The type of the button element.
+   * @default 'button'
+   */
   type = input<'button' | 'submit' | 'reset'>('button');
 
-  // Active state for the button component
+  /** Whether the button is in an active state. */
   active = input<boolean>(false);
 
-  // Edge display state for the button component
+  /** Whether the button is displayed on the edge. */
   isEdge = input<boolean>(false);
 }
