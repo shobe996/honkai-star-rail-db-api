@@ -15,13 +15,14 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgeComponent {
-
-  // Icon for the badge component
+  /** The icon to display in the badge. */
   icon = input.required<string | undefined>();
 
-  // Label for the badge component
+  /** The label to display next to the icon. */
   label = input.required<string | undefined>();
 
-  // Variant for the badge component
+  /** The variant of the badge component.
+   * @default 'mini'
+   */
   variant = input<'mini' | 'detail'>('mini');
 }

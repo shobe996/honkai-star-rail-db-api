@@ -1,8 +1,11 @@
+// Typography styles for the Webkit component
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&display=swap');
 
+// Font definitions for the Webkit component
 $font-display: 'Oswald', sans-serif;
 $font-body: 'Roboto Condensed', sans-serif;
 
+// HSR font style placeholder for reuse in components
 %font-hsr-style {
   font-family: $font-display;
   text-transform: uppercase;

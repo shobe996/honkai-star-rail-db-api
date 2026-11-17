@@ -1,5 +1,6 @@
 @use '../styles/theme' as hsr;
 
+// Styles for the Webkit component
 :host {
   display: block;
   background-color: hsr.$hsr-bg-dark;
@@ -7,6 +8,7 @@
   font-family: hsr.$font-body;
 }
 
+// Styles for the HSR button component
 .hsr-button {
   @extend %font-hsr-style;
   border: hsr.$hsr-border;
