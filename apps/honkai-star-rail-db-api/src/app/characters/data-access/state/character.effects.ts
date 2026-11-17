@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { characterActions } from './character.actions';
 import { CharacterService } from '../services/character.service';
 import { map, switchMap } from 'rxjs';
-import { Character } from 'honkai-star-rail-db/models';
+import { Character, SortOptions } from 'honkai-star-rail-db/models';
 import { PathService } from '../../../paths/data-access/services/path.service';
 import { TypeService } from '../../../types/data-access/services/type.service';
 import { RarityService } from '../../../rarities/data-access/services/rarity.service';
@@ -97,7 +97,7 @@ export class CharacterEffects {
   );
 
   // Helper method to generate sort options for characters based on the provided criteria.
-  private _getCharacterSort(sortBy: string, sortDirection: string) {
+  private _getCharacterSort(sortBy: string, sortDirection: string): SortOptions<Character> {
     const characterMapping: Record<string, (c: Character) => number | string | Date> = {
       id: (c) => c.id,
       name: (c) => c.name,

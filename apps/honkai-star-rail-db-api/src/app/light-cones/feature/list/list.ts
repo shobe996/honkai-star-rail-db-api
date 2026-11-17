@@ -111,12 +111,12 @@ export class ListComponent {
    * Available paths for filtering.
    */
   paths = this._store.selectSignal(lightConeSelectors.selectPaths);
-  
+
   /**
    * Available rarities for filtering.
    */
   rarities = this._store.selectSignal(lightConeSelectors.selectRarities);
-  
+
   // Signal for the currently selected character.
   selectedLightCone = this._store.selectSignal(
     lightConeSelectors.selectLightCone,
@@ -150,7 +150,7 @@ export class ListComponent {
    * Navigate to the details page of a specific light cone.
    * @param lightCone The light cone to navigate to the details page for.
    */
-  toDetails(lightCone: LightCone) {
+  toDetails(lightCone: LightCone): void {
     if (lightCone.id !== this.selectedLightCone()?.id) {
       this._lightConeListFacadeService.goToDetails(lightCone);
     }
@@ -219,7 +219,7 @@ export class ListComponent {
     this._lightConeListFacadeService.updatePage(1);
   }
 
-    /**
+  /**
    * Reset the search filters to their initial state.
    */
   resetFilters(): void {
@@ -235,7 +235,7 @@ export class ListComponent {
     this._lightConeListFacadeService.updatePage(1);
   }
 
-   // Load the options for characters, paths, types, rarities, and factions if they are empty.
+  // Load the options for characters, paths, types, rarities, and factions if they are empty.
   private _loadOptions(): void {
     if (this.areLightConesEmpty()) {
       this._loadLightCones();

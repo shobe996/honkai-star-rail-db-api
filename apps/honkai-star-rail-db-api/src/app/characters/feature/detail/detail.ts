@@ -51,17 +51,19 @@ export class DetailComponent implements OnInit {
   });
 
   // Method to select a specific artwork by index
-  selectArtwork(index: number) {
+  selectArtwork(index: number): void {
     this.selectedArtIndex.set(index);
   }
 
-  // Getter for the active stats based on the current level
+  /**
+   * Getter for the active stats based on the current level
+   */
   get activeStats() {
     return this.character().stats[this.currentLevel];
   }
 
   // Method to toggle the current level for displaying stats
-  toggleLevel(level: 'level1' | 'level80') {
+  toggleLevel(level: 'level1' | 'level80'): void {
     this.currentLevel = level;
   }
   

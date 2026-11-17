@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { PlanarOrnamentService } from '../services/planar-ornament.service';
-import { PlanarOrnament } from 'honkai-star-rail-db/models';
+import { PlanarOrnament, SortOptions } from 'honkai-star-rail-db/models';
 import { switchMap, map } from 'rxjs/operators';
 import { planarOrnamentActions } from './planar-ornament.actions';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
@@ -11,7 +11,6 @@ import { generateSortOptions } from '../../../shared/utils/sort-options';
  */
 @Injectable()
 export class PlanarOrnamentEffects {
-
   // Injected actions stream
   private readonly _actions$ = inject(Actions);
 
@@ -23,7 +22,9 @@ export class PlanarOrnamentEffects {
       ofType(planarOrnamentActions.loadPlanarOrnaments),
       switchMap(({ searchCriteria, page, size, by, direction }) => {
         const sortOptions =
-          by && direction ? this._getPlanarOrnamentSort(by, direction) : undefined;
+          by && direction
+            ? this._getPlanarOrnamentSort(by, direction)
+            : undefined;
         return this._planarOrnamentService
           .filter(searchCriteria, page, size, sortOptions)
           .pipe(
@@ -38,7 +39,10 @@ export class PlanarOrnamentEffects {
   );
 
   // Helper method to generate sort options for planar ornaments based on the provided criteria.
-  private _getPlanarOrnamentSort(sortBy: string, sortDirection: string) {
+  private _getPlanarOrnamentSort(
+    sortBy: string,
+    sortDirection: string,
+  ): SortOptions<PlanarOrnament> {
     const planarOrnamentSort: Record<
       string,
       (c: PlanarOrnament) => number | string
@@ -48,6 +52,10 @@ export class PlanarOrnamentEffects {
       two_set_effect: (c) => c.two_set_effect,
     };
 
-    return generateSortOptions<PlanarOrnament>(sortBy, sortDirection, planarOrnamentSort);
+    return generateSortOptions<PlanarOrnament>(
+      sortBy,
+      sortDirection,
+      planarOrnamentSort,
+    );
   }
 }

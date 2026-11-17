@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { lightConeActions } from './light-cone.actions';
 import { LightConeService } from '../services/light-cone.service';
 import { map, switchMap } from 'rxjs';
-import { LightCone } from 'honkai-star-rail-db/models';
+import { LightCone, SortOptions } from 'honkai-star-rail-db/models';
 import { PathService } from '../../../paths/data-access/services/path.service';
 import { RarityService } from '../../../rarities/data-access/services/rarity.service';
 import { generateSortOptions } from '../../../shared/utils/sort-options';
@@ -70,7 +70,7 @@ export class LightConeEffects {
   );
 
    // Helper method to generate sort options for light cones based on the provided criteria.
-  private _getLightConeSort(sortBy: string, sortDirection: string) {
+  private _getLightConeSort(sortBy: string, sortDirection: string): SortOptions<LightCone> {
     const lightConeMapping: Record<
       string,
       (l: LightCone) => number | string | Date

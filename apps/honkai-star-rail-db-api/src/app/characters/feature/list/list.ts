@@ -165,7 +165,7 @@ export class ListComponent {
    * Navigate to the details page of a specific character.
    * @param character The character to navigate to the details page for.
    */
-  toDetails(character: Character) {
+  toDetails(character: Character): void {
     if (character.id !== this._selectedCharacter().id) {
       this._characterListFacadeService.goToDetails(character);
     }
@@ -206,7 +206,7 @@ export class ListComponent {
   /**
    * Toggle the stats view for a specific character between level1 and level80.
    */
-  toggleStats(characterId: number) {
+  toggleStats(characterId: number): void {
     this._statsToggleState.update((state) => {
       const current = state[characterId] || 'level1';
       return {
@@ -231,7 +231,7 @@ export class ListComponent {
    * Navigate to a specific page of the character list.
    * @param page The page number to navigate to.
    */
-  goToPage(page: number) {
+  goToPage(page: number): void {
     this._characterListFacadeService.updatePage(page);
   }
 
@@ -239,7 +239,7 @@ export class ListComponent {
    * Update the number of items displayed per page and reset to the first page.
    * @param size The new page size.
    */
-  updatePageSize(size: number) {
+  updatePageSize(size: number): void {
     this._characterListFacadeService.updateSize(size);
     this._characterListFacadeService.updatePage(1);
   }
@@ -247,7 +247,7 @@ export class ListComponent {
   /**
    * Reset the search filters to their initial state.
    */
-  resetFilters() {
+  resetFilters(): void {
     const initial: CharacterSearchForm = {
       name: '',
       description: '',
@@ -288,7 +288,7 @@ export class ListComponent {
   }
 
   // Load the options for characters, paths, types, rarities, and factions if they are empty.
-  private _loadOptions() {
+  private _loadOptions(): void {
     if (this._areCharactersEmpty()) {
       this._loadCharacters();
     }

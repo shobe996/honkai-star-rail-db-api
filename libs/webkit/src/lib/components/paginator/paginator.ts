@@ -48,7 +48,10 @@ export class PaginatorComponent {
   // Event emitted when the page size changes
   sizeChange = output<number>();
 
+  // Reference to the Math object for use in templates
   Math = Math;
+
+  // Computed signal for the last page number
   lastPage = computed(() => Math.ceil(this.total() / this.size()));
 
   // Computed signal for the start of the current range of items
@@ -68,7 +71,7 @@ export class PaginatorComponent {
   ];
 
   // Handle changes to the page size
-  handleSizeChange(newSize: string) {
+  handleSizeChange(newSize: string): void {
     this.sizeChange.emit(Number(newSize));
   }
 }

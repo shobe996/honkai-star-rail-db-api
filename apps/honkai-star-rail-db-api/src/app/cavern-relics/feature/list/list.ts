@@ -143,7 +143,7 @@ export class ListComponent {
    * Navigate to the details page of a specific cavern relic.
    * @param cavernRelic The cavern relic to navigate to the details page for.
    */
-  toDetails(cavernRelic: CavernRelic) {
+  toDetails(cavernRelic: CavernRelic): void {
     if (cavernRelic.id !== this._selectedCavernRelic()?.id) {
       this._cavernRelicListFacadeService.goToDetails(cavernRelic);
     }
@@ -154,7 +154,7 @@ export class ListComponent {
    * Navigate to a specific page of the cavern relic list.
    * @param page The page number to navigate to.
    */
-  goToPage(page: number) {
+  goToPage(page: number): void {
     this._cavernRelicListFacadeService.updatePage(page);
   }
 
@@ -162,7 +162,7 @@ export class ListComponent {
    * Update the number of items displayed per page and reset to the first page.
    * @param size The new page size.
    */
-  updatePageSize(size: number) {
+  updatePageSize(size: number): void {
     this._cavernRelicListFacadeService.updateSize(size);
     this._cavernRelicListFacadeService.updatePage(1);
   }
@@ -170,7 +170,7 @@ export class ListComponent {
   /**
    * Reset the search filters to their initial state.
    */
-  resetFilters() {
+  resetFilters(): void {
     const initial: CavernRelicSearchForm = {
       name: '',
       effect: '',
@@ -187,7 +187,7 @@ export class ListComponent {
   }
 
   // Load the list of cavern relics based on the current search criteria, page, and size.
-  private _loadCavernRelics() {
+  private _loadCavernRelics(): void {
     const { name, effect, sortBy, sortDirection } = this.searchForm().value();
 
     const criteria: CavernRelicSearchCriteria = {
