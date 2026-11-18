@@ -29,5 +29,13 @@ export const planarOrnamentReducer = createReducer(
   on(planarOrnamentActions.loadPlanarOrnamentDetails, (state, { selectedPlanarOrnament }) => ({
     ...state,
     selectedPlanarOrnament,
-  }))
+  })),
+  on(planarOrnamentActions.updatePage, (state, { page }) => ({
+    ...state,
+    page,
+  })),
+  on(planarOrnamentActions.updateSize, (state, { size }) => ({
+    ...state,
+    size,
+  })),
 );

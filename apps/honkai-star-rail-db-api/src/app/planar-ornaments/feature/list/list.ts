@@ -102,6 +102,9 @@ export class ListComponent {
    */
   sortDirectionOptions = sortDirectionOptions;
 
+  /**
+   * Form instance for the search form.
+   */
   searchForm = form(this.searchFormModel);
 
   // Flag to indicate if the component has been initialized.
@@ -123,7 +126,6 @@ export class ListComponent {
         return;
       }
 
-      console.log('User action detected, fetching new data...');
       this._loadPlanarOrnaments();
     });
   }

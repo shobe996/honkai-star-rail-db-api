@@ -141,7 +141,6 @@ export class ListComponent {
         return;
       }
 
-      console.log('User action detected, fetching new data...');
       this._loadLightCones();
     });
   }

@@ -34,4 +34,12 @@ export const lightConeReducer = createReducer(
     ...state,
     selectedLightCone: lightCone,
   })),
+  on(lightConeActions.updatePage, (state, { page }) => ({
+    ...state,
+    page,
+  })),
+  on(lightConeActions.updateSize, (state, { size }) => ({
+    ...state,
+    size,
+  })),
 );
