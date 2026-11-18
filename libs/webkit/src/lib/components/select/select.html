@@ -1,5 +1,7 @@
-
+<!-- Select component template -->
 <div class="hsr-input-wrapper">
+
+  <!-- Select element for choosing an option -->
   <select
     [id]="selectId"
     [value]="value()"
@@ -7,10 +9,13 @@
     (change)="onSelectionChange($event)"
     class="hsr-select"
   >
+
+  <!-- Option for selecting all items -->
     @if (label()) {
       <option value="">All {{ label() }}</option>
     }
 
+    <!-- Options for each item in the list -->
     @for (opt of options(); track getOptionValue(opt)) {
       <option
         [value]="getOptionValue(opt)"

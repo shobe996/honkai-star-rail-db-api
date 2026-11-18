@@ -1,23 +1,36 @@
+<!-- Navbar component template -->
 <nav class="hsr-navbar" [class.vertical]="orientation() === 'vertical'" [class.horizontal]="orientation() === 'horizontal'">
+
+  <!-- Logo section -->
   @if (logoUrl()) {
     <div class="nav-brand">
       <img [src]="logoUrl()" alt="Brand Logo" class="brand-logo" />
     </div>
   }
 
+  <!-- Navigation links -->
   <ul class="nav-list">
+
+    <!-- Loop through navigation items -->
     @for (item of items(); track item.link) {
+
+      <!-- Individual navigation item -->
       <li class="nav-item">
         <a [routerLink]="item.link" routerLinkActive="active" class="nav-link">
+
+          <!-- Icon and label for the navigation item -->
           @if (item.icon) {
             <img [src]="item.icon" [alt]="item.label" class="nav-icon" />
           }
+
+          <!-- Label for the navigation item -->
           <span class="nav-label">{{ item.label }}</span>
         </a>
       </li>
     }
   </ul>
 
+  <!-- Footer section -->
   <div class="nav-footer">
     <ng-content></ng-content>
   </div>

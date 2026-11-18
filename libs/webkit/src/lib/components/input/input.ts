@@ -24,25 +24,39 @@ import { FormValueControl } from '@angular/forms/signals';
 })
 export class InputComponent implements FormValueControl<string> {
 
-  // Label for the input field
+  /**
+   * Label for the input field
+   */
   label = input<string>('');
 
-  // Placeholder text for the input field
+  /**
+   * Placeholder text for the input field
+   */
   placeholder = input<string>('');
 
-  // Input type for the field
+  /**
+   * Input type for the field
+   */
   type = input<string>('text');
 
-  // Disabled state of the input field
+  /**
+   * Disabled state of the input field
+   */
   disabled = input<boolean>(false);
 
-  // Value of the input field
+  /**
+   * Value of the input field
+   */
   value = model<string>('');
 
-  // Unique ID for the input element
+  /**
+   * Unique ID for the input element
+   */
   readonly inputId = `hsr-input-${Math.random().toString(36).substring(2, 9)}`;
 
-  // Handle input event and update the value model
+  /**
+   * Handle input event and update the value model
+   */
   handleInput(event: Event): void {
     const target = event.target as HTMLInputElement;
     this.value.set(target.value);

@@ -91,7 +91,7 @@ export class HomeComponent {
       5,
       'Elation',
       'Gather punchlines to power up damage during Aha instance',
-      [4737, 4997, 4736, 10192],
+      [10393, 4997, 4736, 10192],
     ),
     this.buildTeam(
       6,

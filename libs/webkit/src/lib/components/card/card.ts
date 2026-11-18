@@ -16,21 +16,21 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 })
 export class CardComponent {
 
-  // Rarity input for the card component
+  /** Rarity input for the card component */
   rarityValue = input.required<number | string>(); 
 
-  // Image and name inputs for the card component
+  /** Image input for the card component */
   image = input.required<string>();
 
-  // Name input for the card component
+  /** Name input for the card component */
   name = input.required<string>();
 
-  // Star icon input for the card component
+  /** Star icon input for the card component */
   starIcon = input<string>('');
 
-  // Click event outputs for the card component
+  /** Click event output for the image element */
   imageClick = output<void>();
 
-  // Click event output for the name element
+  /** Click event output for the name element */
   nameClick = output<void>();
 }

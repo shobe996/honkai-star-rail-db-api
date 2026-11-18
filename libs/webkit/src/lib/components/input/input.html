@@ -1,8 +1,12 @@
+<!-- Input component template -->
 <div class="hsr-input-wrapper">
+
+  <!-- Input label -->
   @if (label()) {
     <label class="label-caps" [for]="inputId">{{ label() }}</label>
   }
   
+  <!-- Input field -->
   <input
     [id]="inputId"
     [type]="type()"

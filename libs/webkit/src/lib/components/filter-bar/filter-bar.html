@@ -1,7 +1,13 @@
+<!-- Filter bar component template -->
 <div class="filter-bar">
+
+  <!-- Filter bar header slot -->
   <div class="filter-content">
+    
+    <!-- Filter controls slot -->
     <ng-content></ng-content>
     
+    <!-- Reset button -->
     <lib-button variant="reset" (click)="resetFilters.emit()">
       RESET FILTERS
     </lib-button>

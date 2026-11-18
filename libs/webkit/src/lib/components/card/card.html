@@ -1,4 +1,6 @@
+<!-- Card component template -->
 <div class="character-card">
+  <!-- Image side of the card -->
   <div class="image-side" [class]="'rarity-' + rarityValue()">
     <img
       [src]="image()"
@@ -7,9 +9,9 @@
       (keyup.enter)="imageClick.emit()"
       (click)="imageClick.emit()"
     />
-    <!-- </button> -->
   </div>
 
+  <!-- Info content side of the card -->
   <div class="info-content">
     <div class="header-row">
       <span class="rarity-stars">{{ starIcon() }}</span>
@@ -24,14 +26,15 @@
       </h2>
     </div>
 
+    <!-- Badges slot -->
+    <ng-content select="[badges]"></ng-content>
 
-      <ng-content select="[badges]"></ng-content>
-    
-
+    <!-- Stats slot -->
     <div class="stats-slot">
       <ng-content select="[stats]"></ng-content>
     </div>
 
+    <!-- Footer slot -->
     <div class="footer-slot">
       <ng-content select="[footer]"></ng-content>
     </div>

@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { BadgeComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
 import { Store } from '@ngrx/store';
 import { lightConeSelectors } from '../../data-access/state/light-cone.selectors';
 import { Router } from '@angular/router';
-
 
 /**
  * Detail component for displaying light cone details.
@@ -15,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrl: './detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DetailComponent {
+export class DetailComponent implements OnInit {
   
   // Injected router for navigation
   private _router = inject(Router);
@@ -23,10 +22,14 @@ export class DetailComponent {
   // Injected store for state management
   private _store = inject(Store);
   
-  // Signal for the currently selected light cone
+  /**
+   * Signal for the currently selected light cone
+   */
   lightCone = this._store.selectSignal(lightConeSelectors.selectLightCone)
 
-  // Current level for displaying stats
+  /**
+   * Current level for displaying stats
+   */
   currentLevel: 'level1' | 'level80' = 'level80';
 
 
@@ -37,7 +40,9 @@ export class DetailComponent {
     return this.lightCone()?.stats[this.currentLevel];
   }
 
-  // Toggles the current level between level1 and level80
+  /**
+   * Toggles the current level between level1 and level80
+   */
   toggleLevel(level: 'level1' | 'level80'): void {
     this.currentLevel = level;
   }

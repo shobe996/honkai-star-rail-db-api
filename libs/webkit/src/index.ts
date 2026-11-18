@@ -6,8 +6,6 @@ export * from './lib/components/input/input';
 
 export * from './lib/components/select/select';
 
-export * from './lib/components/container/container';
-
 export * from './lib/components/badge/badge';
 
 export * from './lib/components/card/card';

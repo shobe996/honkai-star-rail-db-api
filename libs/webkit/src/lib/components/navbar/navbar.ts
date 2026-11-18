@@ -5,19 +5,18 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
  * Navigation item interface for defining individual nav links.
  */
 export interface NavItem {
-
   /** The display label for the navigation item */
   label: string;
 
   /** The URL or router link for the navigation item */
   link: string;
-  
+
   /** Optional icon for the navigation item */
   icon?: string;
 }
 
 // Defines the orientation type for the navbar component
-export type NavbarOrientation = 'horizontal' | 'vertical';
+type NavbarOrientation = 'horizontal' | 'vertical';
 
 /**
  * Navbar component for rendering navigation links with optional logo.
@@ -34,13 +33,19 @@ export type NavbarOrientation = 'horizontal' | 'vertical';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  
-  // Orientation of the navbar ('horizontal' or 'vertical')
+  /**
+   * Orientation of the navbar ('horizontal' or 'vertical')
+   * @default 'horizontal'
+   */
   orientation = input<NavbarOrientation>('horizontal');
 
-  // List of nav links to render
+  /**
+   * List of nav links to render
+   */
   items = input<NavItem[]>([]);
 
-  // Optional logo image URL
+  /**
+   * Optional logo image URL
+   */
   logoUrl = input<string>();
 }

@@ -16,6 +16,9 @@ import { cavernRelicReducer } from './cavern-relics/data-access/state/cavern-rel
 import { CavernRelicEffects } from './cavern-relics/data-access/state/cavern-relic.effects';
 import { PlanarOrnamentEffects } from './planar-ornaments/data-access/state/planar-ornament.effects';
 
+/**
+ * Store configuration for the application
+ */
 const store = {
   characters: characterReducer,
   lightCones: lightConeReducer,
@@ -23,8 +26,19 @@ const store = {
   planarOrnaments: planarOrnamentReducer,
 };
 
-const effects = [CharacterEffects, LightConeEffects, CavernRelicEffects, PlanarOrnamentEffects];
+/**
+ * Effects configuration for the application
+ */
+const effects = [
+  CharacterEffects,
+  LightConeEffects,
+  CavernRelicEffects,
+  PlanarOrnamentEffects,
+];
 
+/**
+ * Application configuration for the Angular app
+ */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

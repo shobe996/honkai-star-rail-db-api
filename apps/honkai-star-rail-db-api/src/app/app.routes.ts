@@ -4,6 +4,9 @@ import { lightConeRoutes } from './light-cones/data-access/light-cone.routes';
 import { cavernRelicRoutes } from './cavern-relics/data-access/cavern-relic.routes';
 import { planarOrnamentRoutes } from './planar-ornaments/data-access/planar-ornament.routes';
 
+/**
+ * Application routes for the Angular app
+ */
 export const appRoutes: Route[] = [
   {
     path: '',

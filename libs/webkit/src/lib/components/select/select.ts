@@ -19,34 +19,53 @@ import { FormValueControl } from '@angular/forms/signals';
 })
 export class SelectComponent <T extends object, V extends string | number> implements FormValueControl<V>{
 
-  // Label for the select component
+  /**
+   * Label for the select component
+   */
   label = input<string>('');
 
-  // List of options to display
+  /**
+   * List of options to display
+   */
   options = input<T[]>([]);
 
-  // These become optional. If not provided, we use the raw value of T.
+  /**
+   * These become optional. If not provided, we use the raw value of T.
+   */
   labelKey = input<keyof T | undefined>();
 
-  // Key to use for the option labels (optional)
+  /**
+   * Key to use for the option labels (optional)
+   */
   valueKey = input<keyof T | undefined>();
 
-  // Key to use for the option values (optional)
+  /**
+   * Key to use for the option values (optional)
+   * @default false
+   */
   disabled = input<boolean>(false);
 
-  // Model for the selected value
+  /**
+   * Model for the selected value
+   */
   value = model<V>('' as unknown as V);
 
-  // Unique ID for the select element
+  /**
+   * Unique ID for the select element
+   */
   readonly selectId = `hsr-select-${Math.random().toString(36).substring(2, 9)}`;
 
-  // Handle selection changes from the HTML select element
+  /**
+   * Handle selection changes from the HTML select element
+   */
   onSelectionChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.value.set(selectElement.value as unknown as V);
   }
 
-  // Get the display label for an option
+  /**
+   * Get the display label for an option
+   */
   getOptionLabel(opt: T): string {
     const key = this.labelKey();
     if (key && typeof opt === 'object' && opt !== null) {
@@ -55,7 +74,9 @@ export class SelectComponent <T extends object, V extends string | number> imple
     return String(opt);
   }
 
-  // Get the value for an option
+  /**
+   * Get the value for an option
+   */
   getOptionValue(opt: T): V {
     const key = this.valueKey();
     if (key && typeof opt === 'object' && opt !== null) {
