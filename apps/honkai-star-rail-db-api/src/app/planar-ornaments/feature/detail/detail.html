@@ -1,8 +1,14 @@
+<!-- Planar Ornament Detail Page -->
 <div class="page-wrapper">
+
+  <!-- Planar Ornament Artwork and Information Container -->
   <div class="detail-container">
-    <!-- Left Visual Area: 4-Piece Ornament Showcase Grid -->
+
+    <!-- Left Artwork Viewport -->
     <div class="artwork-viewport">
       <div class="ornament-grid-showcase">
+
+        <!-- Planar Ornament Piece Card: Sphere -->
         <div class="ornament-piece-card">
           <img
             [src]="planarOrnament().icons.sphere_icon_url"
@@ -12,6 +18,7 @@
           <span class="piece-label">SPHERE</span>
         </div>
 
+        <!-- Planar Ornament Piece Card: Rope -->
         <div class="ornament-piece-card">
           <img
             [src]="planarOrnament().icons.rope_icon_url"
@@ -27,6 +34,8 @@
 
     <!-- Right Information Panel -->
     <div class="info-pane">
+
+      <!-- Planar Ornament Header -->
       <header class="ornament-header">
         <span class="set-type-tag">{{ planarOrnament().set }}</span>
         <h1 class="bold-name">{{ planarOrnament().name }}</h1>

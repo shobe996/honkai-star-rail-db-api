@@ -1,15 +1,17 @@
+<!-- Light Cone List Page -->
 <div class="page-container">
+  <!-- Filter Bar for Searching and Sorting -->
   <lib-filter-bar (resetFilters)="resetFilters()">
-    <lib-input
-      placeholder="Search name..."
-      [formField]="searchForm.name"
-    />
+    <!-- Search by Light Cone Name -->
+    <lib-input placeholder="Search name..." [formField]="searchForm.name" />
 
+    <!-- Search by Light Cone Effect -->
     <lib-input
       placeholder="Search by effect..."
       [formField]="searchForm.effect"
     />
-  
+
+    <!-- Search by Light Cone Path -->
     <lib-select
       [options]="paths()"
       labelKey="name"
@@ -17,7 +19,8 @@
       label="Paths"
       [formField]="searchForm.path"
     />
-  
+
+    <!-- Search by Light Cone Rarity -->
     <lib-select
       [options]="rarities()"
       labelKey="name"
@@ -26,6 +29,7 @@
       [formField]="searchForm.rarity"
     />
 
+    <!-- Sort By Dropdown -->
     <lib-select
       [options]="sortByOptions"
       labelKey="label"
@@ -34,6 +38,7 @@
       [formField]="searchForm.sortBy"
     />
 
+    <!-- Sort Direction Dropdown -->
     <lib-select
       [options]="sortDirectionOptions"
       labelKey="label"
@@ -41,10 +46,13 @@
       label="Sort Direction"
       [formField]="searchForm.sortDirection"
     />
-
   </lib-filter-bar>
+
+  <!-- Light Cones Card List -->
   <div class="card-list">
     @for (lightCone of lightCones().data; track lightCone.id) {
+
+    <!-- Individual Light Cone Card -->
     <lib-card
       [rarityValue]="lightCone.rarity.value"
       [image]="lightCone.icon_url"
@@ -53,37 +61,46 @@
       (imageClick)="toDetails(lightCone)"
       (nameClick)="toDetails(lightCone)"
     >
+      <!-- Light Cone Path Badge -->
       <div badges class="badge-container">
         <lib-badge
           [icon]="lightCone.path.icon_url"
           [label]="lightCone.path.name"
         />
       </div>
-  
+
+      <!-- Light Cone Base Stats Section -->
       <div stats class="stats-section">
+        <!-- Base Stats Header -->
         <div class="stats-header">
           <span class="label-caps">BASE STATS</span>
+
+          <!-- Toggle Stats Button -->
           <button class="toggle-btn" (click)="toggleStats(lightCone.id)">
             LVL TOGGLE
           </button>
         </div>
         <div class="stats-grid">
           @let s = getStats(lightCone, lightCone.id);
+          <!-- HP Stat -->
           <div class="stat-pill">
             <span>HP</span> <strong>{{ s.base_hp }}</strong>
           </div>
+          <!-- ATK Stat -->
           <div class="stat-pill">
             <span>ATK</span> <strong>{{ s.base_atk }}</strong>
           </div>
+          <!-- DEF Stat -->
           <div class="stat-pill">
             <span>DEF</span> <strong>{{ s.base_def }}</strong>
           </div>
         </div>
       </div>
-  
     </lib-card>
     }
   </div>
+
+  <!-- Paginator for Navigating Through Light Cones -->
   <lib-paginator
     [total]="lightCones().total"
     [size]="currentSize()"

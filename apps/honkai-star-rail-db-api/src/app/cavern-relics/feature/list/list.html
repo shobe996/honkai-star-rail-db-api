@@ -1,65 +1,77 @@
+<!-- Cavern Relics List Page -->
 <div class="page-container">
-  <lib-filter-bar (resetFilters)="resetFilters()">
-    <lib-input
-      placeholder="Search relic name..."
-      [formField]="searchForm.name"
-    />
+  <!-- Filter Bar for Searching and Sorting Cavern Relics -->
+ <lib-filter-bar (resetFilters)="resetFilters()">
+   <!-- Search by Cavern Relic Name -->
+   <lib-input
+     placeholder="Search relic name..."
+     [formField]="searchForm.name"
+   />
 
-    <lib-input
-      placeholder="Search by relic effect..."
-      [formField]="searchForm.effect"
-    />
+   <!-- Search by Cavern Relic Effect -->
+   <lib-input
+     placeholder="Search by relic effect..."
+     [formField]="searchForm.effect"
+   />
 
-    <lib-select
-      [options]="sortByOptions"
-      labelKey="label"
-      valueKey="value"
-      label="Sort By"
-      [formField]="searchForm.sortBy"
-    />
+   <!-- Sort By Dropdown -->
+   <lib-select
+     [options]="sortByOptions"
+     labelKey="label"
+     valueKey="value"
+     label="Sort By"
+     [formField]="searchForm.sortBy"
+   />
 
-    <lib-select
-      [options]="sortDirectionOptions"
-      labelKey="label"
-      valueKey="value"
-      label="Sort Direction"
-      [formField]="searchForm.sortDirection"
-    />
-  </lib-filter-bar>
+   <!-- Sort Direction Dropdown -->
+   <lib-select
+     [options]="sortDirectionOptions"
+     labelKey="label"
+     valueKey="value"
+     label="Sort Direction"
+     [formField]="searchForm.sortDirection"
+   />
+ </lib-filter-bar>
 
-  <div class="card-list">
-    @for (relic of cavernRelics().data; track relic.id) {
-    <lib-card
-      [rarityValue]="5"
-      [image]="relic.icons.icon_url"
-      [name]="relic.name"
-      (imageClick)="toDetails(relic)"
-      (nameClick)="toDetails(relic)"
-    >
+ <!-- Cavern Relics Card List -->
+ <div class="card-list">
+   @for (relic of cavernRelics().data; track relic.id) {
 
-      <div stats class="effects-section">
-        <div class="effect-box">
-          <span class="effect-label">2-PIECE SET</span>
-          <p class="effect-text">{{ relic.two_set_effect }}</p>
-        </div>
-        <div class="effect-box">
-          <span class="effect-label">4-PIECE SET</span>
-          <p class="effect-text">{{ relic.four_set_effect }}</p>
-        </div>
-      </div>
+   <!-- Individual Cavern Relic Card -->
+   <lib-card
+     [rarityValue]="5"
+     [image]="relic.icons.icon_url"
+     [name]="relic.name"
+     (imageClick)="toDetails(relic)"
+     (nameClick)="toDetails(relic)"
+   >
 
-      <div footer class="relic-footer">{{ relic.set }}</div>
-    </lib-card>
-    }
-  </div>
+     <!-- Cavern Relic Effects Section -->
+     <div stats class="effects-section">
+       <div class="effect-box">
+         <span class="effect-label">2-PIECE SET</span>
+         <p class="effect-text">{{ relic.two_set_effect }}</p>
+       </div>
+       <div class="effect-box">
+         <span class="effect-label">4-PIECE SET</span>
+         <p class="effect-text">{{ relic.four_set_effect }}</p>
+       </div>
+     </div>
 
-  <lib-paginator
-    [total]="cavernRelics().total"
-    [size]="currentSize()"
-    [page]="currentPage()"
-    [hasMore]="cavernRelics().hasMore"
-    label="Cavern Relics"
-    (pageChange)="goToPage($event)"
-    (sizeChange)="updatePageSize($event)"
-  />
+     <!-- Cavern Relic Footer -->
+     <div footer class="relic-footer">{{ relic.set }}</div>
+   </lib-card>
+   }
+ </div>
+
+ <!-- Paginator for Navigating Through Cavern Relics -->
+ <lib-paginator
+   [total]="cavernRelics().total"
+   [size]="currentSize()"
+   [page]="currentPage()"
+   [hasMore]="cavernRelics().hasMore"
+   label="Cavern Relics"
+   (pageChange)="goToPage($event)"
+   (sizeChange)="updatePageSize($event)"
+ />
 </div>

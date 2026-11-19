@@ -1,15 +1,20 @@
+<!-- Planar Ornaments List Page -->
 <div class="page-container">
+  <!-- Filter Bar for Searching and Sorting Planar Ornaments -->
   <lib-filter-bar (resetFilters)="resetFilters()">
+    <!-- Search by Planar Ornament Name -->
     <lib-input
       placeholder="Search ornament name..."
       [formField]="searchForm.name"
     />
 
+    <!-- Search by Planar Ornament Effect -->
     <lib-input
       placeholder="Search by ornament effect..."
       [formField]="searchForm.effect"
     />
 
+    <!-- Sort By Dropdown -->
     <lib-select
       [options]="sortByOptions"
       labelKey="label"
@@ -18,6 +23,7 @@
       [formField]="searchForm.sortBy"
     />
 
+    <!-- Sort Direction Dropdown -->
     <lib-select
       [options]="sortDirectionOptions"
       labelKey="label"
@@ -27,8 +33,11 @@
     />
   </lib-filter-bar>
 
+  <!-- PlanarOrnaments Card List -->
   <div class="card-list">
     @for (ornament of planarOrnaments().data; track ornament.id) {
+
+    <!-- Individual Planar Ornament Card -->
     <lib-card
       [rarityValue]="5"
       [image]="ornament.icons.icon_url"
@@ -36,6 +45,7 @@
       (imageClick)="toDetails(ornament)"
       (nameClick)="toDetails(ornament)"
     >
+      <!-- Planar Ornament Effects Section -->
       <div stats class="effects-section">
         <div class="effect-box">
           <span class="effect-label">2-PIECE SET</span>
@@ -43,11 +53,13 @@
         </div>
       </div>
 
+      <!-- Planar Ornament Footer -->
       <div footer class="ornament-footer">{{ ornament.set }}</div>
     </lib-card>
     }
   </div>
 
+  <!-- Paginator for Navigating Through Planar Ornaments -->
   <lib-paginator
     [total]="planarOrnaments().total"
     [size]="currentSize()"

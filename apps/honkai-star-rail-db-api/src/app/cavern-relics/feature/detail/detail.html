@@ -1,7 +1,14 @@
+<!-- Cavern Relic Detail Page -->
 <div class="page-wrapper">
+
+  <!-- Cavern Relic Artwork and Information Container -->
   <div class="detail-container">
+
+    <!-- Left Artwork Viewport -->
     <div class="artwork-viewport">
       <div class="relic-grid-showcase">
+
+        <!-- Cavern Relic Piece Card: Head -->
         <div class="relic-piece-card">
           <img
             [src]="cavernRelic().icons.head_icon_url"
@@ -11,6 +18,7 @@
           <span class="piece-label">HEAD</span>
         </div>
  
+        <!-- Cavern Relic Piece Card: Hands -->
         <div class="relic-piece-card">
           <img
             [src]="cavernRelic().icons.hand_icon_url"
@@ -20,6 +28,7 @@
           <span class="piece-label">HANDS</span>
         </div>
  
+        <!-- Cavern Relic Piece Card: Body -->
         <div class="relic-piece-card">
           <img
             [src]="cavernRelic().icons.body_icon_url"
@@ -29,6 +38,7 @@
           <span class="piece-label">BODY</span>
         </div>
  
+        <!-- Cavern Relic Piece Card: Feet -->
         <div class="relic-piece-card">
           <img
             [src]="cavernRelic().icons.feet_icon_url"
@@ -42,13 +52,18 @@
       <div class="name-overlay-bg">{{ cavernRelic().name }}</div>
     </div>
 
+    <!-- Right Information Panel -->
     <div class="info-pane">
+      <!-- Cavern Relic Header -->
       <header class="relic-header">
         <span class="set-type-tag">{{ cavernRelic().set }}</span>
         <h1 class="bold-name">{{ cavernRelic().name }}</h1>
       </header>
  
+      <!-- Set Effects Panel -->
       <section class="set-effects-panel">
+
+        <!-- 2-Piece Set Effect -->
         <div class="effect-group">
           <span class="effect-badge">2-PIECE SET</span>
           <p class="effect-description">
@@ -56,6 +71,7 @@
           </p>
         </div>
  
+        <!-- 4-Piece Set Effect -->
         <div class="effect-group">
           <span class="effect-badge">4-PIECE SET</span>
           <p class="effect-description">

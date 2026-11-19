@@ -1,5 +1,10 @@
+<!-- Light Cone Detail Page -->
 <div class="page-wrapper">
+
+  <!-- Light Cone Artwork and Information Container -->
   <div class="detail-container">
+
+    <!-- Left Artwork Viewport -->
     <div class="artwork-viewport">
       <img
         [src]="lightCone().full_artwork_url"
@@ -9,7 +14,10 @@
       <div class="name-overlay-bg">{{ lightCone().name }}</div>
     </div>
 
+    <!-- Right Information Panel -->
     <div class="info-pane">
+
+      <!-- Light Cone Header -->
       <header class="char-header">
         <div class="rarity-row">{{ lightCone().rarity.icon }}</div>
         <h1 class="bold-name">{{ lightCone().name }}</h1>
@@ -23,6 +31,7 @@
         </div>
       </header>
 
+      <!-- Light Cone Description -->
       <div class="description-scroll">
         <div
           [innerHTML]="lightCone().effect"
@@ -30,10 +39,16 @@
         ></div>
       </div>
 
+      <!-- Light Cone Base Stats -->
       <section class="stats-panel">
+
+        <!-- Base Stats Header -->
         <div class="stats-header">
+
+          <!-- Base Stats Label and Level Selector -->
           <span class="label">BASE STATS</span>
           <div class="level-selector">
+            <!-- Level 1 Button -->
             <lib-button
               variant="round"
               [active]="currentLevel === 'level1'"
@@ -42,6 +57,7 @@
               01
             </lib-button>
 
+            <!-- Level 80 Button -->
             <lib-button
               variant="round"
               [active]="currentLevel === 'level80'"
@@ -52,16 +68,20 @@
           </div>
         </div>
 
+        <!-- Base Stats Grid -->
         <div class="stat-grid-3col">
+          <!-- HP Stat -->
           <div class="stat-box">
             <span class="stat-label">HP</span>
             <span class="stat-value">{{ activeStats.base_hp }}</span>
           </div>
+          <!-- ATK Stat -->
           <div class="stat-box">
             <span class="stat-label">ATK</span>
             <span class="stat-value">{{ activeStats.base_atk }}</span>
           </div>
-          <div class="stat-box">
+          <!-- DEF Stat -->
+          <div class="stat-box">            
             <span class="stat-label">DEF</span>
             <span class="stat-value">{{ activeStats.base_def }}</span>
           </div>

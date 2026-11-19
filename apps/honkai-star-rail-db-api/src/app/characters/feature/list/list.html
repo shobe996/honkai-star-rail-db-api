@@ -1,12 +1,19 @@
+<!-- Character List Page -->
 <div class="page-container">
+
+  <!-- Filter Bar for Searching and Sorting -->
   <lib-filter-bar (resetFilters)="resetFilters()">
+
+    <!-- Search by Character Name -->
     <lib-input placeholder="Search name..." [formField]="searchForm.name" />
 
+    <!-- Search by Character Description -->
     <lib-input
       placeholder="Search description..."
       [formField]="searchForm.description"
     />
 
+    <!-- Filter by Character Path -->
     <lib-select
       [options]="paths()"
       labelKey="name"
@@ -15,6 +22,7 @@
       [formField]="searchForm.path"
     />
 
+    <!-- Filter by Character Type -->
     <lib-select
       [options]="types()"
       labelKey="name"
@@ -23,6 +31,7 @@
       [formField]="searchForm.type"
     />
 
+    <!-- Filter by Character Rarity -->
     <lib-select
       [options]="rarities()"
       labelKey="name"
@@ -31,6 +40,7 @@
       [formField]="searchForm.rarity"
     />
 
+    <!-- Filter by Character Faction -->
     <lib-select
       [options]="factions()"
       labelKey="name"
@@ -39,10 +49,12 @@
       [formField]="searchForm.faction"
     />
 
+    <!-- Toggle Datepicker Mode -->
     <lib-button (click)="toggleDatepickerMode()">
       Toggle Datepicker Mode
     </lib-button>
 
+    <!-- Datepicker for Release Date -->
     @if (datepickerMode() === 'single') {
       <lib-datepicker
         mode="single"
@@ -59,6 +71,7 @@
       />
     }
 
+    <!-- Sort By Options -->
     <lib-select
       [options]="sortByOptions"
       labelKey="label"
@@ -67,6 +80,7 @@
       [formField]="searchForm.sortBy"
     />
 
+    <!-- Sort Direction Options -->
     <lib-select
       [options]="sortDirectionOptions"
       labelKey="label"
@@ -75,8 +89,12 @@
       [formField]="searchForm.sortDirection"
     />
   </lib-filter-bar>
+
+  <!-- Character Card List -->
   <div class="card-list">
     @for (character of characters().data; track character.id) {
+
+      <!-- Individual Character Card -->
     <lib-card
       [rarityValue]="character.rarity.value"
       [image]="character.icon_url"
@@ -86,11 +104,13 @@
       (nameClick)="toDetails(character)"
     >
       <div badges class="badge-container">
+        <!-- Character Path Badge -->
         <lib-badge
           [icon]="character.path.icon_url"
           [label]="character.path.name"
           variant="mini"
         />
+        <!-- Character Type Badge -->
         <lib-badge
           [icon]="character.type.icon_url"
           [label]="character.type.name"
@@ -98,34 +118,50 @@
         />
       </div>
 
+      <!-- Character Base Stats Section -->
       <div stats class="stats-section">
+
+        <!-- Base Stats Header -->
         <div class="stats-header">
           <span class="label-caps">BASE STATS</span>
+
+          <!-- Toggle Stats Button -->
           <button class="toggle-btn" (click)="toggleStats(character.id)">
             LVL TOGGLE
           </button>
         </div>
         <div class="stats-grid">
           @let s = getStats(character, character.id);
+
+          <!-- HP Stat -->
           <div class="stat-pill">
             <span>HP</span> <strong>{{ s.base_hp }}</strong>
           </div>
+
+          <!-- ATK Stat -->
           <div class="stat-pill">
             <span>ATK</span> <strong>{{ s.base_atk }}</strong>
           </div>
+
+          <!-- DEF Stat -->
           <div class="stat-pill">
             <span>DEF</span> <strong>{{ s.base_def }}</strong>
           </div>
+
+          <!-- SPD Stat -->
           <div class="stat-pill">
             <span>SPD</span> <strong>{{ s.base_speed }}</strong>
           </div>
         </div>
       </div>
 
+      <!-- Character Faction Footer -->
       <div footer class="faction-footer">{{ character.faction.name }}</div>
     </lib-card>
     }
   </div>
+
+  <!-- Paginator for Navigating Through Characters -->
   <lib-paginator
     [total]="characters().total"
     [size]="currentSize()"

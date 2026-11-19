@@ -1,5 +1,10 @@
+<!-- Character Detail Page -->
 <div class="page-wrapper">
+
+  <!-- Character Artwork and Information Container -->
   <div class="detail-container">
+
+    <!-- Character Artwork Section -->
     <div class="artwork-viewport">
       <img
         [src]="activeArtwork()"
@@ -22,17 +27,25 @@
       }
     </div>
 
+    <!-- Character Information Panel -->
     <div class="info-pane">
+
+      <!-- Character Header -->
       <header class="char-header">
         <div class="rarity-row">{{ character().rarity.icon }}</div>
         <h1 class="bold-name">{{ character().name }}</h1>
 
+        <!-- Badge Row -->
         <div class="badge-row">
+
+          <!-- Path Badge -->
           <lib-badge
             [icon]="character().path.icon_url"
             [label]="character().path.name"
             variant="detail"
           ></lib-badge>
+          
+          <!-- Type Badge -->
           <lib-badge
             [icon]="character().type.icon_url"
             [label]="character().type.name"
@@ -41,22 +54,30 @@
         </div>
       </header>
 
+      <!-- Character Description -->
       <div class="description-scroll">
         <div
           [innerHTML]="character().desc"
           class="flavor-text"
         ></div>
 
+        <!-- Faction Row -->
         <div class="faction-row">
           <span class="faction-label">AFFILIATION</span>
           <span class="faction-value">{{ character().faction.name }}</span>
         </div>
       </div>
 
+      <!-- Character Base Stats -->
       <section class="stats-panel">
+
+        <!-- Base Stats Header -->
         <div class="stats-header">
+
+          <!-- Base Stats Label and Level Selector -->
           <span class="label">BASE STATS</span>
           <div class="level-selector">
+            <!-- Level 1 Button -->
             <lib-button
               variant="round"
               [active]="currentLevel === 'level1'"
@@ -65,6 +86,7 @@
               01
             </lib-button>
 
+            <!-- Level 80 Button -->
             <lib-button
               variant="round"
               [active]="currentLevel === 'level80'"
@@ -75,22 +97,27 @@
           </div>
         </div>
 
+        <!-- Base Stats Grid -->
         <div class="stat-grid">
+          <!-- HP Stat -->
           <div class="stat-box">
             <span class="stat-label">HP</span>
             <span class="stat-value">{{ activeStats.base_hp }}</span>
           </div>
 
+          <!-- ATK Stat -->
           <div class="stat-box">
             <span class="stat-label">ATK</span>
             <span class="stat-value">{{ activeStats.base_atk }}</span>
           </div>
 
+          <!-- DEF Stat -->
           <div class="stat-box">
             <span class="stat-label">DEF</span>
             <span class="stat-value">{{ activeStats.base_def }}</span>
           </div>
 
+          <!-- SPD Stat -->
           <div class="stat-box">
             <span class="stat-label">SPD</span>
             <span class="stat-value">{{ activeStats.base_speed }}</span>
