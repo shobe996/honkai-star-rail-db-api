@@ -11,7 +11,7 @@ import { FormValueControl } from '@angular/forms/signals';
  * @label The label for the input field
  * @placeholder The placeholder text for the input field
  * @type The type of the input field (e.g., 'text', 'password')
- * @default text
+ * @default 'text'
  * @disabled The disabled state of the input field
  * @default false
  */

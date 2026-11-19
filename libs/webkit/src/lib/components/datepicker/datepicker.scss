@@ -1,0 +1,211 @@
+@use '../../styles/theme' as hsr;
+ 
+// Styles for the HSR datepicker component
+:host {
+  display: inline-block;
+  position: relative;
+  font-family: hsr.$font-body;
+}
+ 
+// Datepicker container
+.hsr-datepicker {
+  position: relative;
+  min-width: 240px;
+ 
+  &.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+ 
+// Datepicker trigger button
+.datepicker-trigger {
+  height: 40px;
+  background: hsr.$hsr-piece-card-bg;
+  border: 1px solid rgba(hsr.$hsr-white, 0.15);
+  border-radius: 4px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+ 
+  &:hover {
+    border-color: rgba(hsr.$hsr-gold, 0.5);
+  }
+ 
+  .calendar-icon {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+ 
+  .value-text {
+    color: hsr.$hsr-color;
+    font-family: hsr.$font-display;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    flex: 1;
+  }
+ 
+  .placeholder-text {
+    color: hsr.$hsr-label;
+    font-size: 0.9rem;
+    flex: 1;
+  }
+ 
+  .clear-btn {
+    background: transparent;
+    border: none;
+    color: hsr.$hsr-label;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 2px 4px;
+    line-height: 1;
+ 
+    &:hover {
+      color: hsr.$hsr-gold;
+    }
+  }
+}
+ 
+// Open state for the datepicker trigger
+.hsr-datepicker.open .datepicker-trigger {
+  border-color: hsr.$hsr-gold;
+  box-shadow: 0 0 12px rgba(hsr.$hsr-gold, 0.15);
+}
+ 
+// Datepicker popover container
+.datepicker-popover {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 290px;
+  background: hsr.$hsr-card-bg;
+  border: 1px solid hsr.$hsr-gold-glow;
+  border-radius: 6px;
+  padding: 1rem;
+  box-shadow: 0 15px 40px rgba(hsr.$hsr-black, 0.8);
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+// Calendar header within the datepicker popover
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(hsr.$hsr-white, 0.08);
+ 
+  .month-year-label {
+    font-family: hsr.$font-display;
+    font-size: 1rem;
+    font-weight: 700;
+    color: hsr.$hsr-gold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+ 
+  .nav-arrow {
+    background: hsr.$hsr-bg-element;
+    border: 1px solid rgba(hsr.$hsr-white, 0.1);
+    color: hsr.$hsr-color;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+ 
+    &:hover {
+      background: hsr.$hsr-gold;
+      color: hsr.$hsr-bg-dark;
+      border-color: hsr.$hsr-gold;
+    }
+  }
+}
+ 
+// Weekdays row within the datepicker popover
+.weekdays-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 6px;
+ 
+  .weekday-cell {
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: hsr.$hsr-label;
+    letter-spacing: 1px;
+  }
+}
+ 
+// Days grid within the datepicker popover
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 4px;
+}
+ 
+// Individual day cell within the days grid
+.day-cell {
+  height: 34px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: hsr.$hsr-color;
+  font-family: hsr.$font-display;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.15s ease, color 0.15s ease;
+ 
+  &.outside-month {
+    color: #444;
+  }
+ 
+  &.today:not(.selected) {
+    border-color: rgba(hsr.$hsr-gold, 0.5);
+    color: hsr.$hsr-gold;
+  }
+ 
+  &:hover:not(:disabled):not(.selected) {
+    background: rgba(hsr.$hsr-white, 0.08);
+  }
+ 
+  &.in-range {
+    background: rgba(hsr.$hsr-gold, 0.15);
+    border-radius: 0;
+    color: hsr.$hsr-white;
+  }
+ 
+  &.selected {
+    background: hsr.$hsr-gold;
+    color: hsr.$hsr-bg-dark;
+    font-weight: 700;
+  }
+ 
+  &.range-start {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+ 
+  &.range-end {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+ 
+  &.range-start.range-end {
+    border-radius: 4px;
+  }
+ 
+  &:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+}

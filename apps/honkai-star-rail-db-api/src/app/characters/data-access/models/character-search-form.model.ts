@@ -1,8 +1,9 @@
+import { DateRangeArray } from '@honkai-star-rail-db/webkit';
+
 /**
  * Interface representing the search form for characters.
  */
 export interface CharacterSearchForm {
-
   /**
    * The name of the character.
    */
@@ -34,10 +35,20 @@ export interface CharacterSearchForm {
   faction: string;
 
   /**
+   * The release date of the character.
+   */
+  releaseDate: Date | null;
+
+  /**
+   * The date range for the character's release date.
+   */
+  dateRange: DateRangeArray | null;
+
+  /**
    * The field to sort by.
    */
   sortBy: string;
-  
+
   /**
    * The direction to sort by.
    */

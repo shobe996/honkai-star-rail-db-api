@@ -5,14 +5,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import {
-  BadgeComponent,
-  CardComponent,
-  PaginatorComponent,
-  FilterBarComponent,
-  SelectComponent,
-  InputComponent,
-} from '@honkai-star-rail-db/webkit';
+import { BadgeComponent, CardComponent, PaginatorComponent, FilterBarComponent, SelectComponent, InputComponent, DatepickerComponent, ButtonComponent } from '@honkai-star-rail-db/webkit';
 import { CharacterListFacadeService } from '../../data-access/services/character-list.facade.service';
 import { form, FormField } from '@angular/forms/signals';
 import { CharacterSearchForm } from '../../data-access/models/character-search-form.model';
@@ -35,7 +28,9 @@ import { sortDirectionOptions } from '../../../shared/consts/sort-direction-opti
     SelectComponent,
     FormField,
     InputComponent,
-  ],
+    DatepickerComponent,
+    ButtonComponent
+],
   templateUrl: './list.html',
   styleUrl: './list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,12 +65,36 @@ export class ListComponent {
    */
   currentSize = this._store.selectSignal(characterSelectors.selectSize);
 
+  // Signal Forms tracks array items by identity; NgRx freezes its own copies.
+  private get _initialDateRange(): CharacterSearchForm['dateRange'] {
+    const [start, end] = this._storeCriteria().dateRange ?? [];
+    return start ? [new Date(start), end ? new Date(end) : null] : null;
+  }
+
+  /**
+   * Signal for the datepicker mode ('single' or 'range').
+   */
+  datepickerMode = signal<'single' | 'range'>('single');
+
+  /**
+   * Toggles the datepicker mode between 'single' and 'range'.
+   */
+  toggleDatepickerMode(): void {
+    const currentMode = this.datepickerMode();
+    this.datepickerMode.set(
+      currentMode === 'single' ? 'range' : 'single'
+    );
+
+    this.resetFilters();
+  }
+
   // Signal for the search form model.
   private _searchFormModel = signal<CharacterSearchForm>({
     name: this._storeCriteria().name ?? '',
     description: this._storeCriteria().description ?? '',
     path: this._storeCriteria().path ?? '',
     type: this._storeCriteria().type ?? '',
+    releaseDate: this._storeCriteria().releaseDate ?? null,
     rarity:
       this._storeCriteria().rarity !== undefined
         ? this._storeCriteria().rarity?.toString() + '-Star'
@@ -83,6 +102,7 @@ export class ListComponent {
     faction: this._storeCriteria().faction ?? '',
     sortBy: this._storeSortOptions()?.by ?? '',
     sortDirection: this._storeSortOptions()?.direction ?? '',
+    dateRange: this._initialDateRange,
   });
 
   /**
@@ -183,8 +203,11 @@ export class ListComponent {
       faction,
       sortBy,
       sortDirection,
+      releaseDate,
+      dateRange,
     } = this.searchForm().value();
 
+    const [rangeStart, rangeEnd] = dateRange ?? [];
     const criteria: CharacterSearchCriteria = {
       name: name ?? '',
       description: description ?? '',
@@ -192,6 +215,11 @@ export class ListComponent {
       type: type ?? '',
       faction: faction ?? '',
       rarity: rarity ? Number.parseInt(rarity) : undefined,
+      releaseDate: releaseDate ?? undefined,
+      dateRange:
+        rangeStart && rangeEnd
+          ? [rangeStart, rangeEnd]
+          : undefined,
     };
 
     this._characterListFacadeService.filter(
@@ -257,6 +285,8 @@ export class ListComponent {
       faction: '',
       sortBy: '',
       sortDirection: '',
+      releaseDate: null,
+      dateRange: null,
     };
     this.searchForm().reset(initial);
     this._characterListFacadeService.updatePage(1);

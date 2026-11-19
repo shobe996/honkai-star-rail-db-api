@@ -1,15 +1,12 @@
 <div class="page-container">
   <lib-filter-bar (resetFilters)="resetFilters()">
-    <lib-input
-      placeholder="Search name..."
-      [formField]="searchForm.name"
-    />
+    <lib-input placeholder="Search name..." [formField]="searchForm.name" />
 
     <lib-input
       placeholder="Search description..."
       [formField]="searchForm.description"
     />
-  
+
     <lib-select
       [options]="paths()"
       labelKey="name"
@@ -17,7 +14,7 @@
       label="Paths"
       [formField]="searchForm.path"
     />
-  
+
     <lib-select
       [options]="types()"
       labelKey="name"
@@ -25,7 +22,7 @@
       label="Types"
       [formField]="searchForm.type"
     />
-  
+
     <lib-select
       [options]="rarities()"
       labelKey="name"
@@ -33,7 +30,7 @@
       label="Rarities"
       [formField]="searchForm.rarity"
     />
-  
+
     <lib-select
       [options]="factions()"
       labelKey="name"
@@ -41,6 +38,26 @@
       label="Factions"
       [formField]="searchForm.faction"
     />
+
+    <lib-button (click)="toggleDatepickerMode()">
+      Toggle Datepicker Mode
+    </lib-button>
+
+    @if (datepickerMode() === 'single') {
+      <lib-datepicker
+        mode="single"
+        valueTimezone="utc"
+        placeholder="Release date"
+        [formField]="searchForm.releaseDate"
+      />
+    } @else {
+      <lib-datepicker
+        mode="range"
+        valueTimezone="utc"
+        placeholder="Release date"
+        [formField]="searchForm.dateRange"
+      />
+    }
 
     <lib-select
       [options]="sortByOptions"
@@ -80,7 +97,7 @@
           variant="mini"
         />
       </div>
-  
+
       <div stats class="stats-section">
         <div class="stats-header">
           <span class="label-caps">BASE STATS</span>
@@ -104,7 +121,7 @@
           </div>
         </div>
       </div>
-  
+
       <div footer class="faction-footer">{{ character.faction.name }}</div>
     </lib-card>
     }

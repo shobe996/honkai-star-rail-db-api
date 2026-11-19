@@ -1,0 +1,88 @@
+<!-- Datepicker Component -->
+<div
+  class="hsr-datepicker"
+  [class.disabled]="disabled()"
+  [class.open]="isOpen()"
+>
+  <!-- Trigger Input Box -->
+  <div
+    class="datepicker-trigger"
+    (click)="toggleDropdown()"
+    role="button"
+    tabindex="0"
+  >
+    <span class="calendar-icon">📅</span>
+
+    <!-- Display Value or Placeholder -->
+    @if (displayValue()) {
+    <span class="value-text">{{ displayValue() }}</span>
+    } @else {
+    <span class="placeholder-text">{{ placeholder() }}</span>
+    }
+
+    <!-- Clear Button -->
+    @if (displayValue() && !disabled()) {
+    <button
+      type="button"
+      class="clear-btn"
+      (click)="clearSelection($event)"
+      title="Clear"
+    >
+      ✕
+    </button>
+    }
+  </div>
+
+  <!-- Calendar Popover -->
+  @if (isOpen()) {
+
+  <!-- Calendar Popover -->
+  <div class="datepicker-popover">
+
+    <!-- Calendar Header -->
+    <div class="calendar-header">
+
+      <!-- Previous Month Button -->
+      <button type="button" class="nav-arrow" (click)="prevMonth($event)">
+        ‹
+      </button>
+
+      <!-- Month-Year Label -->
+      <span class="month-year-label">{{ viewDate() | date: 'MMMM yyyy' }}</span>
+
+      <!-- Next Month Button -->
+      <button type="button" class="nav-arrow" (click)="nextMonth($event)">
+        ›
+      </button>
+    </div>
+
+    <!-- Weekdays Row -->
+    <div class="weekdays-row">
+      @for (day of weekDays; track day) {
+      <span class="weekday-cell">{{ day }}</span>
+      }
+    </div>
+
+    <!-- Days Grid -->
+    <div class="days-grid" (mouseleave)="hoveredDate.set(null)">
+      @for (day of calendarDays(); track day.date.getTime()) {
+      <button
+        type="button"
+        class="day-cell"
+        [class.outside-month]="!day.isCurrentMonth"
+        [class.today]="day.isToday"
+        [class.selected]="day.isSelected"
+        [class.range-start]="day.isRangeStart"
+        [class.range-end]="day.isRangeEnd"
+        [class.in-range]="day.isInRange"
+        [disabled]="day.isDisabled"
+        (click)="selectDay(day, $event)"
+        (mouseenter)="onDayHover(day)"
+      >
+        {{ day.dayNumber }}
+      </button>
+      }
+    </div>
+  </div>
+  }
+</div>

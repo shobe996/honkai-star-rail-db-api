@@ -16,7 +16,7 @@ import { ButtonComponent } from '../button/button';
  * @hasMore Indicates if there are more items to load.
  * @default false
  * @label The label for the items.
- * @default Items
+ * @default 'Items'
  */
 @Component({
   selector: 'lib-paginator',

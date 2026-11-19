@@ -107,7 +107,7 @@
 
   &.four-star .portrait-wrapper {
     background: hsr.$rarity-4-gradient;
-    border-bottom: 2px solid #9a6ade;
+    border-bottom: 2px solid hsr.$rarity-4;
   }
 
   .portrait-wrapper {
@@ -141,7 +141,7 @@
   &:hover {
     transform: translateY(-4px);
     border-color: hsr.$hsr-gold;
-    box-shadow: 0 8px 20px rgba(hsr.$hsr-gold-rgb, 0.15);
+    box-shadow: 0 8px 20px rgba(hsr.$hsr-gold, 0.15);
 
     .portrait-wrapper .character-icon {
       transform: scale(1.08);
